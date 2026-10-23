@@ -4346,6 +4346,9 @@
   <data name="ViewPageLaunchGameIslandRedirectCatherineDescription" xml:space="preserve">
     <value>เปลี่ยนทางเข้าเควสต์ประจำวันของแคทเธอรีนในคู่มือนักผจญภัย ให้เปิดหน้าต่างยืนยันรางวัลเควสต์ของแคทเธอรีนโดยตรง</value>
   </data>
+  <data name="ViewPageLaunchGameIslandRedirectCatherineTeachingTipSubtitle" xml:space="preserve">
+    <value>把冒险之证中跳转凯瑟琳的每日委托入口，改为直接打开凯瑟琳的委托奖励确认弹窗。第一次点击「领取奖励」会先打开冒险派遣页面；第二次点击时，如果委托已完成，则会打开领取奖励界面。</value>
+  </data>
   <data name="ViewDialogFastSkipTalkConfirmTitle" xml:space="preserve">
     <value>ลบเวลาคูลดาวน์การข้ามบทสนทนา</value>
   </data>
