@@ -191,64 +191,19 @@
                             Glyph="{ThemeResource InfoBarSuccessIconGlyph}"/>
                     </Grid>
 
-                    <cwc:SwitchPresenter
-                        x:Name="GlassPresenter_8464"
+                    <wl:LiquidGlassButton
                         Grid.Column="0"
-                        HorizontalContentAlignment="Stretch"
-                        VerticalContentAlignment="Stretch"
-                        IsTabStop="False"
-                        Tag="LiquidGlass:Button"
-                        Value="{x:Bind shuxcth:MaterialBindingSource.Current.ButtonMaterial, Mode=OneWay}">
-                        <cwc:Case>
-                            <cwc:Case.Value>
-                                <x:Int32>0</x:Int32>
-                            </cwc:Case.Value>
-                            <Button
-                                Command="{x:Bind ((shvs:SignInViewModel)DataContext).ClaimSignInRewardCommand, Mode=OneWay}"
-                                Content="{shuxm:ResourceString Name=ViewCardSignInClaimSignInAction}"
-                                IsEnabled="{x:Bind ((shvs:SignInViewModel)DataContext).IsTodaySigned, Converter={StaticResource BoolNegationConverter}, Mode=OneWay}"
-                                Style="{ThemeResource SettingButtonStyle}"/>
-                        </cwc:Case>
-                        <cwc:Case>
-                            <cwc:Case.Value>
-                                <x:Int32>1</x:Int32>
-                            </cwc:Case.Value>
-                            <wl:LiquidGlassButton
-                                shuxcth:ControlMaterialState.IsManaged="True"
-                                Command="{x:Bind ((shvs:SignInViewModel)DataContext).ClaimSignInRewardCommand, Mode=OneWay}"
-                                Content="{shuxm:ResourceString Name=ViewCardSignInClaimSignInAction}"
-                                IsEnabled="{x:Bind ((shvs:SignInViewModel)DataContext).IsTodaySigned, Converter={StaticResource BoolNegationConverter}, Mode=OneWay}"
-                                Style="{ThemeResource SettingButtonStyle}"/>
-                        </cwc:Case>
-                    </cwc:SwitchPresenter>
-                    <cwc:SwitchPresenter
-                        x:Name="GlassPresenter_8874"
+                        shuxcth:ControlMaterialState.IsManaged="True"
+                        Command="{x:Bind ((shvs:SignInViewModel)DataContext).ClaimSignInRewardCommand, Mode=OneWay}"
+                        Content="{shuxm:ResourceString Name=ViewCardSignInClaimSignInAction}"
+                        IsEnabled="{x:Bind ((shvs:SignInViewModel)DataContext).IsTodaySigned, Converter={StaticResource BoolNegationConverter}, Mode=OneWay}"
+                        Style="{ThemeResource SettingButtonStyle}"/>
+                    <wl:LiquidGlassButton
                         Grid.Column="1"
-                        HorizontalContentAlignment="Stretch"
-                        VerticalContentAlignment="Stretch"
-                        IsTabStop="False"
-                        Tag="LiquidGlass:Button"
-                        Value="{x:Bind shuxcth:MaterialBindingSource.Current.ButtonMaterial, Mode=OneWay}">
-                        <cwc:Case>
-                            <cwc:Case.Value>
-                                <x:Int32>0</x:Int32>
-                            </cwc:Case.Value>
-                            <Button
-                                Command="{x:Bind ((shvs:SignInViewModel)DataContext).ClaimResignInRewardCommand, Mode=OneWay}"
-                                Content="{shuxm:ResourceString Name=ViewCardSignInClaimReSignInAction}"
-                                Style="{ThemeResource SettingButtonStyle}"/>
-                        </cwc:Case>
-                        <cwc:Case>
-                            <cwc:Case.Value>
-                                <x:Int32>1</x:Int32>
-                            </cwc:Case.Value>
-                            <wl:LiquidGlassButton
-                                shuxcth:ControlMaterialState.IsManaged="True"
-                                Command="{x:Bind ((shvs:SignInViewModel)DataContext).ClaimResignInRewardCommand, Mode=OneWay}"
-                                Content="{shuxm:ResourceString Name=ViewCardSignInClaimReSignInAction}"
-                                Style="{ThemeResource SettingButtonStyle}"/>
-                        </cwc:Case>
-                    </cwc:SwitchPresenter>
+                        shuxcth:ControlMaterialState.IsManaged="True"
+                        Command="{x:Bind ((shvs:SignInViewModel)DataContext).ClaimResignInRewardCommand, Mode=OneWay}"
+                        Content="{shuxm:ResourceString Name=ViewCardSignInClaimReSignInAction}"
+                        Style="{ThemeResource SettingButtonStyle}"/>
                 </Grid>
             </Grid>
         </Grid>

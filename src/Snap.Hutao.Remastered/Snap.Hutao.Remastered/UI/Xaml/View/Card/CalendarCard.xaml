@@ -169,87 +169,16 @@
                     <ItemsControl.ItemTemplate>
                         <DataTemplate x:DataType="shvc:CalendarMaterial">
                             <Grid>
-                                <cwc:SwitchPresenter
-                                    x:Name="GlassPresenter_8182"
+                                <wl:LiquidGlassButton
+                                    shuxcth:ControlMaterialState.IsManaged="True"
+                                    MinWidth="0"
+                                    Padding="0"
                                     VerticalAlignment="Stretch"
-                                    HorizontalContentAlignment="Stretch"
-                                    VerticalContentAlignment="Stretch"
-                                    IsTabStop="False"
-                                    Tag="LiquidGlass:Button"
-                                    Value="{Binding ButtonMaterial, Source={StaticResource ControlMaterialState}, Mode=OneWay}">
-                                    <cwc:Case>
-                                        <cwc:Case.Value>
-                                            <x:Int32>0</x:Int32>
-                                        </cwc:Case.Value>
-                                        <Button
-                                            MinWidth="0"
-                                            Padding="0"
-                                            VerticalAlignment="Stretch"
-                                            AutomationProperties.Name="{x:Bind Inner.Name, Mode=OneWay}"
-                                            Background="{Binding Highlight, Converter={ThemeResource BoolToBrushSelector}}"
-                                            DataContext="{x:Bind}"
-                                            Style="{ThemeResource ShimmerButtonStyle}">
-
-                                            <Button.Flyout>
-                                                <Flyout essential:FlyoutHelper.AcrylicWorkaround="True" FlyoutPresenterStyle="{ThemeResource FlyoutPresenterPadding6Style}">
-                                                    <Grid RowSpacing="6">
-                                                        <Grid.RowDefinitions>
-                                                            <RowDefinition Height="auto"/>
-                                                            <RowDefinition/>
-                                                        </Grid.RowDefinitions>
-                                                        <shuxcc:HorizontalCard Grid.Row="0">
-                                                            <shuxcc:HorizontalCard.Left>
-                                                                <shuxc:ItemIcon
-                                                                    Width="48"
-                                                                    Height="48"
-                                                                    Icon="{Binding Inner.Icon, Converter={StaticResource ItemIconConverter}}"
-                                                                    Quality="{Binding Inner.RankLevel}"/>
-                                                            </shuxcc:HorizontalCard.Left>
-                                                            <shuxcc:HorizontalCard.Right>
-                                                                <StackPanel Margin="12,0">
-                                                                    <TextBlock Text="{Binding Inner.Name}"/>
-                                                                    <TextBlock
-                                                                        Opacity="0.7"
-                                                                        Style="{StaticResource CaptionTextBlockStyle}"
-                                                                        Text="{Binding Inner.TypeDescription}"/>
-                                                                </StackPanel>
-                                                            </shuxcc:HorizontalCard.Right>
-                                                        </shuxcc:HorizontalCard>
-                                                        <Border
-                                                            Grid.Row="1"
-                                                            HorizontalAlignment="Stretch"
-                                                            Style="{ThemeResource BorderShimmerStyle}">
-                                                            <ItemsControl ItemsPanel="{StaticResource UniformGridColumns4Spacing6Template}" ItemsSource="{Binding Items}">
-                                                                <ItemsControl.ItemTemplate>
-                                                                    <DataTemplate>
-                                                                        <shuxc:ItemIcon
-                                                                            Width="48"
-                                                                            Height="48"
-                                                                            Icon="{Binding Icon}"
-                                                                            Opacity="{Binding Highlight, Converter={StaticResource BoolToOpacityConverter}}"
-                                                                            Quality="{Binding Quality}"/>
-                                                                    </DataTemplate>
-                                                                </ItemsControl.ItemTemplate>
-                                                            </ItemsControl>
-                                                        </Border>
-                                                    </Grid>
-                                                </Flyout>
-                                            </Button.Flyout>
-                                        </Button>
-                                    </cwc:Case>
-                                    <cwc:Case>
-                                        <cwc:Case.Value>
-                                            <x:Int32>1</x:Int32>
-                                        </cwc:Case.Value>
-                                        <wl:LiquidGlassButton
-                                            MinWidth="0"
-                                            Padding="0"
-                                            VerticalAlignment="Stretch"
-                                            shuxcth:ControlMaterialState.IsManaged="True"
-                                            AutomationProperties.Name="{x:Bind Inner.Name, Mode=OneWay}"
-                                            CornerRadius="8"
-                                            DataContext="{x:Bind}"
-                                            Style="{ThemeResource ShimmerButtonStyle}">
+                                    AutomationProperties.Name="{x:Bind Inner.Name, Mode=OneWay}"
+                                    Background="{Binding Highlight, Converter={ThemeResource BoolToBrushSelector}}"
+                                    CornerRadius="8"
+                                    DataContext="{x:Bind}"
+                                    Style="{ThemeResource ShimmerButtonStyle}">
 
                                             <wl:LiquidGlassButton.Flyout>
                                                 <Flyout essential:FlyoutHelper.AcrylicWorkaround="True" FlyoutPresenterStyle="{ThemeResource FlyoutPresenterPadding6Style}">
@@ -296,9 +225,7 @@
                                                     </Grid>
                                                 </Flyout>
                                             </wl:LiquidGlassButton.Flyout>
-                                        </wl:LiquidGlassButton>
-                                    </cwc:Case>
-                                </cwc:SwitchPresenter>
+                                </wl:LiquidGlassButton>
                                 <!--  Keep one icon in the stable template tree; only the button surface switches.  -->
                                 <shuxci:CachedImage
                                     Width="24"

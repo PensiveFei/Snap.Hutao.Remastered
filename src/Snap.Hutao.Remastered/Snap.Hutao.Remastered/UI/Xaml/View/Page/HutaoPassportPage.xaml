@@ -34,118 +34,30 @@
                                     Header="{shuxm:ResourceString Name=ViewPageSettingHutaoPassportHeader}"
                                     HeaderIcon="{shuxm:FontIcon Glyph=&#xE716;}">
                                     <StackPanel Orientation="Horizontal" Spacing="16">
-                                        <cwc:SwitchPresenter
-                                            x:Name="GlassPresenter_2109"
-                                            HorizontalContentAlignment="Stretch"
-                                            VerticalContentAlignment="Stretch"
-                                            IsTabStop="False"
-                                            Tag="LiquidGlass:Button"
+                                        <wl:LiquidGlassButton
                                             Visibility="{x:Bind ((shvh:HutaoPassportViewModel)DataContext).HutaoUserOptions.IsLoggedIn, Converter={StaticResource BoolToVisibilityRevertConverter}, Mode=OneWay}"
-                                            Value="{x:Bind shuxcth:MaterialBindingSource.Current.ButtonMaterial, Mode=OneWay}">
-                                            <cwc:Case>
-                                                <cwc:Case.Value>
-                                                    <x:Int32>0</x:Int32>
-                                                </cwc:Case.Value>
-                                                <Button
-                                                    Command="{x:Bind ((shvh:HutaoPassportViewModel)DataContext).LoginCommand, Mode=OneWay}"
-                                                    Content="{shuxm:ResourceString Name=ViewPageSettingHutaoPassportLoginAction}"
-                                                    Style="{ThemeResource SettingButtonStyle}"/>
-                                            </cwc:Case>
-                                            <cwc:Case>
-                                                <cwc:Case.Value>
-                                                    <x:Int32>1</x:Int32>
-                                                </cwc:Case.Value>
-                                                <wl:LiquidGlassButton
-                                                    shuxcth:ControlMaterialState.IsManaged="True"
-                                                    Command="{x:Bind ((shvh:HutaoPassportViewModel)DataContext).LoginCommand, Mode=OneWay}"
-                                                    Content="{shuxm:ResourceString Name=ViewPageSettingHutaoPassportLoginAction}"
-                                                    Style="{ThemeResource SettingButtonStyle}"/>
-                                            </cwc:Case>
-                                        </cwc:SwitchPresenter>
-                                        <cwc:SwitchPresenter
-                                            x:Name="GlassPresenter_2600"
-                                            HorizontalContentAlignment="Stretch"
-                                            VerticalContentAlignment="Stretch"
-                                            IsTabStop="False"
-                                            Tag="LiquidGlass:Button"
+                                            shuxcth:ControlMaterialState.IsManaged="True"
+                                            Command="{x:Bind ((shvh:HutaoPassportViewModel)DataContext).LoginCommand, Mode=OneWay}"
+                                            Content="{shuxm:ResourceString Name=ViewPageSettingHutaoPassportLoginAction}"
+                                            Style="{ThemeResource SettingButtonStyle}"/>
+                                        <wl:LiquidGlassButton
                                             Visibility="{x:Bind ((shvh:HutaoPassportViewModel)DataContext).HutaoUserOptions.IsLoggedIn, Converter={StaticResource BoolToVisibilityRevertConverter}, Mode=OneWay}"
-                                            Value="{x:Bind shuxcth:MaterialBindingSource.Current.ButtonMaterial, Mode=OneWay}">
-                                            <cwc:Case>
-                                                <cwc:Case.Value>
-                                                    <x:Int32>0</x:Int32>
-                                                </cwc:Case.Value>
-                                                <Button
-                                                    Command="{x:Bind ((shvh:HutaoPassportViewModel)DataContext).RegisterCommand, Mode=OneWay}"
-                                                    Content="{shuxm:ResourceString Name=ViewPageSettingHutaoPassportRegisterAction}"
-                                                    Style="{ThemeResource SettingButtonStyle}"/>
-                                            </cwc:Case>
-                                            <cwc:Case>
-                                                <cwc:Case.Value>
-                                                    <x:Int32>1</x:Int32>
-                                                </cwc:Case.Value>
-                                                <wl:LiquidGlassButton
-                                                    shuxcth:ControlMaterialState.IsManaged="True"
-                                                    Command="{x:Bind ((shvh:HutaoPassportViewModel)DataContext).RegisterCommand, Mode=OneWay}"
-                                                    Content="{shuxm:ResourceString Name=ViewPageSettingHutaoPassportRegisterAction}"
-                                                    Style="{ThemeResource SettingButtonStyle}"/>
-                                            </cwc:Case>
-                                        </cwc:SwitchPresenter>
-                                        <cwc:SwitchPresenter
-                                            x:Name="GlassPresenter_3097"
-                                            HorizontalContentAlignment="Stretch"
-                                            VerticalContentAlignment="Stretch"
-                                            IsTabStop="False"
-                                            Tag="LiquidGlass:Button"
+                                            shuxcth:ControlMaterialState.IsManaged="True"
+                                            Command="{x:Bind ((shvh:HutaoPassportViewModel)DataContext).RegisterCommand, Mode=OneWay}"
+                                            Content="{shuxm:ResourceString Name=ViewPageSettingHutaoPassportRegisterAction}"
+                                            Style="{ThemeResource SettingButtonStyle}"/>
+                                        <wl:LiquidGlassButton
                                             Visibility="{x:Bind ((shvh:HutaoPassportViewModel)DataContext).HutaoUserOptions.IsLoggedIn, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}"
-                                            Value="{x:Bind shuxcth:MaterialBindingSource.Current.ButtonMaterial, Mode=OneWay}">
-                                            <cwc:Case>
-                                                <cwc:Case.Value>
-                                                    <x:Int32>0</x:Int32>
-                                                </cwc:Case.Value>
-                                                <Button
-                                                    Command="{x:Bind ((shvh:HutaoPassportViewModel)DataContext).RefreshUserInfoCommand, Mode=OneWay}"
-                                                    Content="{shuxm:ResourceString Name=ViewPageSettingHutaoPassportRefreshAction}"
-                                                    Style="{ThemeResource SettingButtonStyle}"/>
-                                            </cwc:Case>
-                                            <cwc:Case>
-                                                <cwc:Case.Value>
-                                                    <x:Int32>1</x:Int32>
-                                                </cwc:Case.Value>
-                                                <wl:LiquidGlassButton
-                                                    shuxcth:ControlMaterialState.IsManaged="True"
-                                                    Command="{x:Bind ((shvh:HutaoPassportViewModel)DataContext).RefreshUserInfoCommand, Mode=OneWay}"
-                                                    Content="{shuxm:ResourceString Name=ViewPageSettingHutaoPassportRefreshAction}"
-                                                    Style="{ThemeResource SettingButtonStyle}"/>
-                                            </cwc:Case>
-                                        </cwc:SwitchPresenter>
-                                        <cwc:SwitchPresenter
-                                            x:Name="GlassPresenter_3594"
-                                            HorizontalContentAlignment="Stretch"
-                                            VerticalContentAlignment="Stretch"
-                                            IsTabStop="False"
-                                            Tag="LiquidGlass:Button"
+                                            shuxcth:ControlMaterialState.IsManaged="True"
+                                            Command="{x:Bind ((shvh:HutaoPassportViewModel)DataContext).RefreshUserInfoCommand, Mode=OneWay}"
+                                            Content="{shuxm:ResourceString Name=ViewPageSettingHutaoPassportRefreshAction}"
+                                            Style="{ThemeResource SettingButtonStyle}"/>
+                                        <wl:LiquidGlassButton
                                             Visibility="{x:Bind ((shvh:HutaoPassportViewModel)DataContext).HutaoUserOptions.IsLoggedIn, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}"
-                                            Value="{x:Bind shuxcth:MaterialBindingSource.Current.ButtonMaterial, Mode=OneWay}">
-                                            <cwc:Case>
-                                                <cwc:Case.Value>
-                                                    <x:Int32>0</x:Int32>
-                                                </cwc:Case.Value>
-                                                <Button
-                                                    Command="{x:Bind ((shvh:HutaoPassportViewModel)DataContext).LogoutCommand, Mode=OneWay}"
-                                                    Content="{shuxm:ResourceString Name=ViewPageSettingHutaoPassportLogoutAction}"
-                                                    Style="{ThemeResource SettingButtonStyle}"/>
-                                            </cwc:Case>
-                                            <cwc:Case>
-                                                <cwc:Case.Value>
-                                                    <x:Int32>1</x:Int32>
-                                                </cwc:Case.Value>
-                                                <wl:LiquidGlassButton
-                                                    shuxcth:ControlMaterialState.IsManaged="True"
-                                                    Command="{x:Bind ((shvh:HutaoPassportViewModel)DataContext).LogoutCommand, Mode=OneWay}"
-                                                    Content="{shuxm:ResourceString Name=ViewPageSettingHutaoPassportLogoutAction}"
-                                                    Style="{ThemeResource SettingButtonStyle}"/>
-                                            </cwc:Case>
-                                        </cwc:SwitchPresenter>
+                                            shuxcth:ControlMaterialState.IsManaged="True"
+                                            Command="{x:Bind ((shvh:HutaoPassportViewModel)DataContext).LogoutCommand, Mode=OneWay}"
+                                            Content="{shuxm:ResourceString Name=ViewPageSettingHutaoPassportLogoutAction}"
+                                            Style="{ThemeResource SettingButtonStyle}"/>
                                     </StackPanel>
                                 </cwc:SettingsCard>
                                 <cwc:SettingsCard
@@ -153,33 +65,11 @@
                                     Description="{shuxm:ResourceString Name=ViewPageSettingHutaoPassportLicensedDeveloperDescription}"
                                     Header="{shuxm:ResourceString Name=ViewPageSettingHutaoPassportLicensedDeveloperHeader}"
                                     Visibility="{x:Bind ((shvh:HutaoPassportViewModel)DataContext).HutaoUserOptions.IsDeveloper, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}">
-                                    <cwc:SwitchPresenter
-                                        x:Name="GlassPresenter_4735"
-                                        HorizontalContentAlignment="Stretch"
-                                        VerticalContentAlignment="Stretch"
-                                        IsTabStop="False"
-                                        Tag="LiquidGlass:Button"
-                                        Value="{x:Bind shuxcth:MaterialBindingSource.Current.ButtonMaterial, Mode=OneWay}">
-                                        <cwc:Case>
-                                            <cwc:Case.Value>
-                                                <x:Int32>0</x:Int32>
-                                            </cwc:Case.Value>
-                                            <Button
-                                                Command="{x:Bind ((shvh:HutaoPassportViewModel)DataContext).OpenTestPageCommand, Mode=OneWay}"
-                                                Content="TEST"
-                                                Style="{ThemeResource SettingButtonStyle}"/>
-                                        </cwc:Case>
-                                        <cwc:Case>
-                                            <cwc:Case.Value>
-                                                <x:Int32>1</x:Int32>
-                                            </cwc:Case.Value>
-                                            <wl:LiquidGlassButton
-                                                shuxcth:ControlMaterialState.IsManaged="True"
-                                                Command="{x:Bind ((shvh:HutaoPassportViewModel)DataContext).OpenTestPageCommand, Mode=OneWay}"
-                                                Content="TEST"
-                                                Style="{ThemeResource SettingButtonStyle}"/>
-                                        </cwc:Case>
-                                    </cwc:SwitchPresenter>
+                                    <wl:LiquidGlassButton
+                                        shuxcth:ControlMaterialState.IsManaged="True"
+                                        Command="{x:Bind ((shvh:HutaoPassportViewModel)DataContext).OpenTestPageCommand, Mode=OneWay}"
+                                        Content="TEST"
+                                        Style="{ThemeResource SettingButtonStyle}"/>
                                 </cwc:SettingsCard>
                                 <cwc:SettingsCard
                                     Background="{ThemeResource SystemFillColorSuccessBackgroundBrush}"
@@ -191,87 +81,21 @@
                                     Description="{shuxm:ResourceString Name=ViewPageSettingHutaoPassportDangerZoneDescription}"
                                     Header="{shuxm:ResourceString Name=ViewPageSettingHutaoPassportDangerZoneHeader}">
                                     <StackPanel Orientation="Horizontal" Spacing="16">
-                                        <cwc:SwitchPresenter
-                                            x:Name="GlassPresenter_6087"
-                                            HorizontalContentAlignment="Stretch"
-                                            VerticalContentAlignment="Stretch"
-                                            IsTabStop="False"
-                                            Tag="LiquidGlass:Button"
-                                            Value="{x:Bind shuxcth:MaterialBindingSource.Current.ButtonMaterial, Mode=OneWay}">
-                                            <cwc:Case>
-                                                <cwc:Case.Value>
-                                                    <x:Int32>0</x:Int32>
-                                                </cwc:Case.Value>
-                                                <Button
-                                                    Command="{x:Bind ((shvh:HutaoPassportViewModel)DataContext).ResetUsernameCommand, Mode=OneWay}"
-                                                    Content="{shuxm:ResourceString Name=ViewPageSettingHutaoPassportResetUserNameAction}"
-                                                    Style="{ThemeResource SettingButtonStyle}"/>
-                                            </cwc:Case>
-                                            <cwc:Case>
-                                                <cwc:Case.Value>
-                                                    <x:Int32>1</x:Int32>
-                                                </cwc:Case.Value>
-                                                <wl:LiquidGlassButton
-                                                    shuxcth:ControlMaterialState.IsManaged="True"
-                                                    Command="{x:Bind ((shvh:HutaoPassportViewModel)DataContext).ResetUsernameCommand, Mode=OneWay}"
-                                                    Content="{shuxm:ResourceString Name=ViewPageSettingHutaoPassportResetUserNameAction}"
-                                                    Style="{ThemeResource SettingButtonStyle}"/>
-                                            </cwc:Case>
-                                        </cwc:SwitchPresenter>
-                                        <cwc:SwitchPresenter
-                                            x:Name="GlassPresenter_6439"
-                                            HorizontalContentAlignment="Stretch"
-                                            VerticalContentAlignment="Stretch"
-                                            IsTabStop="False"
-                                            Tag="LiquidGlass:Button"
-                                            Value="{x:Bind shuxcth:MaterialBindingSource.Current.ButtonMaterial, Mode=OneWay}">
-                                            <cwc:Case>
-                                                <cwc:Case.Value>
-                                                    <x:Int32>0</x:Int32>
-                                                </cwc:Case.Value>
-                                                <Button
-                                                    Command="{x:Bind ((shvh:HutaoPassportViewModel)DataContext).ResetPasswordCommand, Mode=OneWay}"
-                                                    Content="{shuxm:ResourceString Name=ViewPageSettingHutaoPassportResetPasswordAction}"
-                                                    Style="{ThemeResource SettingButtonStyle}"/>
-                                            </cwc:Case>
-                                            <cwc:Case>
-                                                <cwc:Case.Value>
-                                                    <x:Int32>1</x:Int32>
-                                                </cwc:Case.Value>
-                                                <wl:LiquidGlassButton
-                                                    shuxcth:ControlMaterialState.IsManaged="True"
-                                                    Command="{x:Bind ((shvh:HutaoPassportViewModel)DataContext).ResetPasswordCommand, Mode=OneWay}"
-                                                    Content="{shuxm:ResourceString Name=ViewPageSettingHutaoPassportResetPasswordAction}"
-                                                    Style="{ThemeResource SettingButtonStyle}"/>
-                                            </cwc:Case>
-                                        </cwc:SwitchPresenter>
-                                        <cwc:SwitchPresenter
-                                            x:Name="GlassPresenter_6791"
-                                            HorizontalContentAlignment="Stretch"
-                                            VerticalContentAlignment="Stretch"
-                                            IsTabStop="False"
-                                            Tag="LiquidGlass:Button"
-                                            Value="{x:Bind shuxcth:MaterialBindingSource.Current.ButtonMaterial, Mode=OneWay}">
-                                            <cwc:Case>
-                                                <cwc:Case.Value>
-                                                    <x:Int32>0</x:Int32>
-                                                </cwc:Case.Value>
-                                                <Button
-                                                    Command="{x:Bind ((shvh:HutaoPassportViewModel)DataContext).UnregisterCommand, Mode=OneWay}"
-                                                    Content="{shuxm:ResourceString Name=ViewPageSettingHutaoPassportUnregisterAction}"
-                                                    Style="{ThemeResource SettingButtonStyle}"/>
-                                            </cwc:Case>
-                                            <cwc:Case>
-                                                <cwc:Case.Value>
-                                                    <x:Int32>1</x:Int32>
-                                                </cwc:Case.Value>
-                                                <wl:LiquidGlassButton
-                                                    shuxcth:ControlMaterialState.IsManaged="True"
-                                                    Command="{x:Bind ((shvh:HutaoPassportViewModel)DataContext).UnregisterCommand, Mode=OneWay}"
-                                                    Content="{shuxm:ResourceString Name=ViewPageSettingHutaoPassportUnregisterAction}"
-                                                    Style="{ThemeResource SettingButtonStyle}"/>
-                                            </cwc:Case>
-                                        </cwc:SwitchPresenter>
+                                        <wl:LiquidGlassButton
+                                            shuxcth:ControlMaterialState.IsManaged="True"
+                                            Command="{x:Bind ((shvh:HutaoPassportViewModel)DataContext).ResetUsernameCommand, Mode=OneWay}"
+                                            Content="{shuxm:ResourceString Name=ViewPageSettingHutaoPassportResetUserNameAction}"
+                                            Style="{ThemeResource SettingButtonStyle}"/>
+                                        <wl:LiquidGlassButton
+                                            shuxcth:ControlMaterialState.IsManaged="True"
+                                            Command="{x:Bind ((shvh:HutaoPassportViewModel)DataContext).ResetPasswordCommand, Mode=OneWay}"
+                                            Content="{shuxm:ResourceString Name=ViewPageSettingHutaoPassportResetPasswordAction}"
+                                            Style="{ThemeResource SettingButtonStyle}"/>
+                                        <wl:LiquidGlassButton
+                                            shuxcth:ControlMaterialState.IsManaged="True"
+                                            Command="{x:Bind ((shvh:HutaoPassportViewModel)DataContext).UnregisterCommand, Mode=OneWay}"
+                                            Content="{shuxm:ResourceString Name=ViewPageSettingHutaoPassportUnregisterAction}"
+                                            Style="{ThemeResource SettingButtonStyle}"/>
                                     </StackPanel>
                                 </cwc:SettingsCard>
                             </StackPanel>
@@ -289,42 +113,17 @@
                             IsOpen="True"
                             Message="{shuxm:ResourceString Name=ViewPageHutaoPassportGachaLogCloudDescription}"/>
                         <cwc:SettingsCard Description="{x:Bind ((shvh:HutaoPassportViewModel)DataContext).HutaoUserOptions.CloudExpireAt, Mode=OneWay}" Header="{shuxm:ResourceString Name=ViewPageSettingHutaoPassportGachaLogExpiredAtHeader}">
-                            <cwc:SwitchPresenter
-                                x:Name="GlassPresenter_8182"
-                                HorizontalContentAlignment="Stretch"
-                                VerticalContentAlignment="Stretch"
-                                IsTabStop="False"
-                                Tag="LiquidGlass:Button"
+                            <wl:LiquidGlassButton
                                 Visibility="Collapsed"
-                                Value="{x:Bind shuxcth:MaterialBindingSource.Current.ButtonMaterial, Mode=OneWay}">
-                                <cwc:Case>
-                                    <cwc:Case.Value>
-                                        <x:Int32>0</x:Int32>
-                                    </cwc:Case.Value>
-                                    <Button Content="{shuxm:ResourceString Name=ViewPageHutaoPassportSponsorAction}" Style="{ThemeResource SettingButtonStyle}">
-                                        <mxi:Interaction.Behaviors>
-                                            <mxi:EventTriggerBehavior EventName="Click">
-                                                <cwb:NavigateToUriAction NavigateUri="https://afdian.com/item/80d3b9decf9011edb5f452540025c377"/>
-                                            </mxi:EventTriggerBehavior>
-                                        </mxi:Interaction.Behaviors>
-                                    </Button>
-                                </cwc:Case>
-                                <cwc:Case>
-                                    <cwc:Case.Value>
-                                        <x:Int32>1</x:Int32>
-                                    </cwc:Case.Value>
-                                    <wl:LiquidGlassButton
-                                        shuxcth:ControlMaterialState.IsManaged="True"
-                                        Content="{shuxm:ResourceString Name=ViewPageHutaoPassportSponsorAction}"
-                                        Style="{ThemeResource SettingButtonStyle}">
-                                        <mxi:Interaction.Behaviors>
-                                            <mxi:EventTriggerBehavior EventName="Click">
-                                                <cwb:NavigateToUriAction NavigateUri="https://afdian.com/item/80d3b9decf9011edb5f452540025c377"/>
-                                            </mxi:EventTriggerBehavior>
-                                        </mxi:Interaction.Behaviors>
-                                    </wl:LiquidGlassButton>
-                                </cwc:Case>
-                            </cwc:SwitchPresenter>
+                                shuxcth:ControlMaterialState.IsManaged="True"
+                                Content="{shuxm:ResourceString Name=ViewPageHutaoPassportSponsorAction}"
+                                Style="{ThemeResource SettingButtonStyle}">
+                                <mxi:Interaction.Behaviors>
+                                    <mxi:EventTriggerBehavior EventName="Click">
+                                        <cwb:NavigateToUriAction NavigateUri="https://afdian.com/item/80d3b9decf9011edb5f452540025c377"/>
+                                    </mxi:EventTriggerBehavior>
+                                </mxi:Interaction.Behaviors>
+                            </wl:LiquidGlassButton>
                         </cwc:SettingsCard>
                         <InfoBar
                             Title="{shuxm:ResourceString Name=ViewPageHutaoPassportCDNCloudHeader}"
@@ -336,41 +135,16 @@
                             Description="{x:Bind ((shvh:HutaoPassportViewModel)DataContext).HutaoUserOptions.CdnExpireAt, Mode=OneWay}"
                             Header="{shuxm:ResourceString Name=ViewPageSettingHutaoPassportCdnExpiredAtHeader}"
                             Visibility="Collapsed">
-                            <cwc:SwitchPresenter
-                                x:Name="GlassPresenter_9429"
-                                HorizontalContentAlignment="Stretch"
-                                VerticalContentAlignment="Stretch"
-                                IsTabStop="False"
-                                Tag="LiquidGlass:Button"
-                                Value="{x:Bind shuxcth:MaterialBindingSource.Current.ButtonMaterial, Mode=OneWay}">
-                                <cwc:Case>
-                                    <cwc:Case.Value>
-                                        <x:Int32>0</x:Int32>
-                                    </cwc:Case.Value>
-                                    <Button Content="{shuxm:ResourceString Name=ViewPageHutaoPassportSponsorAction}" Style="{ThemeResource SettingButtonStyle}">
-                                        <mxi:Interaction.Behaviors>
-                                            <mxi:EventTriggerBehavior EventName="Click">
-                                                <cwb:NavigateToUriAction NavigateUri="https://afdian.com/item/274f5a7cbe9911efab6552540025c377"/>
-                                            </mxi:EventTriggerBehavior>
-                                        </mxi:Interaction.Behaviors>
-                                    </Button>
-                                </cwc:Case>
-                                <cwc:Case>
-                                    <cwc:Case.Value>
-                                        <x:Int32>1</x:Int32>
-                                    </cwc:Case.Value>
-                                    <wl:LiquidGlassButton
-                                        shuxcth:ControlMaterialState.IsManaged="True"
-                                        Content="{shuxm:ResourceString Name=ViewPageHutaoPassportSponsorAction}"
-                                        Style="{ThemeResource SettingButtonStyle}">
-                                        <mxi:Interaction.Behaviors>
-                                            <mxi:EventTriggerBehavior EventName="Click">
-                                                <cwb:NavigateToUriAction NavigateUri="https://afdian.com/item/274f5a7cbe9911efab6552540025c377"/>
-                                            </mxi:EventTriggerBehavior>
-                                        </mxi:Interaction.Behaviors>
-                                    </wl:LiquidGlassButton>
-                                </cwc:Case>
-                            </cwc:SwitchPresenter>
+                            <wl:LiquidGlassButton
+                                shuxcth:ControlMaterialState.IsManaged="True"
+                                Content="{shuxm:ResourceString Name=ViewPageHutaoPassportSponsorAction}"
+                                Style="{ThemeResource SettingButtonStyle}">
+                                <mxi:Interaction.Behaviors>
+                                    <mxi:EventTriggerBehavior EventName="Click">
+                                        <cwb:NavigateToUriAction NavigateUri="https://afdian.com/item/274f5a7cbe9911efab6552540025c377"/>
+                                    </mxi:EventTriggerBehavior>
+                                </mxi:Interaction.Behaviors>
+                            </wl:LiquidGlassButton>
                         </cwc:SettingsCard>
                         <cwc:SettingsCard
                             Command="{x:Bind ((shvh:HutaoPassportViewModel)DataContext).UseRedeemCodeCommand, Mode=OneWay}"

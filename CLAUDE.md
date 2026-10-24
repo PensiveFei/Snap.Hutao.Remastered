@@ -258,10 +258,31 @@ the build fails with `CS9275`); write a normal constructor in that case.
 
 ### 5.3 Page / window lifetime
 
-- **Material controls own their theme brushes** — a visible liquid-glass control resolves its
-  default `Foreground` through its own style. Do not bind that value to a detached native peer;
-  forwarding a resolved brush bypasses the visible control's theme resource expression. Preserve
-  explicit caller colors separately. `ThemeSynchronization` still synchronizes inactive peers.
+- **Material switching keeps one control instance** — every materialized control is a
+  `WinUI.LiquidGlass` type that derives from the WinUI control it replaces (`LiquidGlassButton :
+  Button`, `LiquidGlassTextBox : TextBox`, …), marked with
+  `shuxcth:ControlMaterialState.IsManaged="True"`. `UI/Xaml/Control/Theme/MaterialAppearance.cs`
+  swaps its appearance: in the default material it assigns `MaterialNative{Kind}Style` (from
+  `MaterialNative.xaml`, `BasedOn` the framework default style) when the element has no caller
+  style, and clears the glass brush; in the liquid-glass material it restores the caller style and
+  the glass brush. **Do not** reintroduce `cwc:SwitchPresenter` material trees, mirrored
+  `x:Bind …Glass` properties, `ThemeSynchronization`, or a second control instance.
+- **The glass brush lives in `Background`** — a liquid-glass control assigns its `GlassBrush` to its
+  own `Background` in its constructor and its glass template only forwards that local value. A
+  template that forwards `Background` therefore paints the composition brush (or nothing) instead
+  of the theme brush, which is what made controls look blank outside the glass material. A caller
+  style that declares `Background` (accent/danger/setting styles) keeps its own fill in both
+  materials; a caller-assigned local `Background` binding is never overwritten.
+- **`LiquidGlassToggleSwitch` is not a `ToggleSwitch`** — it derives from `ToggleButton`, so
+  `ToggleSwitch`-typed `Style`s and `BehaviorBase<ToggleSwitch>`/`BehaviorBase<…>` behaviors do not
+  apply (a wrong behavior base throws `XamlParseException` while the page loads, and the frame then
+  silently stays on the previous page). Use `MaterialNativeToggleSwitchStyle` plus the
+  `Checked`/`Unchecked` events, and target behaviors at a base type the glass control satisfies
+  (see `ToggleSwitchHeaderHitTestVisibleBehavior`).
+- **`shuxcth:MaterialSwap` hosts the kinds that cannot be restyled in place** — `Slider`,
+  `PasswordBox` and `SearchBox` glass types hide the native thumb or paint an inner control, so
+  those sites declare `MaterialSwap.Native` and `MaterialSwap.Glass` children. Keep event handlers
+  and code-behind name matching (`ReferenceEquals(sender, X)` pairs) on both instances.
 - Pages derive from
   [`UI/Xaml/Control/ScopedPage.cs`](src/Snap.Hutao.Remastered/Snap.Hutao.Remastered/UI/Xaml/Control/ScopedPage.cs).
   `Loading` creates an `IServiceScope` from `XamlRoot.XamlContext().ServiceProvider`; a page's
@@ -463,6 +484,7 @@ ID — do not "fix" these by documenting them as if they were intended.
 
 | Date | Change |
 |---|---|
+| 2026-10-24 | Replaced the cwc:SwitchPresenter material trees (317 blocks) with single glass instances plus MaterialAppearance/MaterialNative.xaml style-and-background switching; MaterialSwap for slider/password/search; documented the glass-brush, caller-background and ToggleSwitch/behavior rules in §5.3. |
 | 2026-10-20 | Enabled default R2R for Debug and Release; connected the SDK-selected images to local runnable output and MSIX deployment, switched all Cake packaging inputs to publish output, and added final-image header validation. |
 | 2026-10-20 | Separated JSON wire policy from reflection, added generated infrastructure/metadata collection contracts, static enum converters, typed ID/HTTP metadata APIs, and finite cultivation navigation. |
 | 2026-10-20 | Adopted source-generated settings/database JSON and EF's compiled model; preserved plugin/script support, storage formats, and migrations. Removed extra experiment scripts; retained optional AOT diagnostics. |
