@@ -126,7 +126,7 @@
             HorizontalContentAlignment="Stretch"
             VerticalContentAlignment="Stretch"
             ContentTransitions="{ThemeResource EntranceThemeTransitions}"
-            Value="{x:Bind shvg:GuideNavigation.VisibleState(((shvg:GuideViewModel)DataContext).State), Mode=OneWay}">
+            Value="{x:Bind shvg:GuideNavigation.VisibleState(DataContext.State), Mode=OneWay}">
             <!--  Language  -->
             <cwc:Case Value="{shuxm:UInt32 Value=0}">
                 <Grid>
@@ -605,7 +605,7 @@
                             HorizontalAlignment="Center"
                             shuxcth:ComboBoxPopupLifetime.IsManaged="True"
                             Header="{shuxm:ResourceString Name=ViewPageSettingControlMaterialHeader}"
-                            SelectedIndex="{x:Bind ((shvg:GuideViewModel)DataContext).ControlMaterialState, Mode=OneWay}"
+                            SelectedIndex="{x:Bind DataContext.ControlMaterialState, Mode=OneWay}"
                             SelectionChanged="OnControlMaterialSelectionChanged">
                             <ComboBoxItem Content="{shuxm:ResourceString Name=ViewPageSettingControlMaterialDefault}"/>
                             <ComboBoxItem Content="{shuxm:ResourceString Name=ViewPageSettingControlMaterialLiquidGlass}"/>
@@ -884,7 +884,7 @@
                     HorizontalAlignment="Center"
                     IsHitTestVisible="False"
                     Loaded="OnGuideProgressLoaded"
-                    SelectedIndex="{x:Bind shvg:GuideNavigation.StepIndex(((shvg:GuideViewModel)DataContext).State), Mode=OneWay}">
+                    SelectedIndex="{x:Bind shvg:GuideNavigation.StepIndex(DataContext.State), Mode=OneWay}">
                     <cwc:SegmentedItem Icon="{shuxm:FontIcon Glyph=&#xF2B7;}"/>
                     <cwc:SegmentedItem Icon="{shuxm:FontIcon Glyph=&#xF28B;}"/>
                     <cwc:SegmentedItem Icon="{shuxm:FontIcon Glyph=&#xE81E;}"/>

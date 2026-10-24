@@ -19,7 +19,7 @@
     mc:Ignorable="d">
 
     <mxi:Interaction.Behaviors>
-        <shuxb:InvokeCommandOnLoadedBehavior Command="{x:Bind ((shvh:HutaoPassportViewModel)DataContext).LoadCommand, Mode=OneWay}"/>
+        <shuxb:InvokeCommandOnLoadedBehavior Command="{x:Bind DataContext.LoadCommand, Mode=OneWay}"/>
     </mxi:Interaction.Behaviors>
 
     <ScrollViewer>
@@ -30,32 +30,32 @@
                         <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Disabled">
                             <StackPanel Spacing="{ThemeResource SettingsCardSpacing}">
                                 <cwc:SettingsCard
-                                    Description="{x:Bind ((shvh:HutaoPassportViewModel)DataContext).HutaoUserOptions.UserName, Mode=OneWay}"
+                                    Description="{x:Bind DataContext.HutaoUserOptions.UserName, Mode=OneWay}"
                                     Header="{shuxm:ResourceString Name=ViewPageSettingHutaoPassportHeader}"
                                     HeaderIcon="{shuxm:FontIcon Glyph=&#xE716;}">
                                     <StackPanel Orientation="Horizontal" Spacing="16">
                                         <wl:LiquidGlassButton
-                                            Visibility="{x:Bind ((shvh:HutaoPassportViewModel)DataContext).HutaoUserOptions.IsLoggedIn, Converter={StaticResource BoolToVisibilityRevertConverter}, Mode=OneWay}"
+                                            Visibility="{x:Bind DataContext.HutaoUserOptions.IsLoggedIn, Converter={StaticResource BoolToVisibilityRevertConverter}, Mode=OneWay}"
                                             shuxcth:ControlMaterialState.IsManaged="True"
-                                            Command="{x:Bind ((shvh:HutaoPassportViewModel)DataContext).LoginCommand, Mode=OneWay}"
+                                            Command="{x:Bind DataContext.LoginCommand, Mode=OneWay}"
                                             Content="{shuxm:ResourceString Name=ViewPageSettingHutaoPassportLoginAction}"
                                             Style="{ThemeResource SettingButtonStyle}"/>
                                         <wl:LiquidGlassButton
-                                            Visibility="{x:Bind ((shvh:HutaoPassportViewModel)DataContext).HutaoUserOptions.IsLoggedIn, Converter={StaticResource BoolToVisibilityRevertConverter}, Mode=OneWay}"
+                                            Visibility="{x:Bind DataContext.HutaoUserOptions.IsLoggedIn, Converter={StaticResource BoolToVisibilityRevertConverter}, Mode=OneWay}"
                                             shuxcth:ControlMaterialState.IsManaged="True"
-                                            Command="{x:Bind ((shvh:HutaoPassportViewModel)DataContext).RegisterCommand, Mode=OneWay}"
+                                            Command="{x:Bind DataContext.RegisterCommand, Mode=OneWay}"
                                             Content="{shuxm:ResourceString Name=ViewPageSettingHutaoPassportRegisterAction}"
                                             Style="{ThemeResource SettingButtonStyle}"/>
                                         <wl:LiquidGlassButton
-                                            Visibility="{x:Bind ((shvh:HutaoPassportViewModel)DataContext).HutaoUserOptions.IsLoggedIn, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}"
+                                            Visibility="{x:Bind DataContext.HutaoUserOptions.IsLoggedIn, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}"
                                             shuxcth:ControlMaterialState.IsManaged="True"
-                                            Command="{x:Bind ((shvh:HutaoPassportViewModel)DataContext).RefreshUserInfoCommand, Mode=OneWay}"
+                                            Command="{x:Bind DataContext.RefreshUserInfoCommand, Mode=OneWay}"
                                             Content="{shuxm:ResourceString Name=ViewPageSettingHutaoPassportRefreshAction}"
                                             Style="{ThemeResource SettingButtonStyle}"/>
                                         <wl:LiquidGlassButton
-                                            Visibility="{x:Bind ((shvh:HutaoPassportViewModel)DataContext).HutaoUserOptions.IsLoggedIn, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}"
+                                            Visibility="{x:Bind DataContext.HutaoUserOptions.IsLoggedIn, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}"
                                             shuxcth:ControlMaterialState.IsManaged="True"
-                                            Command="{x:Bind ((shvh:HutaoPassportViewModel)DataContext).LogoutCommand, Mode=OneWay}"
+                                            Command="{x:Bind DataContext.LogoutCommand, Mode=OneWay}"
                                             Content="{shuxm:ResourceString Name=ViewPageSettingHutaoPassportLogoutAction}"
                                             Style="{ThemeResource SettingButtonStyle}"/>
                                     </StackPanel>
@@ -64,10 +64,10 @@
                                     Background="{ThemeResource SystemFillColorSuccessBackgroundBrush}"
                                     Description="{shuxm:ResourceString Name=ViewPageSettingHutaoPassportLicensedDeveloperDescription}"
                                     Header="{shuxm:ResourceString Name=ViewPageSettingHutaoPassportLicensedDeveloperHeader}"
-                                    Visibility="{x:Bind ((shvh:HutaoPassportViewModel)DataContext).HutaoUserOptions.IsDeveloper, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}">
+                                    Visibility="{x:Bind DataContext.HutaoUserOptions.IsDeveloper, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}">
                                     <wl:LiquidGlassButton
                                         shuxcth:ControlMaterialState.IsManaged="True"
-                                        Command="{x:Bind ((shvh:HutaoPassportViewModel)DataContext).OpenTestPageCommand, Mode=OneWay}"
+                                        Command="{x:Bind DataContext.OpenTestPageCommand, Mode=OneWay}"
                                         Content="TEST"
                                         Style="{ThemeResource SettingButtonStyle}"/>
                                 </cwc:SettingsCard>
@@ -75,7 +75,7 @@
                                     Background="{ThemeResource SystemFillColorSuccessBackgroundBrush}"
                                     Description="{shuxm:ResourceString Name=ViewPageSettingHutaoPassportMaintainerDescription}"
                                     Header="{shuxm:ResourceString Name=ViewPageSettingHutaoPassportMaintainerHeader}"
-                                    Visibility="{x:Bind ((shvh:HutaoPassportViewModel)DataContext).HutaoUserOptions.IsMaintainer, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}"/>
+                                    Visibility="{x:Bind DataContext.HutaoUserOptions.IsMaintainer, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}"/>
                                 <cwc:SettingsCard
                                     Background="{ThemeResource SystemFillColorCriticalBackgroundBrush}"
                                     Description="{shuxm:ResourceString Name=ViewPageSettingHutaoPassportDangerZoneDescription}"
@@ -83,17 +83,17 @@
                                     <StackPanel Orientation="Horizontal" Spacing="16">
                                         <wl:LiquidGlassButton
                                             shuxcth:ControlMaterialState.IsManaged="True"
-                                            Command="{x:Bind ((shvh:HutaoPassportViewModel)DataContext).ResetUsernameCommand, Mode=OneWay}"
+                                            Command="{x:Bind DataContext.ResetUsernameCommand, Mode=OneWay}"
                                             Content="{shuxm:ResourceString Name=ViewPageSettingHutaoPassportResetUserNameAction}"
                                             Style="{ThemeResource SettingButtonStyle}"/>
                                         <wl:LiquidGlassButton
                                             shuxcth:ControlMaterialState.IsManaged="True"
-                                            Command="{x:Bind ((shvh:HutaoPassportViewModel)DataContext).ResetPasswordCommand, Mode=OneWay}"
+                                            Command="{x:Bind DataContext.ResetPasswordCommand, Mode=OneWay}"
                                             Content="{shuxm:ResourceString Name=ViewPageSettingHutaoPassportResetPasswordAction}"
                                             Style="{ThemeResource SettingButtonStyle}"/>
                                         <wl:LiquidGlassButton
                                             shuxcth:ControlMaterialState.IsManaged="True"
-                                            Command="{x:Bind ((shvh:HutaoPassportViewModel)DataContext).UnregisterCommand, Mode=OneWay}"
+                                            Command="{x:Bind DataContext.UnregisterCommand, Mode=OneWay}"
                                             Content="{shuxm:ResourceString Name=ViewPageSettingHutaoPassportUnregisterAction}"
                                             Style="{ThemeResource SettingButtonStyle}"/>
                                     </StackPanel>
@@ -112,7 +112,7 @@
                             IsClosable="False"
                             IsOpen="True"
                             Message="{shuxm:ResourceString Name=ViewPageHutaoPassportGachaLogCloudDescription}"/>
-                        <cwc:SettingsCard Description="{x:Bind ((shvh:HutaoPassportViewModel)DataContext).HutaoUserOptions.CloudExpireAt, Mode=OneWay}" Header="{shuxm:ResourceString Name=ViewPageSettingHutaoPassportGachaLogExpiredAtHeader}">
+                        <cwc:SettingsCard Description="{x:Bind DataContext.HutaoUserOptions.CloudExpireAt, Mode=OneWay}" Header="{shuxm:ResourceString Name=ViewPageSettingHutaoPassportGachaLogExpiredAtHeader}">
                             <wl:LiquidGlassButton
                                 Visibility="Collapsed"
                                 shuxcth:ControlMaterialState.IsManaged="True"
@@ -132,7 +132,7 @@
                             Message="{shuxm:ResourceString Name=ViewPageHutaoPassportCDNCloudDescription}"
                             Visibility="Collapsed"/>
                         <cwc:SettingsCard
-                            Description="{x:Bind ((shvh:HutaoPassportViewModel)DataContext).HutaoUserOptions.CdnExpireAt, Mode=OneWay}"
+                            Description="{x:Bind DataContext.HutaoUserOptions.CdnExpireAt, Mode=OneWay}"
                             Header="{shuxm:ResourceString Name=ViewPageSettingHutaoPassportCdnExpiredAtHeader}"
                             Visibility="Collapsed">
                             <wl:LiquidGlassButton
@@ -147,7 +147,7 @@
                             </wl:LiquidGlassButton>
                         </cwc:SettingsCard>
                         <cwc:SettingsCard
-                            Command="{x:Bind ((shvh:HutaoPassportViewModel)DataContext).UseRedeemCodeCommand, Mode=OneWay}"
+                            Command="{x:Bind DataContext.UseRedeemCodeCommand, Mode=OneWay}"
                             Description="{shuxm:ResourceString Name=ViewPageSettingHutaoPassportRedeemCodeDescription}"
                             Header="{shuxm:ResourceString Name=ViewPageSettingHutaoPassportRedeemCodeHeader}"
                             IsClickEnabled="True"/>

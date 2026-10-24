@@ -21,7 +21,7 @@
     mc:Ignorable="d">
 
     <mxi:Interaction.Behaviors>
-        <shuxb:InvokeCommandOnLoadedBehavior Command="{x:Bind ((shv:TestViewModel)DataContext).LoadCommand, Mode=OneWay}"/>
+        <shuxb:InvokeCommandOnLoadedBehavior Command="{x:Bind DataContext.LoadCommand, Mode=OneWay}"/>
     </mxi:Interaction.Behaviors>
 
     <Border Margin="16" Style="{ThemeResource AcrylicBorderCardStyle}">
@@ -91,7 +91,7 @@
                 <cwc:SettingsCard Header="Resize MainWindow">
                     <wl:LiquidGlassButton
                         shuxcth:ControlMaterialState.IsManaged="True"
-                        Command="{x:Bind ((shv:TestViewModel)DataContext).ResetMainWindowSizeCommand, Mode=OneWay}"
+                        Command="{x:Bind DataContext.ResetMainWindowSizeCommand, Mode=OneWay}"
                         Content="Reset"
                         Style="{ThemeResource SettingButtonStyle}"/>
                 </cwc:SettingsCard>
@@ -99,27 +99,27 @@
                 <TextBlock Style="{ThemeResource SettingsSectionHeaderTextBlockStyle}" Text="Condition Override"/>
 
                 <cwc:SettingsCard Header="Override Elevation Requirement">
-                    <wl:LiquidGlassToggleSwitch shuxcth:ControlMaterialState.IsManaged="True" IsOn="{x:Bind ((shv:TestViewModel)DataContext).OverrideElevationRequirement, Mode=TwoWay}"/>
+                    <wl:LiquidGlassToggleSwitch shuxcth:ControlMaterialState.IsManaged="True" IsOn="{x:Bind DataContext.OverrideElevationRequirement, Mode=TwoWay}"/>
                 </cwc:SettingsCard>
 
                 <cwc:SettingsCard Header="Override Update Version Comparison">
-                    <wl:LiquidGlassToggleSwitch shuxcth:ControlMaterialState.IsManaged="True" IsOn="{x:Bind ((shv:TestViewModel)DataContext).OverrideUpdateVersionComparison, Mode=TwoWay}"/>
+                    <wl:LiquidGlassToggleSwitch shuxcth:ControlMaterialState.IsManaged="True" IsOn="{x:Bind DataContext.OverrideUpdateVersionComparison, Mode=TwoWay}"/>
                 </cwc:SettingsCard>
 
                 <cwc:SettingsCard
-                    Command="{x:Bind ((shv:TestViewModel)DataContext).ForceUpdateDialogCommand, Mode=OneWay}"
+                    Command="{x:Bind DataContext.ForceUpdateDialogCommand, Mode=OneWay}"
                     Description="Show the update dialog without requiring an actual new version"
                     Header="Force Show Update Dialog"
                     IsClickEnabled="True"/>
 
                 <cwc:SettingsCard
-                    Command="{x:Bind ((shv:TestViewModel)DataContext).OpenStoreTestCommand, Mode=OneWay}"
+                    Command="{x:Bind DataContext.OpenStoreTestCommand, Mode=OneWay}"
                     Description="Open product 9P1LDJFJFJQQ using the same Store link and web fallback as updates; works in packaged and unpackaged builds"
                     Header="Open Microsoft Store (Test)"
                     IsClickEnabled="True"/>
 
                 <cwc:SettingsCard Header="Override Package Convert Directory Permission Requirement">
-                    <wl:LiquidGlassToggleSwitch shuxcth:ControlMaterialState.IsManaged="True" IsOn="{x:Bind ((shv:TestViewModel)DataContext).OverridePackageConvertDirectoryPermissionsRequirement, Mode=TwoWay}"/>
+                    <wl:LiquidGlassToggleSwitch shuxcth:ControlMaterialState.IsManaged="True" IsOn="{x:Bind DataContext.OverridePackageConvertDirectoryPermissionsRequirement, Mode=TwoWay}"/>
                 </cwc:SettingsCard>
 
                 <cwc:SettingsCard Header="Override Hard Drive Type">
@@ -127,18 +127,18 @@
                         <wl:LiquidGlassToggleSwitch
                             shuxcth:ControlMaterialState.IsManaged="True"
                             IsEnabled="{x:Bind HardDriveTypeToggle.IsOn, Mode=OneWay}"
-                            IsOn="{x:Bind ((shv:TestViewModel)DataContext).OverrideHardDriveTypeIsSolidState, Mode=TwoWay}"
+                            IsOn="{x:Bind DataContext.OverrideHardDriveTypeIsSolidState, Mode=TwoWay}"
                             OffContent="HDD"
                             OnContent="SSD"/>
                         <wl:LiquidGlassToggleSwitch
                             x:Name="HardDriveTypeToggle"
                             shuxcth:ControlMaterialState.IsManaged="True"
-                            IsOn="{x:Bind ((shv:TestViewModel)DataContext).OverrideHardDriveType, Mode=TwoWay}"/>
+                            IsOn="{x:Bind DataContext.OverrideHardDriveType, Mode=TwoWay}"/>
                     </StackPanel>
                 </cwc:SettingsCard>
 
                 <cwc:SettingsCard Header="Always Treat As First Run After Update">
-                    <wl:LiquidGlassToggleSwitch shuxcth:ControlMaterialState.IsManaged="True" IsOn="{x:Bind ((shv:TestViewModel)DataContext).AlwaysIsFirstRunAfterUpdate, Mode=TwoWay}"/>
+                    <wl:LiquidGlassToggleSwitch shuxcth:ControlMaterialState.IsManaged="True" IsOn="{x:Bind DataContext.AlwaysIsFirstRunAfterUpdate, Mode=TwoWay}"/>
                 </cwc:SettingsCard>
 
                 <cwc:SettingsCard Header="Alpha Build Generic API Endpoint">
@@ -146,13 +146,13 @@
                         <wl:LiquidGlassToggleSwitch
                             x:Name="GenericApiEndPointToggle"
                             shuxcth:ControlMaterialState.IsManaged="True"
-                            IsOn="{x:Bind ((shv:TestViewModel)DataContext).AlphaBuildUseCNPatchEndpoint, Mode=TwoWay}"
+                            IsOn="{x:Bind DataContext.AlphaBuildUseCNPatchEndpoint, Mode=TwoWay}"
                             OffContent="Oversea Endpoints"
                             OnContent="Chinese Endpoints"/>
                         <wl:LiquidGlassToggleSwitch
                             shuxcth:ControlMaterialState.IsManaged="True"
                             IsEnabled="{x:Bind GenericApiEndPointToggle.IsOn, Mode=OneWay}"
-                            IsOn="{x:Bind ((shv:TestViewModel)DataContext).AlphaBuildUseFJPatchEndpoint, Mode=TwoWay}"
+                            IsOn="{x:Bind DataContext.AlphaBuildUseFJPatchEndpoint, Mode=TwoWay}"
                             OffContent="No Secondary Endpoints"
                             OnContent="Fujian Endpoints"/>
                     </StackPanel>
@@ -160,7 +160,7 @@
 
                 <TextBlock Style="{ThemeResource SettingsSectionHeaderTextBlockStyle}" Text="Hutao Cloud"/>
                 <cwc:SettingsCard
-                    Command="{x:Bind ((shv:TestViewModel)DataContext).CompensationGachaLogServiceTimeCommand, Mode=OneWay}"
+                    Command="{x:Bind DataContext.CompensationGachaLogServiceTimeCommand, Mode=OneWay}"
                     Header="Compensation GachaLog Service Time"
                     IsClickEnabled="True">
                     <StackPanel
@@ -171,13 +171,13 @@
                             MinWidth="{ThemeResource SettingsCardContentControlMinWidth}"
                             VerticalAlignment="Center"
                             AcceptsExpression="False"
-                            Value="{x:Bind ((shv:TestViewModel)DataContext).GachaLogCompensationDays, Mode=TwoWay}"/>
+                            Value="{x:Bind DataContext.GachaLogCompensationDays, Mode=TwoWay}"/>
                         <TextBlock VerticalAlignment="Center" Text="Days"/>
                     </StackPanel>
                 </cwc:SettingsCard>
 
                 <cwc:SettingsCard
-                    Command="{x:Bind ((shv:TestViewModel)DataContext).DesignationGachaLogServiceTimeCommand, Mode=OneWay}"
+                    Command="{x:Bind DataContext.DesignationGachaLogServiceTimeCommand, Mode=OneWay}"
                     Header="Designation GachaLog Service Time"
                     IsClickEnabled="True">
                     <StackPanel
@@ -189,18 +189,18 @@
                             shuxcth:ControlMaterialState.IsManaged="True"
                             MinWidth="{ThemeResource SettingsCardContentControlMinWidth}"
                             VerticalAlignment="Center"
-                            Text="{x:Bind ((shv:TestViewModel)DataContext).GachaLogDesignationOptions.UserName, Mode=TwoWay}"/>
+                            Text="{x:Bind DataContext.GachaLogDesignationOptions.UserName, Mode=TwoWay}"/>
                         <NumberBox
                             MinWidth="{ThemeResource SettingsCardContentControlMinWidth}"
                             VerticalAlignment="Center"
                             AcceptsExpression="False"
-                            Value="{x:Bind ((shv:TestViewModel)DataContext).GachaLogDesignationOptions.Days, Mode=TwoWay}"/>
+                            Value="{x:Bind DataContext.GachaLogDesignationOptions.Days, Mode=TwoWay}"/>
                         <TextBlock VerticalAlignment="Center" Text="Days"/>
                     </StackPanel>
                 </cwc:SettingsCard>
 
                 <cwc:SettingsCard
-                    Command="{x:Bind ((shv:TestViewModel)DataContext).CompensationCdnServiceTimeCommand, Mode=OneWay}"
+                    Command="{x:Bind DataContext.CompensationCdnServiceTimeCommand, Mode=OneWay}"
                     Header="Compensation Cdn Service Time"
                     IsClickEnabled="True">
                     <StackPanel
@@ -211,13 +211,13 @@
                             MinWidth="{ThemeResource SettingsCardContentControlMinWidth}"
                             VerticalAlignment="Center"
                             AcceptsExpression="False"
-                            Value="{x:Bind ((shv:TestViewModel)DataContext).CdnCompensationDays, Mode=TwoWay}"/>
+                            Value="{x:Bind DataContext.CdnCompensationDays, Mode=TwoWay}"/>
                         <TextBlock VerticalAlignment="Center" Text="Days"/>
                     </StackPanel>
                 </cwc:SettingsCard>
 
                 <cwc:SettingsCard
-                    Command="{x:Bind ((shv:TestViewModel)DataContext).DesignationCdnServiceTimeCommand, Mode=OneWay}"
+                    Command="{x:Bind DataContext.DesignationCdnServiceTimeCommand, Mode=OneWay}"
                     Header="Designation Cdn Service Time"
                     IsClickEnabled="True">
                     <StackPanel
@@ -229,12 +229,12 @@
                             shuxcth:ControlMaterialState.IsManaged="True"
                             MinWidth="{ThemeResource SettingsCardContentControlMinWidth}"
                             VerticalAlignment="Center"
-                            Text="{x:Bind ((shv:TestViewModel)DataContext).CdnDesignationOptions.UserName, Mode=TwoWay}"/>
+                            Text="{x:Bind DataContext.CdnDesignationOptions.UserName, Mode=TwoWay}"/>
                         <NumberBox
                             MinWidth="{ThemeResource SettingsCardContentControlMinWidth}"
                             VerticalAlignment="Center"
                             AcceptsExpression="False"
-                            Value="{x:Bind ((shv:TestViewModel)DataContext).CdnDesignationOptions.Days, Mode=TwoWay}"/>
+                            Value="{x:Bind DataContext.CdnDesignationOptions.Days, Mode=TwoWay}"/>
                         <TextBlock VerticalAlignment="Center" Text="Days"/>
                     </StackPanel>
                 </cwc:SettingsCard>
@@ -248,10 +248,10 @@
                         <NumberBox
                             Header="Count"
                             PlaceholderText="Code count"
-                            Text="{x:Bind ((shv:TestViewModel)DataContext).RedeemCodeGenerateOption.Count, Mode=TwoWay}"/>
+                            Text="{x:Bind DataContext.RedeemCodeGenerateOption.Count, Mode=TwoWay}"/>
                         <StackPanel Orientation="Horizontal" Spacing="8">
-                            <wl:LiquidGlassCheckBox shuxcth:ControlMaterialState.IsManaged="True" Content="IsTimeLimited" IsChecked="{x:Bind ((shv:TestViewModel)DataContext).RedeemCodeGenerateOption.IsTimeLimited, Mode=TwoWay}"/>
-                            <wl:LiquidGlassCheckBox shuxcth:ControlMaterialState.IsManaged="True" Content="IsTimesLimited" IsChecked="{x:Bind ((shv:TestViewModel)DataContext).RedeemCodeGenerateOption.IsTimesLimited, Mode=TwoWay}"/>
+                            <wl:LiquidGlassCheckBox shuxcth:ControlMaterialState.IsManaged="True" Content="IsTimeLimited" IsChecked="{x:Bind DataContext.RedeemCodeGenerateOption.IsTimeLimited, Mode=TwoWay}"/>
+                            <wl:LiquidGlassCheckBox shuxcth:ControlMaterialState.IsManaged="True" Content="IsTimesLimited" IsChecked="{x:Bind DataContext.RedeemCodeGenerateOption.IsTimesLimited, Mode=TwoWay}"/>
                         </StackPanel>
                         <shuxc:SizeRestrictedContentControl>
                             <wl:LiquidGlassComboBox
@@ -259,28 +259,28 @@
                                 shuxcth:ComboBoxPopupLifetime.IsManaged="True"
                                 Header="ServiceType"
                                 ItemsSource="{cwh:EnumValues Type=shwhr:RedeemCodeTargetServiceType}"
-                                SelectedItem="{x:Bind ((shv:TestViewModel)DataContext).RedeemCodeGenerateOption.ServiceType, Mode=TwoWay}"/>
+                                SelectedItem="{x:Bind DataContext.RedeemCodeGenerateOption.ServiceType, Mode=TwoWay}"/>
                         </shuxc:SizeRestrictedContentControl>
                         <NumberBox
                             Header="Value"
                             PlaceholderText="Days"
-                            Text="{x:Bind ((shv:TestViewModel)DataContext).RedeemCodeGenerateOption.Value, Mode=TwoWay}"/>
+                            Text="{x:Bind DataContext.RedeemCodeGenerateOption.Value, Mode=TwoWay}"/>
                         <wl:LiquidGlassTextBox
                             shuxcth:ControlMaterialState.IsManaged="True"
                             Header="Description"
                             PlaceholderText="Code description"
-                            Text="{x:Bind ((shv:TestViewModel)DataContext).RedeemCodeGenerateOption.Description, Mode=TwoWay}"/>
+                            Text="{x:Bind DataContext.RedeemCodeGenerateOption.Description, Mode=TwoWay}"/>
                         <NumberBox
                             Header="Expire Hours"
-                            IsEnabled="{x:Bind ((shv:TestViewModel)DataContext).RedeemCodeGenerateOption.IsTimeLimited, Mode=OneWay}"
+                            IsEnabled="{x:Bind DataContext.RedeemCodeGenerateOption.IsTimeLimited, Mode=OneWay}"
                             PlaceholderText="72"
-                            Text="{x:Bind ((shv:TestViewModel)DataContext).RedeemCodeGenerateOption.ExpireHours, Mode=TwoWay}"/>
+                            Text="{x:Bind DataContext.RedeemCodeGenerateOption.ExpireHours, Mode=TwoWay}"/>
                         <NumberBox
                             Header="Times"
-                            IsEnabled="{x:Bind ((shv:TestViewModel)DataContext).RedeemCodeGenerateOption.IsTimesLimited, Mode=OneWay}"
+                            IsEnabled="{x:Bind DataContext.RedeemCodeGenerateOption.IsTimesLimited, Mode=OneWay}"
                             PlaceholderText="Limited times"
-                            Text="{x:Bind ((shv:TestViewModel)DataContext).RedeemCodeGenerateOption.Times, Mode=TwoWay}"/>
-                        <wl:LiquidGlassButton shuxcth:ControlMaterialState.IsManaged="True" Command="{x:Bind ((shv:TestViewModel)DataContext).GenerateRedeemCodeCommand, Mode=OneWay}" Content="Generate"/>
+                            Text="{x:Bind DataContext.RedeemCodeGenerateOption.Times, Mode=TwoWay}"/>
+                        <wl:LiquidGlassButton shuxcth:ControlMaterialState.IsManaged="True" Command="{x:Bind DataContext.GenerateRedeemCodeCommand, Mode=OneWay}" Content="Generate"/>
                     </StackPanel>
                 </Expander>
 
@@ -297,17 +297,17 @@
                     IsClickEnabled="True"/>
 
                 <cwc:SettingsCard
-                    Command="{x:Bind ((shv:TestViewModel)DataContext).SendRandomInfoBarNotificationCommand, Mode=OneWay}"
+                    Command="{x:Bind DataContext.SendRandomInfoBarNotificationCommand, Mode=OneWay}"
                     Header="Random InfoBar"
                     IsClickEnabled="True"/>
 
                 <cwc:SettingsCard
-                    Command="{x:Bind ((shv:TestViewModel)DataContext).CheckPathBelongsToSSDCommand, Mode=OneWay}"
+                    Command="{x:Bind DataContext.CheckPathBelongsToSSDCommand, Mode=OneWay}"
                     Header="Check path belongs to a SSD"
                     IsClickEnabled="True"/>
 
                 <cwc:SettingsCard
-                    Command="{x:Bind ((shv:TestViewModel)DataContext).RunCodeCommand, Mode=OneWay}"
+                    Command="{x:Bind DataContext.RunCodeCommand, Mode=OneWay}"
                     Header="Run Script Code"
                     IsClickEnabled="True"/>
 
@@ -315,12 +315,12 @@
                     <StackPanel Orientation="Horizontal">
                         <wl:LiquidGlassButton
                             shuxcth:ControlMaterialState.IsManaged="True"
-                            Command="{x:Bind ((shv:TestViewModel)DataContext).OpenSpeedGraphTestWindowCommand, Mode=OneWay}"
+                            Command="{x:Bind DataContext.OpenSpeedGraphTestWindowCommand, Mode=OneWay}"
                             Content="{shuxm:ResourceString Name=ViewPageTestSpeedGraphWindowHeader}"
                             Style="{ThemeResource SettingButtonStyle}"/>
                         <wl:LiquidGlassButton
                             shuxcth:ControlMaterialState.IsManaged="True"
-                            Command="{x:Bind ((shv:TestViewModel)DataContext).OpenGamePackageWindowCommand, Mode=OneWay}"
+                            Command="{x:Bind DataContext.OpenGamePackageWindowCommand, Mode=OneWay}"
                             Content="Open The Game Package Window"
                             Style="{ThemeResource SettingButtonStyle}"/>
                     </StackPanel>
@@ -328,25 +328,25 @@
 
                 <TextBlock Style="{ThemeResource SettingsSectionHeaderTextBlockStyle}" Text="Game Package"/>
                 <cwc:SettingsCard Header="Treat Predownload As Main">
-                    <wl:LiquidGlassToggleSwitch shuxcth:ControlMaterialState.IsManaged="True" IsOn="{x:Bind ((shv:TestViewModel)DataContext).TreatPredownloadAsMain, Mode=TwoWay}"/>
+                    <wl:LiquidGlassToggleSwitch shuxcth:ControlMaterialState.IsManaged="True" IsOn="{x:Bind DataContext.TreatPredownloadAsMain, Mode=TwoWay}"/>
                 </cwc:SettingsCard>
 
                 <cwc:SettingsCard Header="Enable Beta Game Install">
-                    <wl:LiquidGlassToggleSwitch shuxcth:ControlMaterialState.IsManaged="True" IsOn="{x:Bind ((shv:TestViewModel)DataContext).EnableBetaGameInstall, Mode=TwoWay}"/>
+                    <wl:LiquidGlassToggleSwitch shuxcth:ControlMaterialState.IsManaged="True" IsOn="{x:Bind DataContext.EnableBetaGameInstall, Mode=TwoWay}"/>
                 </cwc:SettingsCard>
 
                 <cwc:SettingsCard
-                    Command="{x:Bind ((shv:TestViewModel)DataContext).ExtractGameBlocksCommand, Mode=OneWay}"
+                    Command="{x:Bind DataContext.ExtractGameBlocksCommand, Mode=OneWay}"
                     Header="Extract Game Blocks"
                     IsClickEnabled="True"/>
 
                 <cwc:SettingsCard
-                    Command="{x:Bind ((shv:TestViewModel)DataContext).ExtractGameExeCommand, Mode=OneWay}"
+                    Command="{x:Bind DataContext.ExtractGameExeCommand, Mode=OneWay}"
                     Header="Extract Game Executable"
                     IsClickEnabled="True">
                     <StackPanel Orientation="Horizontal" Spacing="{ThemeResource SettingsCardContentControlSpacing}">
-                        <wl:LiquidGlassCheckBox shuxcth:ControlMaterialState.IsManaged="True" Content="IsOversea" IsChecked="{x:Bind ((shv:TestViewModel)DataContext).ExtractExeOptions.IsOversea, Mode=TwoWay}"/>
-                        <wl:LiquidGlassCheckBox shuxcth:ControlMaterialState.IsManaged="True" Content="IsPredownload" IsChecked="{x:Bind ((shv:TestViewModel)DataContext).ExtractExeOptions.IsPreDownload, Mode=TwoWay}"/>
+                        <wl:LiquidGlassCheckBox shuxcth:ControlMaterialState.IsManaged="True" Content="IsOversea" IsChecked="{x:Bind DataContext.ExtractExeOptions.IsOversea, Mode=TwoWay}"/>
+                        <wl:LiquidGlassCheckBox shuxcth:ControlMaterialState.IsManaged="True" Content="IsPredownload" IsChecked="{x:Bind DataContext.ExtractExeOptions.IsPreDownload, Mode=TwoWay}"/>
                     </StackPanel>
                 </cwc:SettingsCard>
 
@@ -361,32 +361,32 @@
                             shuxcth:ControlMaterialState.IsManaged="True"
                             Header="Title"
                             PlaceholderText="Please input title"
-                            Text="{x:Bind ((shv:TestViewModel)DataContext).Announcement.Title, Mode=TwoWay}"/>
+                            Text="{x:Bind DataContext.Announcement.Title, Mode=TwoWay}"/>
                         <wl:LiquidGlassTextBox
                             shuxcth:ControlMaterialState.IsManaged="True"
                             Header="Link"
                             PlaceholderText="Please input link"
-                            Text="{x:Bind ((shv:TestViewModel)DataContext).Announcement.Link, Mode=TwoWay}"/>
+                            Text="{x:Bind DataContext.Announcement.Link, Mode=TwoWay}"/>
                         <wl:LiquidGlassTextBox
                             shuxcth:ControlMaterialState.IsManaged="True"
                             Header="Version Threshold"
                             PlaceholderText="Max present version(leave empty to present in all version)"
-                            Text="{x:Bind ((shv:TestViewModel)DataContext).Announcement.MaxPresentVersion, Mode=TwoWay}"/>
+                            Text="{x:Bind DataContext.Announcement.MaxPresentVersion, Mode=TwoWay}"/>
                         <wl:LiquidGlassTextBox
                             shuxcth:ControlMaterialState.IsManaged="True"
                             AcceptsReturn="True"
                             Header="Content"
                             PlaceholderText="Please input content"
-                            Text="{x:Bind ((shv:TestViewModel)DataContext).Announcement.Content, Mode=TwoWay}"/>
+                            Text="{x:Bind DataContext.Announcement.Content, Mode=TwoWay}"/>
                         <shuxc:SizeRestrictedContentControl>
                             <wl:LiquidGlassComboBox
                                 shuxcth:ControlMaterialState.IsManaged="True"
                                 shuxcth:ComboBoxPopupLifetime.IsManaged="True"
                                 Header="Severity"
                                 ItemsSource="{cwh:EnumValues Type=InfoBarSeverity}"
-                                SelectedItem="{x:Bind ((shv:TestViewModel)DataContext).Announcement.Severity, Mode=TwoWay}"/>
+                                SelectedItem="{x:Bind DataContext.Announcement.Severity, Mode=TwoWay}"/>
                         </shuxc:SizeRestrictedContentControl>
-                        <wl:LiquidGlassButton shuxcth:ControlMaterialState.IsManaged="True" Command="{x:Bind ((shv:TestViewModel)DataContext).UploadAnnouncementCommand, Mode=OneWay}" Content="Upload"/>
+                        <wl:LiquidGlassButton shuxcth:ControlMaterialState.IsManaged="True" Command="{x:Bind DataContext.UploadAnnouncementCommand, Mode=OneWay}" Content="Upload"/>
                     </StackPanel>
                 </Expander>
             </StackPanel>

@@ -22,7 +22,7 @@
     mc:Ignorable="d">
 
     <mxi:Interaction.Behaviors>
-        <shuxb:InvokeCommandOnLoadedBehavior Command="{x:Bind ((shvp:PluginViewModel)DataContext).LoadCommand, Mode=OneWay}"/>
+        <shuxb:InvokeCommandOnLoadedBehavior Command="{x:Bind DataContext.LoadCommand, Mode=OneWay}"/>
     </mxi:Interaction.Behaviors>
 
     <Page.Resources>
@@ -177,9 +177,9 @@
     </Page.Resources>
 
     <Grid x:Name="Root">
-        <shuxc:StandardView ShowCondition="{x:Bind ((shvp:PluginViewModel)DataContext).IsInitialized, Mode=OneWay}">
+        <shuxc:StandardView ShowCondition="{x:Bind DataContext.IsInitialized, Mode=OneWay}">
             <shuxc:StandardView.EmptyContent>
-                <clw:Shimmer IsActive="{x:Bind ((shvp:PluginViewModel)DataContext).IsInitialized, Converter={StaticResource BoolNegationConverter}, Mode=OneWay}"/>
+                <clw:Shimmer IsActive="{x:Bind DataContext.IsInitialized, Converter={StaticResource BoolNegationConverter}, Mode=OneWay}"/>
             </shuxc:StandardView.EmptyContent>
 
             <Grid Margin="16">
@@ -200,7 +200,7 @@
                             Spacing="12">
                             <wl:LiquidGlassButton
                                 shuxcth:ControlMaterialState.IsManaged="True"
-                                Command="{x:Bind ((shvp:PluginViewModel)DataContext).InstallPluginCommand, Mode=OneWay}"
+                                Command="{x:Bind DataContext.InstallPluginCommand, Mode=OneWay}"
                                 Content="{shuxm:ResourceString Name=ViewPagePluginInstallButton}"
                                 Style="{StaticResource AccentButtonStyle}">
                                 <wl:LiquidGlassButton.ContentTemplate>
@@ -215,7 +215,7 @@
 
                             <wl:LiquidGlassButton
                                 shuxcth:ControlMaterialState.IsManaged="True"
-                                Command="{x:Bind ((shvp:PluginViewModel)DataContext).RefreshPluginsCommand, Mode=OneWay}"
+                                Command="{x:Bind DataContext.RefreshPluginsCommand, Mode=OneWay}"
                                 Content="{shuxm:ResourceString Name=ViewPagePluginRefreshButton}"
                                 Style="{StaticResource DefaultButtonStyle}">
                                 <wl:LiquidGlassButton.ContentTemplate>
@@ -230,7 +230,7 @@
 
                             <wl:LiquidGlassButton
                                 shuxcth:ControlMaterialState.IsManaged="True"
-                                Command="{x:Bind ((shvp:PluginViewModel)DataContext).OpenPluginDirectoryCommand, Mode=OneWay}"
+                                Command="{x:Bind DataContext.OpenPluginDirectoryCommand, Mode=OneWay}"
                                 Content="{shuxm:ResourceString Name=ViewPagePluginOpenDirectoryButton}"
                                 Style="{StaticResource DefaultButtonStyle}">
                                 <wl:LiquidGlassButton.ContentTemplate>
@@ -245,7 +245,7 @@
 
                             <TextBlock VerticalAlignment="Center" Foreground="{ThemeResource TextFillColorSecondaryBrush}">
                                 <Run Text="{shuxm:ResourceString Name=ViewPagePluginTotalText}"/>
-                                <Run Text="{x:Bind ((shvp:PluginViewModel)DataContext).Plugins.Count, Mode=OneWay}"/>
+                                <Run Text="{x:Bind DataContext.Plugins.Count, Mode=OneWay}"/>
                                 <Run Text="{shuxm:ResourceString Name=ViewPagePluginCountText}"/>
                             </TextBlock>
                         </StackPanel>
@@ -255,7 +255,7 @@
                 <!--  插件列表  -->
                 <Border Grid.Row="1" cw:Effects.Shadow="{ThemeResource CompatCardShadow}">
                     <Grid Style="{ThemeResource AcrylicGridCardStyle}">
-                        <shuxc:StandardView ShowCondition="{x:Bind ((shvp:PluginViewModel)DataContext).Plugins.Count, Converter={StaticResource Int32ToBoolConverter}, Mode=OneWay}">
+                        <shuxc:StandardView ShowCondition="{x:Bind DataContext.Plugins.Count, Converter={StaticResource Int32ToBoolConverter}, Mode=OneWay}">
                             <shuxc:StandardView.EmptyContent>
                                 <StackPanel
                                     HorizontalAlignment="Center"
@@ -278,7 +278,7 @@
                                     ItemContainerTransitions="{ThemeResource ListViewLikeThemeTransitions}"
                                     ItemTemplate="{StaticResource PluginItemTemplate}"
                                     ItemsPanel="{ThemeResource StackPanelSpacing8Template}"
-                                    ItemsSource="{x:Bind ((shvp:PluginViewModel)DataContext).Plugins, Mode=OneWay}"/>
+                                    ItemsSource="{x:Bind DataContext.Plugins, Mode=OneWay}"/>
                             </ScrollViewer>
                         </shuxc:StandardView>
                     </Grid>

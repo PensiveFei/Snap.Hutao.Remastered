@@ -29,12 +29,12 @@
     mc:Ignorable="d">
 
     <mxi:Interaction.Behaviors>
-        <shuxb:InvokeCommandOnLoadedBehavior Command="{x:Bind ((shvg:LaunchGameViewModel)DataContext).LoadCommand, Mode=OneWay}"/>
-        <shuxb:InvokeCommandOnLoadedBehavior Command="{x:Bind ((shvg:LaunchGameViewModel)DataContext).GamePackageInstallViewModel.LoadCommand, Mode=OneWay}"/>
+        <shuxb:InvokeCommandOnLoadedBehavior Command="{x:Bind DataContext.LoadCommand, Mode=OneWay}"/>
+        <shuxb:InvokeCommandOnLoadedBehavior Command="{x:Bind DataContext.GamePackageInstallViewModel.LoadCommand, Mode=OneWay}"/>
     </mxi:Interaction.Behaviors>
 
     <Page.Resources>
-        <shux:BindingProxy x:Key="BindingProxy" DataContext="{x:Bind ((shvg:LaunchGameViewModel)DataContext), Mode=OneWay}"/>
+        <shux:BindingProxy x:Key="BindingProxy" DataContext="{x:Bind DataContext, Mode=OneWay}"/>
 
         <DataTemplate x:Key="GameAccountListTemplate" x:DataType="shme:GameAccount">
             <Grid>
@@ -142,7 +142,7 @@
         <shuxdcs:IntToNameValueVirtualKeyConverter x:Key="IntToNameValueVirtualKeyConverter"/>
     </Page.Resources>
 
-    <shuxc:StandardView ShowCondition="{x:Bind ((shvg:LaunchGameViewModel)DataContext).GamePathEntryValid.Value, Mode=OneWay}" Style="{ThemeResource DefaultStandardViewStyle}">
+    <shuxc:StandardView ShowCondition="{x:Bind DataContext.GamePathEntryValid.Value, Mode=OneWay}" Style="{ThemeResource DefaultStandardViewStyle}">
         <shuxc:StandardView.EmptyContent>
             <Border
                 Margin="128,0"
@@ -167,16 +167,16 @@
                         HorizontalAlignment="Center"
                         Foreground="{ThemeResource SystemErrorTextColor}"
                         Text="{shuxm:ResourceString Name=ViewPageLaunchGameSelectGamePathHint}"/>
-                    <Border Style="{ThemeResource BorderCardStyle}" Visibility="{x:Bind ((shvg:LaunchGameViewModel)DataContext).LaunchOptions.GamePathEntries.Value.Length, Converter={StaticResource Int32ToVisibilityConverter}, Mode=OneWay}">
+                    <Border Style="{ThemeResource BorderCardStyle}" Visibility="{x:Bind DataContext.LaunchOptions.GamePathEntries.Value.Length, Converter={StaticResource Int32ToVisibilityConverter}, Mode=OneWay}">
                         <ListView
                             ItemTemplate="{StaticResource GamePathEntryListTemplate}"
-                            ItemsSource="{x:Bind ((shvg:LaunchGameViewModel)DataContext).LaunchOptions.GamePathEntries.Value, Mode=OneWay}"
-                            SelectedItem="{x:Bind ((shvg:LaunchGameViewModel)DataContext).GamePathEntry.Value, Mode=TwoWay}"/>
+                            ItemsSource="{x:Bind DataContext.LaunchOptions.GamePathEntries.Value, Mode=OneWay}"
+                            SelectedItem="{x:Bind DataContext.GamePathEntry.Value, Mode=TwoWay}"/>
                     </Border>
                     <cwc:SettingsCard
                         ActionIcon="{shuxm:FontIcon Glyph=&#xE76C;}"
                         ActionIconToolTip="{shuxm:ResourceString Name=ViewPageSettingSetGamePathAction}"
-                        Command="{x:Bind ((shvg:LaunchGameViewModel)DataContext).PickGamePathCommand, Mode=OneWay}"
+                        Command="{x:Bind DataContext.PickGamePathCommand, Mode=OneWay}"
                         Header="{shuxm:ResourceString Name=ViewPageSettingSetGamePathHeader}"
                         HeaderIcon="{shuxm:FontIcon Glyph=&#xE7FC;}"
                         IsClickEnabled="True">
@@ -186,8 +186,8 @@
                     </cwc:SettingsCard>
                     <cwc:SettingsCard
                         Padding="{ThemeResource SettingsExpanderItemHasIconPadding}"
-                        Command="{x:Bind ((shvg:LaunchGameViewModel)DataContext).GamePackageInstallViewModel.StartCommand, Mode=OneWay}"
-                        Description="{x:Bind ((shvg:LaunchGameViewModel)DataContext).GamePackageInstallViewModel.RemoteVersionText, Mode=OneWay}"
+                        Command="{x:Bind DataContext.GamePackageInstallViewModel.StartCommand, Mode=OneWay}"
+                        Description="{x:Bind DataContext.GamePackageInstallViewModel.RemoteVersionText, Mode=OneWay}"
                         Header="{shuxm:ResourceString Name=ViewPageLaunchGamePackageOperationInstall}"
                         HeaderIcon="{shuxm:FontIcon Glyph={StaticResource FontIconContentCloudDownload}}"
                         IsClickEnabled="True"
@@ -205,25 +205,25 @@
                         <TextBlock
                             Margin="12,14,12,0"
                             VerticalAlignment="Center"
-                            Text="{x:Bind ((shvg:LaunchGameViewModel)DataContext).LaunchStatusOptions.LaunchStatus.Description, Mode=OneWay}"/>
+                            Text="{x:Bind DataContext.LaunchStatusOptions.LaunchStatus.Description, Mode=OneWay}"/>
                     </CommandBar.Content>
                     <AppBarButton
-                        Command="{x:Bind ((shvg:LaunchGameViewModel)DataContext).OpenScreenshotFolderCommand, Mode=OneWay}"
+                        Command="{x:Bind DataContext.OpenScreenshotFolderCommand, Mode=OneWay}"
                         Icon="{shuxm:FontIcon Glyph=&#xED25;}"
                         Label="{shuxm:ResourceString Name=ViewPageOpenScreenshotFolderAction}"/>
                     <AppBarButton
-                        Command="{x:Bind ((shvg:LaunchGameViewModel)DataContext).ResetGamePathCommand, Mode=OneWay}"
+                        Command="{x:Bind DataContext.ResetGamePathCommand, Mode=OneWay}"
                         Icon="{shuxm:FontIcon Glyph=&#xEBC4;}"
                         IsEnabled="{x:Bind shsg:LaunchOptions.IsGameRunning.Value, Converter={StaticResource BoolNegationConverter}, Mode=OneWay}"
                         Label="{shuxm:ResourceString Name=ViewPageResetGamePathAction}"
-                        ToolTipService.ToolTip="{x:Bind ((shvg:LaunchGameViewModel)DataContext).DisplayGamePath.Value, Mode=OneWay}"/>
+                        ToolTipService.ToolTip="{x:Bind DataContext.DisplayGamePath.Value, Mode=OneWay}"/>
                     <AppBarButton
-                        Command="{x:Bind ((shvg:LaunchGameViewModel)DataContext).KillGameProcessCommand, Mode=OneWay}"
+                        Command="{x:Bind DataContext.KillGameProcessCommand, Mode=OneWay}"
                         Icon="{shuxm:FontIcon Glyph=&#xE733;}"
                         IsEnabled="{x:Bind shsg:LaunchOptions.CanKillGameProcess.Value, Mode=OneWay}"
                         Label="{shuxm:ResourceString Name=ViewPageLaunchGameKillGameProcessAction}"/>
                     <AppBarButton
-                        Command="{x:Bind ((shvg:LaunchGameViewModel)DataContext).LaunchCommand, Mode=OneWay}"
+                        Command="{x:Bind DataContext.LaunchCommand, Mode=OneWay}"
                         Icon="{shuxm:FontIcon Glyph=&#xE7FC;}"
                         IsEnabled="{x:Bind shsg:LaunchOptions.IsGameRunning.Value, Converter={StaticResource BoolNegationConverter}, Mode=OneWay}"
                         Label="{shuxm:ResourceString Name=ViewPageLaunchGameAction}"/>
@@ -277,8 +277,8 @@
                                                     VerticalAlignment="Center"
                                                     Orientation="Vertical"
                                                     Spacing="{ThemeResource SettingsCardSpacing}">
-                                                    <TextBlock Text="{x:Bind ((shvg:LaunchGameViewModel)DataContext).GamePackageViewModel.LocalVersionText, Mode=OneWay}"/>
-                                                    <TextBlock Text="{x:Bind ((shvg:LaunchGameViewModel)DataContext).GamePackageViewModel.RemoteVersionText, Mode=OneWay}"/>
+                                                    <TextBlock Text="{x:Bind DataContext.GamePackageViewModel.LocalVersionText, Mode=OneWay}"/>
+                                                    <TextBlock Text="{x:Bind DataContext.GamePackageViewModel.RemoteVersionText, Mode=OneWay}"/>
                                                     <Grid ColumnSpacing="8">
                                                         <Grid.ColumnDefinitions>
                                                             <ColumnDefinition Width="*"/>
@@ -288,7 +288,7 @@
                                                             VerticalAlignment="Center"
                                                             FontSize="12"
                                                             Opacity="0.7"
-                                                            Text="{x:Bind ((shvg:LaunchGameViewModel)DataContext).GamePackageViewModel.VersionSourcesText, Mode=OneWay}"
+                                                            Text="{x:Bind DataContext.GamePackageViewModel.VersionSourcesText, Mode=OneWay}"
                                                             TextWrapping="Wrap"/>
                                                         <TeachingTip
                                                             x:Name="GameInstallationInfoTeachingTip"
@@ -317,8 +317,8 @@
                                                     </Grid>
                                                     <InfoBar
                                                         IsClosable="False"
-                                                        IsOpen="{x:Bind ((shvg:LaunchGameViewModel)DataContext).GamePackageViewModel.HasInstallationWarning, Mode=OneWay}"
-                                                        Message="{x:Bind ((shvg:LaunchGameViewModel)DataContext).GamePackageViewModel.InstallationStatusText, Mode=OneWay}"
+                                                        IsOpen="{x:Bind DataContext.GamePackageViewModel.HasInstallationWarning, Mode=OneWay}"
+                                                        Message="{x:Bind DataContext.GamePackageViewModel.InstallationStatusText, Mode=OneWay}"
                                                         Severity="Warning"/>
                                                 </StackPanel>
                                             </Grid>
@@ -328,37 +328,37 @@
                                                 Padding="16"
                                                 Orientation="Horizontal">
                                                 <AppBarButton
-                                                    Command="{x:Bind ((shvg:LaunchGameViewModel)DataContext).GamePackageViewModel.RefreshInstallationCommand, Mode=OneWay}"
+                                                    Command="{x:Bind DataContext.GamePackageViewModel.RefreshInstallationCommand, Mode=OneWay}"
                                                     Icon="Refresh"
-                                                    IsEnabled="{x:Bind ((shvg:LaunchGameViewModel)DataContext).GamePackageViewModel.IsNotRefreshing, Mode=OneWay}"
+                                                    IsEnabled="{x:Bind DataContext.GamePackageViewModel.IsNotRefreshing, Mode=OneWay}"
                                                     Label="{shuxm:ResourceString Name=ViewPageGameRefreshInstallation}"/>
                                                 <AppBarButton
-                                                    Command="{x:Bind ((shvg:LaunchGameViewModel)DataContext).GamePackageViewModel.StartCommand, Mode=OneWay}"
+                                                    Command="{x:Bind DataContext.GamePackageViewModel.StartCommand, Mode=OneWay}"
                                                     CommandParameter="Verify"
                                                     Icon="{shuxm:FontIcon Glyph={StaticResource FontIconContentDeveloperTools}}"
-                                                    IsEnabled="{x:Bind ((shvg:LaunchGameViewModel)DataContext).GamePackageViewModel.CanOperate, Mode=OneWay}"
-                                                    Label="{x:Bind ((shvg:LaunchGameViewModel)DataContext).GamePackageViewModel.VerifyOperationLabel, Mode=OneWay}"
+                                                    IsEnabled="{x:Bind DataContext.GamePackageViewModel.CanOperate, Mode=OneWay}"
+                                                    Label="{x:Bind DataContext.GamePackageViewModel.VerifyOperationLabel, Mode=OneWay}"
                                                     Style="{StaticResource DefaultAppBarButtonStyle}"/>
                                                 <AppBarButton
-                                                    Command="{x:Bind ((shvg:LaunchGameViewModel)DataContext).GamePackageViewModel.StartCommand, Mode=OneWay}"
+                                                    Command="{x:Bind DataContext.GamePackageViewModel.StartCommand, Mode=OneWay}"
                                                     CommandParameter="Update"
                                                     Icon="{shuxm:FontIcon Glyph={StaticResource FontIconContentUpArrowShiftKey}}"
-                                                    IsEnabled="{x:Bind ((shvg:LaunchGameViewModel)DataContext).GamePackageViewModel.IsUpdateAvailable, Mode=OneWay}"
+                                                    IsEnabled="{x:Bind DataContext.GamePackageViewModel.IsUpdateAvailable, Mode=OneWay}"
                                                     Label="{shuxm:ResourceString Name=ViewPageLaunchGamePackageOperationUpdate}"/>
                                                 <Grid>
                                                     <AppBarButton
-                                                        Command="{x:Bind ((shvg:LaunchGameViewModel)DataContext).GamePackageViewModel.StartCommand, Mode=OneWay}"
+                                                        Command="{x:Bind DataContext.GamePackageViewModel.StartCommand, Mode=OneWay}"
                                                         CommandParameter="Predownload"
                                                         Icon="{shuxm:FontIcon Glyph={StaticResource FontIconContentDownload}}"
-                                                        IsEnabled="{x:Bind ((shvg:LaunchGameViewModel)DataContext).GamePackageViewModel.IsPredownloadButtonEnabled, Mode=OneWay}"
+                                                        IsEnabled="{x:Bind DataContext.GamePackageViewModel.IsPredownloadButtonEnabled, Mode=OneWay}"
                                                         Label="{shuxm:ResourceString Name=ViewPageLaunchGamePackageOperationPredownload}"/>
                                                     <!--  预下载开放 Icon  -->
                                                     <Grid
                                                         Margin="4,8"
                                                         HorizontalAlignment="Right"
                                                         VerticalAlignment="Top"
-                                                        ToolTipService.ToolTip="{x:Bind ((shvg:LaunchGameViewModel)DataContext).GamePackageViewModel.PreVersionText, Mode=OneWay}"
-                                                        Visibility="{x:Bind ((shvg:LaunchGameViewModel)DataContext).GamePackageViewModel.IsPredownloadButtonEnabled, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}">
+                                                        ToolTipService.ToolTip="{x:Bind DataContext.GamePackageViewModel.PreVersionText, Mode=OneWay}"
+                                                        Visibility="{x:Bind DataContext.GamePackageViewModel.IsPredownloadButtonEnabled, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}">
                                                         <FontIcon
                                                             FontSize="16"
                                                             Foreground="{ThemeResource InfoBarInformationalSeverityIconBackground}"
@@ -373,16 +373,16 @@
                                                         Margin="4,8"
                                                         HorizontalAlignment="Right"
                                                         VerticalAlignment="Bottom"
-                                                        ToolTipService.ToolTip="{x:Bind ((shvg:LaunchGameViewModel)DataContext).GamePackageViewModel.PredownloadProgressText, Mode=OneWay}"
-                                                        Visibility="{x:Bind ((shvg:LaunchGameViewModel)DataContext).GamePackageViewModel.IsPredownloadInProgress, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}"
-                                                        Value="{x:Bind ((shvg:LaunchGameViewModel)DataContext).GamePackageViewModel.PredownloadProgress, Mode=OneWay}"/>
+                                                        ToolTipService.ToolTip="{x:Bind DataContext.GamePackageViewModel.PredownloadProgressText, Mode=OneWay}"
+                                                        Visibility="{x:Bind DataContext.GamePackageViewModel.IsPredownloadInProgress, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}"
+                                                        Value="{x:Bind DataContext.GamePackageViewModel.PredownloadProgress, Mode=OneWay}"/>
                                                     <!--  预下载完成 Icon  -->
                                                     <Grid
                                                         Margin="4,8"
                                                         HorizontalAlignment="Right"
                                                         VerticalAlignment="Bottom"
                                                         ToolTipService.ToolTip="{shuxm:ResourceString Name=ViewPageLaunchGamePackageOperationPredownloadCompleteBadgeContent}"
-                                                        Visibility="{x:Bind ((shvg:LaunchGameViewModel)DataContext).GamePackageViewModel.IsPredownloadFinished, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}">
+                                                        Visibility="{x:Bind DataContext.GamePackageViewModel.IsPredownloadFinished, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}">
                                                         <FontIcon
                                                             FontSize="16"
                                                             Foreground="{ThemeResource InfoBarSuccessSeverityIconBackground}"
@@ -406,7 +406,7 @@
                                             <StackPanel Orientation="Horizontal" Spacing="{ThemeResource SettingsCardContentControlSpacing}">
                                                 <wl:LiquidGlassButton
                                                     shuxcth:ControlMaterialState.IsManaged="True"
-                                                    Command="{x:Bind ((shvg:LaunchGameViewModel)DataContext).ConvertCommand, Mode=OneWay}"
+                                                    Command="{x:Bind DataContext.ConvertCommand, Mode=OneWay}"
                                                     Content="{shuxm:ResourceString Name=ViewPageLaunchGameSwitchSchemeAction}"
                                                     Style="{ThemeResource SettingButtonStyle}"/>
                                                 <shuxc:SizeRestrictedContentControl>
@@ -414,8 +414,8 @@
                                                         DisplayMemberPath="DisplayName"
                                                         EnableMemberPath="IsNotCompatOnly"
                                                         IsEnabled="{x:Bind shsg:LaunchOptions.IsGameRunning.Value, Converter={StaticResource BoolNegationConverter}, Mode=OneWay}"
-                                                        ItemsSource="{x:Bind ((shvg:LaunchGameViewModel)DataContext).KnownSchemes, Mode=OneWay}"
-                                                        SelectedItem="{x:Bind ((shvg:LaunchGameViewModel)DataContext).TargetSchemeFilteredGameAccountsView.Scheme, Mode=TwoWay}"
+                                                        ItemsSource="{x:Bind DataContext.KnownSchemes, Mode=OneWay}"
+                                                        SelectedItem="{x:Bind DataContext.TargetSchemeFilteredGameAccountsView.Scheme, Mode=TwoWay}"
                                                         Style="{StaticResource DefaultComboBoxStyle}"/>
                                                 </shuxc:SizeRestrictedContentControl>
                                             </StackPanel>
@@ -423,7 +423,7 @@
                                         <!--  悬浮窗  -->
                                         <ScrollViewer>
                                             <cwc:SettingsExpander
-                                                shuxc:SettingsExpanderHelper.IsItemsEnabled="{x:Bind ((shvg:LaunchGameViewModel)DataContext).LaunchOptions.UsingOverlay.Value, Mode=OneWay}"
+                                                shuxc:SettingsExpanderHelper.IsItemsEnabled="{x:Bind DataContext.LaunchOptions.UsingOverlay.Value, Mode=OneWay}"
                                                 Description="{shuxm:ResourceString Name=ViewPageLaunchGameOverlayDescription}"
                                                 Header="{shuxm:ResourceString Name=ViewPageLaunchGameOverlayHeader}"
                                                 HeaderIcon="{shuxm:FontIcon Glyph=&#xEB91;}"
@@ -431,7 +431,7 @@
                                                 <wl:LiquidGlassToggleSwitch
                                                     shuxcth:ControlMaterialState.IsManaged="True"
                                                     IsEnabled="{x:Bind shsg:LaunchOptions.IsGameRunning.Value, Converter={StaticResource BoolNegationConverter}, Mode=OneWay}"
-                                                    IsOn="{x:Bind ((shvg:LaunchGameViewModel)DataContext).LaunchOptions.UsingOverlay.Value, Mode=TwoWay}"/>
+                                                    IsOn="{x:Bind DataContext.LaunchOptions.UsingOverlay.Value, Mode=TwoWay}"/>
                                                 <cwc:SettingsExpander.Items>
                                                     <cwc:SettingsCard
                                                         Padding="{ThemeResource SettingsCardAlignSettingsExpanderPadding}"
@@ -447,7 +447,7 @@
                                                                     shuxcth:ComboBoxPopupLifetime.IsManaged="True"
                                                                     DisplayMemberPath="Name"
                                                                     ItemsSource="{x:Bind shuil:LowLevelKeyOptions.VirtualKeys}"
-                                                                    SelectedItem="{x:Bind ((shvg:LaunchGameViewModel)DataContext).LowLevelKeyOptions.OverlayHideKey, Mode=TwoWay}"/>
+                                                                    SelectedItem="{x:Bind DataContext.LowLevelKeyOptions.OverlayHideKey, Mode=TwoWay}"/>
                                                             </shuxc:SizeRestrictedContentControl>
                                                         </StackPanel>
                                                     </cwc:SettingsCard>
@@ -479,29 +479,29 @@
                                         Description="{shuxm:ResourceString Name=ViewPageLaunchGameUseHoyolabAccountDescription}"
                                         Header="{shuxm:ResourceString Name=ViewPageLaunchGameUseHoyolabAccountHeader}"
                                         HeaderIcon="{shuxm:FontIcon Glyph=&#xE748;}"
-                                        IsEnabled="{x:Bind ((shvg:LaunchGameViewModel)DataContext).LaunchOptions.AreCommandLineArgumentsEnabled.Value, Mode=OneWay}">
+                                        IsEnabled="{x:Bind DataContext.LaunchOptions.AreCommandLineArgumentsEnabled.Value, Mode=OneWay}">
                                         <wl:LiquidGlassToggleSwitch
                                             shuxcth:ControlMaterialState.IsManaged="True"
                                             MinWidth="{ThemeResource SettingsCardContentControlMinWidth}"
-                                            IsOn="{x:Bind ((shvg:LaunchGameViewModel)DataContext).LaunchOptions.UsingHoyolabAccount.Value, Mode=TwoWay}"/>
+                                            IsOn="{x:Bind DataContext.LaunchOptions.UsingHoyolabAccount.Value, Mode=TwoWay}"/>
                                     </cwc:SettingsCard>
                                     <cwc:SettingsCard
                                         ActionIconToolTip="{shuxm:ResourceString Name=ViewPageLaunchGameSwitchAccountDetectAction}"
-                                        Command="{x:Bind ((shvg:LaunchGameViewModel)DataContext).DetectGameAccountCommand, Mode=OneWay}"
+                                        Command="{x:Bind DataContext.DetectGameAccountCommand, Mode=OneWay}"
                                         Description="{shuxm:ResourceString Name=ViewPageLaunchGameSwitchAccountDescription}"
                                         Header="{shuxm:ResourceString Name=ViewPageLaunchGameSwitchAccountHeader}"
                                         HeaderIcon="{shuxm:FontIcon Glyph=&#xE748;}"
                                         IsClickEnabled="True"
-                                        IsEnabled="{x:Bind ((shvg:LaunchGameViewModel)DataContext).LaunchOptions.UsingHoyolabAccount.Value, Converter={StaticResource BoolNegationConverter}, Mode=OneWay}"/>
-                                    <Border Style="{StaticResource BorderCardStyle}" Visibility="{x:Bind ((shvg:LaunchGameViewModel)DataContext).TargetSchemeFilteredGameAccountsView.View.Count, Converter={StaticResource Int32ToVisibilityConverter}, Mode=OneWay}">
+                                        IsEnabled="{x:Bind DataContext.LaunchOptions.UsingHoyolabAccount.Value, Converter={StaticResource BoolNegationConverter}, Mode=OneWay}"/>
+                                    <Border Style="{StaticResource BorderCardStyle}" Visibility="{x:Bind DataContext.TargetSchemeFilteredGameAccountsView.View.Count, Converter={StaticResource Int32ToVisibilityConverter}, Mode=OneWay}">
                                         <ListView
                                             Padding="{StaticResource ListViewInSplitPanePadding}"
                                             AllowDrop="{shuxm:IsProcessNotElevated}"
                                             CanReorderItems="{shuxm:IsProcessNotElevated}"
-                                            IsEnabled="{x:Bind ((shvg:LaunchGameViewModel)DataContext).LaunchOptions.UsingHoyolabAccount.Value, Converter={StaticResource BoolNegationConverter}, Mode=OneWay}"
+                                            IsEnabled="{x:Bind DataContext.LaunchOptions.UsingHoyolabAccount.Value, Converter={StaticResource BoolNegationConverter}, Mode=OneWay}"
                                             ItemTemplate="{StaticResource GameAccountListTemplate}"
-                                            ItemsSource="{x:Bind ((shvg:LaunchGameViewModel)DataContext).TargetSchemeFilteredGameAccountsView.View, Mode=OneWay}"
-                                            SelectedItem="{x:Bind ((shvg:LaunchGameViewModel)DataContext).TargetSchemeFilteredGameAccountsView.View.CurrentItem, Mode=TwoWay}">
+                                            ItemsSource="{x:Bind DataContext.TargetSchemeFilteredGameAccountsView.View, Mode=OneWay}"
+                                            SelectedItem="{x:Bind DataContext.TargetSchemeFilteredGameAccountsView.View.CurrentItem, Mode=TwoWay}">
                                             <ListView.Header>
                                                 <InfoBar
                                                     Title="{shuxm:ResourceString Name=ViewListViewDragElevatedHint}"
@@ -532,11 +532,11 @@
                                         <wl:LiquidGlassToggleSwitch
                                             shuxcth:ControlMaterialState.IsManaged="True"
                                             MinWidth="{ThemeResource SettingsCardContentControlMinWidth}"
-                                            IsOn="{x:Bind ((shvg:LaunchGameViewModel)DataContext).LaunchOptions.IsWindowsHDREnabled.Value, Mode=TwoWay}"/>
+                                            IsOn="{x:Bind DataContext.LaunchOptions.IsWindowsHDREnabled.Value, Mode=TwoWay}"/>
                                     </cwc:SettingsCard>
                                     <ScrollViewer>
                                         <cwc:SettingsExpander
-                                            shuxc:SettingsExpanderHelper.IsItemsEnabled="{x:Bind ((shvg:LaunchGameViewModel)DataContext).LaunchOptions.AreCommandLineArgumentsEnabled.Value, Mode=OneWay}"
+                                            shuxc:SettingsExpanderHelper.IsItemsEnabled="{x:Bind DataContext.LaunchOptions.AreCommandLineArgumentsEnabled.Value, Mode=OneWay}"
                                             Description="{shuxm:ResourceString Name=ViewPageLaunchGameArgumentsDescription}"
                                             Header="{shuxm:ResourceString Name=ViewPageLaunchGameArgumentsHeader}"
                                             HeaderIcon="{shuxm:FontIcon Glyph=&#xE943;}"
@@ -544,25 +544,25 @@
                                             <wl:LiquidGlassToggleSwitch
                                                 shuxcth:ControlMaterialState.IsManaged="True"
                                                 MinWidth="{ThemeResource SettingsCardContentControlMinWidth}"
-                                                IsOn="{x:Bind ((shvg:LaunchGameViewModel)DataContext).LaunchOptions.AreCommandLineArgumentsEnabled.Value, Mode=TwoWay}"/>
+                                                IsOn="{x:Bind DataContext.LaunchOptions.AreCommandLineArgumentsEnabled.Value, Mode=TwoWay}"/>
                                             <cwc:SettingsExpander.Items>
                                                 <cwc:SettingsCard Description="{shuxm:ResourceString Name=ViewPageLaunchGameAppearanceExclusiveDescription}" Header="-window-mode exclusive">
                                                     <wl:LiquidGlassToggleSwitch
                                                         shuxcth:ControlMaterialState.IsManaged="True"
                                                         MinWidth="{ThemeResource SettingsCardContentControlMinWidth}"
-                                                        IsOn="{x:Bind ((shvg:LaunchGameViewModel)DataContext).LaunchOptions.IsExclusive.Value, Mode=TwoWay}"/>
+                                                        IsOn="{x:Bind DataContext.LaunchOptions.IsExclusive.Value, Mode=TwoWay}"/>
                                                 </cwc:SettingsCard>
                                                 <cwc:SettingsCard Description="{shuxm:ResourceString Name=ViewPageLaunchGameAppearanceFullscreenDescription}" Header="-screen-fullscreen">
                                                     <wl:LiquidGlassToggleSwitch
                                                         shuxcth:ControlMaterialState.IsManaged="True"
                                                         MinWidth="{ThemeResource SettingsCardContentControlMinWidth}"
-                                                        IsOn="{x:Bind ((shvg:LaunchGameViewModel)DataContext).LaunchOptions.IsFullScreen.Value, Mode=TwoWay}"/>
+                                                        IsOn="{x:Bind DataContext.LaunchOptions.IsFullScreen.Value, Mode=TwoWay}"/>
                                                 </cwc:SettingsCard>
                                                 <cwc:SettingsCard Description="{shuxm:ResourceString Name=ViewPageLaunchGameAppearanceBorderlessDescription}" Header="-popupwindow">
                                                     <wl:LiquidGlassToggleSwitch
                                                         shuxcth:ControlMaterialState.IsManaged="True"
                                                         MinWidth="{ThemeResource SettingsCardContentControlMinWidth}"
-                                                        IsOn="{x:Bind ((shvg:LaunchGameViewModel)DataContext).LaunchOptions.IsBorderless.Value, Mode=TwoWay}"/>
+                                                        IsOn="{x:Bind DataContext.LaunchOptions.IsBorderless.Value, Mode=TwoWay}"/>
                                                 </cwc:SettingsCard>
                                                 <cwc:SettingsCard Description="{shuxm:ResourceString Name=ViewPageLaunchGameAppearancePlatformTypeDescription}" Header="-platform_type">
                                                     <StackPanel Orientation="Horizontal" Spacing="10">
@@ -572,14 +572,14 @@
                                                                 MinWidth="{ThemeResource SettingsCardContentControlMinWidth2}"
                                                                 shuxcth:ComboBoxPopupLifetime.IsManaged="True"
                                                                 DisplayMemberPath="Name"
-                                                                IsEnabled="{x:Bind ((shvg:LaunchGameViewModel)DataContext).LaunchOptions.IsPlatformTypeEnabled.Value, Mode=OneWay}"
-                                                                ItemsSource="{x:Bind ((shvg:LaunchGameViewModel)DataContext).LaunchOptions.PlatformTypes, Mode=OneWay}"
-                                                                SelectedItem="{x:Bind ((shvg:LaunchGameViewModel)DataContext).SelectedPlatformType.Value, Mode=TwoWay}"/>
+                                                                IsEnabled="{x:Bind DataContext.LaunchOptions.IsPlatformTypeEnabled.Value, Mode=OneWay}"
+                                                                ItemsSource="{x:Bind DataContext.LaunchOptions.PlatformTypes, Mode=OneWay}"
+                                                                SelectedItem="{x:Bind DataContext.SelectedPlatformType.Value, Mode=TwoWay}"/>
                                                         </shuxc:SizeRestrictedContentControl>
                                                         <wl:LiquidGlassToggleSwitch
                                                             shuxcth:ControlMaterialState.IsManaged="True"
                                                             MinWidth="{ThemeResource SettingsCardContentControlMinWidth}"
-                                                            IsOn="{x:Bind ((shvg:LaunchGameViewModel)DataContext).LaunchOptions.IsPlatformTypeEnabled.Value, Mode=TwoWay}"/>
+                                                            IsOn="{x:Bind DataContext.LaunchOptions.IsPlatformTypeEnabled.Value, Mode=TwoWay}"/>
                                                     </StackPanel>
                                                 </cwc:SettingsCard>
                                                 <cwc:SettingsCard Description="{shuxm:ResourceString Name=ViewPageLaunchGameAppearanceAspectRatioDescription}" Header="{shuxm:ResourceString Name=ViewPageLaunchGameAppearanceAspectRatioHeader}">
@@ -589,9 +589,9 @@
                                                             MinWidth="{ThemeResource SettingsCardContentControlMinWidth2}"
                                                             shuxcth:ComboBoxPopupLifetime.IsManaged="True"
                                                             ItemTemplateSelector="{StaticResource AspectRatioComboBoxTemplateSelector}"
-                                                            ItemsSource="{x:Bind ((shvg:LaunchGameViewModel)DataContext).LaunchOptions.AspectRatios.Value, Mode=OneWay}"
+                                                            ItemsSource="{x:Bind DataContext.LaunchOptions.AspectRatios.Value, Mode=OneWay}"
                                                             PlaceholderText="{shuxm:ResourceString Name=ViewPageLaunchGameAppearanceAspectRatioPlaceHolder}"
-                                                            SelectedItem="{x:Bind ((shvg:LaunchGameViewModel)DataContext).LaunchOptions.SelectedAspectRatio, Mode=TwoWay}"
+                                                            SelectedItem="{x:Bind DataContext.LaunchOptions.SelectedAspectRatio, Mode=TwoWay}"
                                                             Style="{ThemeResource DefaultComboBoxStyle}"/>
                                                     </shuxc:SizeRestrictedContentControl>
                                                 </cwc:SettingsCard>
@@ -602,12 +602,12 @@
                                                             Padding="12,6,0,0"
                                                             VerticalAlignment="Center"
                                                             essential:NumberBoxHelper.AcrylicWorkaround="True"
-                                                            IsEnabled="{x:Bind ((shvg:LaunchGameViewModel)DataContext).LaunchOptions.IsScreenWidthEnabled.Value, Mode=OneWay}"
-                                                            Value="{x:Bind ((shvg:LaunchGameViewModel)DataContext).LaunchOptions.ScreenWidth.Value, Mode=TwoWay}"/>
+                                                            IsEnabled="{x:Bind DataContext.LaunchOptions.IsScreenWidthEnabled.Value, Mode=OneWay}"
+                                                            Value="{x:Bind DataContext.LaunchOptions.ScreenWidth.Value, Mode=TwoWay}"/>
                                                         <wl:LiquidGlassToggleSwitch
                                                             shuxcth:ControlMaterialState.IsManaged="True"
                                                             MinWidth="{ThemeResource SettingsCardContentControlMinWidth}"
-                                                            IsOn="{x:Bind ((shvg:LaunchGameViewModel)DataContext).LaunchOptions.IsScreenWidthEnabled.Value, Mode=TwoWay}"/>
+                                                            IsOn="{x:Bind DataContext.LaunchOptions.IsScreenWidthEnabled.Value, Mode=TwoWay}"/>
                                                     </StackPanel>
                                                 </cwc:SettingsCard>
                                                 <cwc:SettingsCard Description="{shuxm:ResourceString Name=ViewPageLaunchGameAppearanceScreenHeightDescription}" Header="-screen-height">
@@ -617,12 +617,12 @@
                                                             Padding="12,6,0,0"
                                                             VerticalAlignment="Center"
                                                             essential:NumberBoxHelper.AcrylicWorkaround="True"
-                                                            IsEnabled="{x:Bind ((shvg:LaunchGameViewModel)DataContext).LaunchOptions.IsScreenHeightEnabled.Value, Mode=OneWay}"
-                                                            Value="{x:Bind ((shvg:LaunchGameViewModel)DataContext).LaunchOptions.ScreenHeight.Value, Mode=TwoWay}"/>
+                                                            IsEnabled="{x:Bind DataContext.LaunchOptions.IsScreenHeightEnabled.Value, Mode=OneWay}"
+                                                            Value="{x:Bind DataContext.LaunchOptions.ScreenHeight.Value, Mode=TwoWay}"/>
                                                         <wl:LiquidGlassToggleSwitch
                                                             shuxcth:ControlMaterialState.IsManaged="True"
                                                             MinWidth="{ThemeResource SettingsCardContentControlMinWidth}"
-                                                            IsOn="{x:Bind ((shvg:LaunchGameViewModel)DataContext).LaunchOptions.IsScreenHeightEnabled.Value, Mode=TwoWay}"/>
+                                                            IsOn="{x:Bind DataContext.LaunchOptions.IsScreenHeightEnabled.Value, Mode=TwoWay}"/>
                                                     </StackPanel>
                                                 </cwc:SettingsCard>
                                                 <cwc:SettingsCard Description="{shuxm:ResourceString Name=ViewPageLaunchGameMonitorsDescription}" Header="-monitor">
@@ -638,14 +638,14 @@
                                                                 MinWidth="{ThemeResource SettingsCardContentControlMinWidth2}"
                                                                 shuxcth:ComboBoxPopupLifetime.IsManaged="True"
                                                                 DisplayMemberPath="Name"
-                                                                IsEnabled="{x:Bind ((shvg:LaunchGameViewModel)DataContext).LaunchOptions.IsMonitorEnabled.Value, Mode=OneWay}"
-                                                                ItemsSource="{x:Bind ((shvg:LaunchGameViewModel)DataContext).LaunchOptions.Monitors, Mode=OneWay}"
-                                                                SelectedItem="{x:Bind ((shvg:LaunchGameViewModel)DataContext).LaunchOptions.Monitor.Value, Mode=TwoWay}"/>
+                                                                IsEnabled="{x:Bind DataContext.LaunchOptions.IsMonitorEnabled.Value, Mode=OneWay}"
+                                                                ItemsSource="{x:Bind DataContext.LaunchOptions.Monitors, Mode=OneWay}"
+                                                                SelectedItem="{x:Bind DataContext.LaunchOptions.Monitor.Value, Mode=TwoWay}"/>
                                                         </shuxc:SizeRestrictedContentControl>
                                                         <wl:LiquidGlassToggleSwitch
                                                             shuxcth:ControlMaterialState.IsManaged="True"
                                                             MinWidth="{ThemeResource SettingsCardContentControlMinWidth}"
-                                                            IsOn="{x:Bind ((shvg:LaunchGameViewModel)DataContext).LaunchOptions.IsMonitorEnabled.Value, Mode=TwoWay}"/>
+                                                            IsOn="{x:Bind DataContext.LaunchOptions.IsMonitorEnabled.Value, Mode=TwoWay}"/>
                                                     </StackPanel>
                                                 </cwc:SettingsCard>
                                             </cwc:SettingsExpander.Items>
@@ -660,14 +660,14 @@
                             <Border Padding="16" Style="{ThemeResource AcrylicBorderCardStyle}">
                                 <StackPanel Spacing="{ThemeResource SettingsCardSpacing}">
                                     <cwc:SettingsExpander
-                                        shuxc:SettingsExpanderHelper.IsItemsEnabled="{x:Bind ((shvg:LaunchGameViewModel)DataContext).LaunchOptions.UsingBetterGenshinImpactAutomation.Value, Mode=OneWay}"
+                                        shuxc:SettingsExpanderHelper.IsItemsEnabled="{x:Bind DataContext.LaunchOptions.UsingBetterGenshinImpactAutomation.Value, Mode=OneWay}"
                                         Description="{shuxm:ResourceString Name=ViewPageLaunchGameBetterGIDescription}"
                                         Header="{shuxm:ResourceString Name=ViewPageLaunchGameBetterGIHeader}"
                                         HeaderIcon="{shuxm:FontIcon Glyph=&#xE961;}">
                                         <wl:LiquidGlassToggleSwitch
                                             shuxcth:ControlMaterialState.IsManaged="True"
                                             MinWidth="{ThemeResource SettingsCardContentControlMinWidth}"
-                                            IsOn="{x:Bind ((shvg:LaunchGameViewModel)DataContext).LaunchOptions.UsingBetterGenshinImpactAutomation.Value, Mode=TwoWay}"/>
+                                            IsOn="{x:Bind DataContext.LaunchOptions.UsingBetterGenshinImpactAutomation.Value, Mode=TwoWay}"/>
                                         <cwc:SettingsExpander.Items>
                                             <cwc:SettingsCard
                                                 Padding="{ThemeResource SettingsCardAlignSettingsExpanderPadding}"
@@ -679,12 +679,12 @@
                                                         shuxcth:ControlMaterialState.IsManaged="True"
                                                         Width="320"
                                                         VerticalAlignment="Center"
-                                                        Text="{x:Bind ((shvg:LaunchGameViewModel)DataContext).LaunchOptions.BetterGenshinImpactPath.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                                        Text="{x:Bind DataContext.LaunchOptions.BetterGenshinImpactPath.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                                     <wl:LiquidGlassButton
                                                         shuxcth:ControlMaterialState.IsManaged="True"
                                                         Width="50"
                                                         Height="34"
-                                                        Command="{x:Bind ((shvg:LaunchGameViewModel)DataContext).PickBetterGenshinImpactPathCommand, Mode=OneWay}"
+                                                        Command="{x:Bind DataContext.PickBetterGenshinImpactPathCommand, Mode=OneWay}"
                                                         Content="{shuxm:FontIcon Glyph=&#xE8DA;}"/>
                                                 </StackPanel>
                                             </cwc:SettingsCard>
@@ -697,11 +697,11 @@
                                         <wl:LiquidGlassToggleSwitch
                                             shuxcth:ControlMaterialState.IsManaged="True"
                                             MinWidth="{ThemeResource SettingsCardContentControlMinWidth}"
-                                            IsOn="{x:Bind ((shvg:LaunchGameViewModel)DataContext).LaunchOptions.UsingStarwardPlayTimeStatistics.Value, Mode=TwoWay}"/>
+                                            IsOn="{x:Bind DataContext.LaunchOptions.UsingStarwardPlayTimeStatistics.Value, Mode=TwoWay}"/>
                                     </cwc:SettingsCard>
                                     <cwc:SettingsCard
                                         ActionIconToolTip="{shuxm:ResourceString Name=ViewPageSettingCreateDesktopShortcutAction}"
-                                        Command="{x:Bind ((shvg:LaunchGameViewModel)DataContext).CreateGameLaunchShortcutCommand, Mode=OneWay}"
+                                        Command="{x:Bind DataContext.CreateGameLaunchShortcutCommand, Mode=OneWay}"
                                         Header="{shuxm:ResourceString Name=ViewPageLaunchGameCreateGameLaunchShortcut}"
                                         HeaderIcon="{shuxm:FontIcon Glyph=&#xE72D;}"
                                         IsClickEnabled="True"/>
@@ -765,14 +765,14 @@
                                         <AppBarButton
                                             Width="200"
                                             HorizontalAlignment="Left"
-                                            Command="{x:Bind ((shvg:LaunchGameViewModel)DataContext).LaunchAdvancedCommand, Mode=OneWay}"
+                                            Command="{x:Bind DataContext.LaunchAdvancedCommand, Mode=OneWay}"
                                             Icon="{shuxm:FontIcon Glyph=&#xE967;}"
                                             IsEnabled="True"
                                             Label="{shuxm:ResourceString Name=ViewPageLaunchGameAdvancedStartGame}"/>
                                         <AppBarButton
                                             Width="200"
                                             HorizontalAlignment="Left"
-                                            Command="{x:Bind ((shvg:LaunchGameViewModel)DataContext).LaunchAdvancedDelayedCommand, Mode=OneWay}"
+                                            Command="{x:Bind DataContext.LaunchAdvancedDelayedCommand, Mode=OneWay}"
                                             Icon="{shuxm:FontIcon Glyph=&#xEC92;}"
                                             IsEnabled="True"
                                             Label="{shuxm:ResourceString Name=ViewPageLaunchGameAdvancedStartGameDelayedStart}"/>
@@ -783,7 +783,7 @@
                                         Grid.Row="1"
                                         VerticalAlignment="Top"
                                         ActionIcon="{shuxm:FontIcon Glyph=&#xE8DA;}"
-                                        Command="{x:Bind ((shvg:LaunchGameViewModel)DataContext).PickAdvancedStartProgramPathCommand, Mode=OneWay}"
+                                        Command="{x:Bind DataContext.PickAdvancedStartProgramPathCommand, Mode=OneWay}"
                                         Description="{shuxm:ResourceString Name=ViewPageLaunchGameAdvancedStartPickPathDescription}"
                                         Header="{shuxm:ResourceString Name=ViewPageLaunchGameAdvancedStartPickPathHeader}"
                                         HeaderIcon="{shuxm:FontIcon Glyph=&#xE8AC;}"
@@ -792,7 +792,7 @@
                                             <TextBlock
                                                 MaxWidth="400"
                                                 HorizontalAlignment="Stretch"
-                                                Text="{x:Bind ((shvg:LaunchGameViewModel)DataContext).AdvancedStartProgramPath, Mode=OneWay}"/>
+                                                Text="{x:Bind DataContext.AdvancedStartProgramPath, Mode=OneWay}"/>
                                         </StackPanel>
                                     </cwc:SettingsCard>
                                     <!--<cwc:SettingsExpander
@@ -945,7 +945,7 @@
                                                 IsClickEnabled="False">
                                                 <wl:LiquidGlassToggleSwitch
                                                     shuxcth:ControlMaterialState.IsManaged="True"
-                                                    IsOn="{x:Bind ((shvg:LaunchGameViewModel)DataContext).LaunchOptions.AdvancedStartDelayedOnAdvancedStart.Value, Mode=TwoWay}"/>
+                                                    IsOn="{x:Bind DataContext.LaunchOptions.AdvancedStartDelayedOnAdvancedStart.Value, Mode=TwoWay}"/>
                                             </cwc:SettingsCard>
                                             <cwc:SettingsCard
                                                 Header="{shuxm:ResourceString Name=ViewPageLaunchGameAdvancedStartCoStartGameHeader}"
@@ -953,7 +953,7 @@
                                                 IsClickEnabled="False">
                                                 <wl:LiquidGlassToggleSwitch
                                                     shuxcth:ControlMaterialState.IsManaged="True"
-                                                    IsOn="{x:Bind ((shvg:LaunchGameViewModel)DataContext).LaunchOptions.AdvancedStartDelayedOnGameLaunch.Value, Mode=TwoWay}"/>
+                                                    IsOn="{x:Bind DataContext.LaunchOptions.AdvancedStartDelayedOnGameLaunch.Value, Mode=TwoWay}"/>
                                             </cwc:SettingsCard>
 
                                         </cwc:SettingsExpander.Items>
@@ -1001,7 +1001,7 @@
                                 shuxcth:ControlMaterialState.IsManaged="True"
                                 MinWidth="{ThemeResource SettingsCardContentControlMinWidth}"
                                 IsEnabled="{x:Bind shsg:LaunchOptions.IsGameRunning.Value, Converter={StaticResource BoolNegationConverter}, Mode=OneWay}"
-                                IsOn="{x:Bind ((shvg:LaunchGameViewModel)DataContext).LaunchOptions.IsIslandEnabled.Value, Mode=TwoWay}"/>
+                                IsOn="{x:Bind DataContext.LaunchOptions.IsIslandEnabled.Value, Mode=TwoWay}"/>
                         </Grid>
                         <Border
                             Grid.Row="1"
@@ -1019,7 +1019,7 @@
                             Background="{ThemeResource InfoBarSuccessSeverityBackgroundBrush}"
                             BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
                             BorderThickness="0,0,0,1"
-                            Visibility="{x:Bind ((shvg:LaunchGameViewModel)DataContext).IsIslandConnected.Value, Mode=OneWay}">
+                            Visibility="{x:Bind DataContext.IsIslandConnected.Value, Mode=OneWay}">
                             <TextBlock
                                 Margin="6"
                                 HorizontalAlignment="Center"
@@ -1032,7 +1032,7 @@
                                 VerticalAlignment="Stretch"
                                 HorizontalContentAlignment="Stretch"
                                 VerticalContentAlignment="Stretch"
-                                IsEnabled="{x:Bind ((shvg:LaunchGameViewModel)DataContext).LaunchOptions.IsIslandEnabled.Value, Mode=OneWay}">
+                                IsEnabled="{x:Bind DataContext.LaunchOptions.IsIslandEnabled.Value, Mode=OneWay}">
                                 <Grid
                                     Padding="16"
                                     ColumnSpacing="16"
@@ -1060,7 +1060,7 @@
                                         Grid.Column="0"
                                         shuxcth:ControlMaterialState.IsManaged="True"
                                         Header="{shuxm:ResourceString Name=ViewPageLaunchGameTargetFovHotSwitchHeader}"
-                                        IsOn="{x:Bind ((shvg:LaunchGameViewModel)DataContext).LaunchOptions.IsSetFieldOfViewEnabled.Value, Mode=TwoWay}"
+                                        IsOn="{x:Bind DataContext.LaunchOptions.IsSetFieldOfViewEnabled.Value, Mode=TwoWay}"
                                         ToolTipService.ToolTip="{shuxm:ResourceString Name=ViewPageLaunchGameHotSwitchDescription}"/>
                                     <NumberBox
                                         Grid.Row="0"
@@ -1068,21 +1068,21 @@
                                         Padding="10,8,6,6"
                                         essential:NumberBoxHelper.AcrylicWorkaround="True"
                                         Header="{shuxm:ResourceString Name=ViewPageLaunchGameTargetFovHeader}"
-                                        IsEnabled="{x:Bind ((shvg:LaunchGameViewModel)DataContext).LaunchOptions.IsSetFieldOfViewEnabled.Value, Mode=OneWay}"
+                                        IsEnabled="{x:Bind DataContext.LaunchOptions.IsSetFieldOfViewEnabled.Value, Mode=OneWay}"
                                         LargeChange="10"
                                         Maximum="100"
                                         Minimum="0"
                                         SmallChange="1"
                                         SpinButtonPlacementMode="Inline"
                                         ToolTipService.ToolTip="{shuxm:ResourceString Name=ViewPageLaunchGameTargetFovDescription}"
-                                        Value="{x:Bind ((shvg:LaunchGameViewModel)DataContext).LaunchOptions.TargetFov.Value, Mode=TwoWay}"/>
+                                        Value="{x:Bind DataContext.LaunchOptions.TargetFov.Value, Mode=TwoWay}"/>
                                     <wl:LiquidGlassToggleSwitch
                                         Grid.Row="0"
                                         Grid.Column="2"
                                         shuxcth:ControlMaterialState.IsManaged="True"
                                         Header="{shuxm:ResourceString Name=ViewPageLaunchGameDisableFogHeader}"
-                                        IsEnabled="{x:Bind ((shvg:LaunchGameViewModel)DataContext).LaunchOptions.IsSetFieldOfViewEnabled.Value, Mode=OneWay}"
-                                        IsOn="{x:Bind ((shvg:LaunchGameViewModel)DataContext).LaunchOptions.DisableFog.Value, Mode=TwoWay}"
+                                        IsEnabled="{x:Bind DataContext.LaunchOptions.IsSetFieldOfViewEnabled.Value, Mode=OneWay}"
+                                        IsOn="{x:Bind DataContext.LaunchOptions.DisableFog.Value, Mode=TwoWay}"
                                         OffContent="{shuxm:ResourceString Name=ViewPageLaunchGameDisableFogOff}"
                                         OnContent="{shuxm:ResourceString Name=ViewPageLaunchGameDisableFogOn}"
                                         ToolTipService.ToolTip="{shuxm:ResourceString Name=ViewPageLaunchGameDisableFogDescription}"/>
@@ -1092,7 +1092,7 @@
                                         Grid.Row="1"
                                         Grid.Column="0"
                                         shuxcth:ControlMaterialState.IsManaged="True"
-                                        IsOn="{x:Bind ((shvg:LaunchGameViewModel)DataContext).LaunchOptions.IsSetTargetFrameRateEnabled.Value, Mode=TwoWay}"
+                                        IsOn="{x:Bind DataContext.LaunchOptions.IsSetTargetFrameRateEnabled.Value, Mode=TwoWay}"
                                         ToolTipService.ToolTip="{shuxm:ResourceString Name=ViewPageLaunchGameHotSwitchDescription}">
                                         <mxi:Interaction.Behaviors>
                                             <shuxb:ToggleSwitchHeaderHitTestVisibleBehavior/>
@@ -1134,19 +1134,19 @@
                                         Padding="10,8,6,6"
                                         essential:NumberBoxHelper.AcrylicWorkaround="True"
                                         Header="{shuxm:ResourceString Name=ViewPageLaunchGameTargetFpsHeader}"
-                                        IsEnabled="{x:Bind ((shvg:LaunchGameViewModel)DataContext).LaunchOptions.IsSetTargetFrameRateEnabled.Value, Mode=OneWay}"
+                                        IsEnabled="{x:Bind DataContext.LaunchOptions.IsSetTargetFrameRateEnabled.Value, Mode=OneWay}"
                                         Maximum="2000"
                                         Minimum="1"
                                         SpinButtonPlacementMode="Inline"
                                         ToolTipService.ToolTip="{shuxm:ResourceString Name=ViewPageLaunchGameUnlockFpsDescription}"
-                                        Value="{x:Bind ((shvg:LaunchGameViewModel)DataContext).LaunchOptions.TargetFps.Value, Mode=TwoWay}"/>
+                                        Value="{x:Bind DataContext.LaunchOptions.TargetFps.Value, Mode=TwoWay}"/>
                                     <wl:LiquidGlassToggleSwitch
                                         x:Name="DisablePlayerPerspectiveToggleSwitch"
                                         Grid.Row="1"
                                         Grid.Column="2"
                                         shuxcth:ControlMaterialState.IsManaged="True"
                                         Header="{shuxm:ResourceString Name=ViewPageLaunchGameDisablePlayerPerspectiveDescription}"
-                                        IsOn="{x:Bind ((shvg:LaunchGameViewModel)DataContext).LaunchOptions.DisablePlayerPerspective.Value, Mode=TwoWay}"
+                                        IsOn="{x:Bind DataContext.LaunchOptions.DisablePlayerPerspective.Value, Mode=TwoWay}"
                                         ToolTipService.ToolTip="{shuxm:ResourceString Name=ViewPageLaunchGameDisablePlayerPerspectiveDescription}"/>
 
                                     <wl:LiquidGlassToggleSwitch
@@ -1154,7 +1154,7 @@
                                         Grid.Row="2"
                                         Grid.Column="0"
                                         shuxcth:ControlMaterialState.IsManaged="True"
-                                        IsOn="{x:Bind ((shvg:LaunchGameViewModel)DataContext).LaunchOptions.HideQuestBanner.Value, Mode=TwoWay}"
+                                        IsOn="{x:Bind DataContext.LaunchOptions.HideQuestBanner.Value, Mode=TwoWay}"
                                         OffContent="{shuxm:ResourceString Name=ViewPageLaunchGameDisableFogOff}"
                                         OnContent="{shuxm:ResourceString Name=ViewPageLaunchGameDisableFogOn}"
                                         ToolTipService.ToolTip="{shuxm:ResourceString Name=ViewPageLaunchGameHotSwitchDescription}">
@@ -1200,7 +1200,7 @@
                                         Grid.Column="1"
                                         shuxcth:ControlMaterialState.IsManaged="True"
                                         Header="{shuxm:ResourceString Name=ViewPageLaunchGameRemoveOpenTeamProgressHeader}"
-                                        IsOn="{x:Bind ((shvg:LaunchGameViewModel)DataContext).LaunchOptions.RemoveOpenTeamProgress.Value, Mode=TwoWay}"
+                                        IsOn="{x:Bind DataContext.LaunchOptions.RemoveOpenTeamProgress.Value, Mode=TwoWay}"
                                         OffContent="{shuxm:ResourceString Name=ViewPageLaunchGameDisableFogOff}"
                                         OnContent="{shuxm:ResourceString Name=ViewPageLaunchGameDisableFogOn}"
                                         ToolTipService.ToolTip="{shuxm:ResourceString Name=ViewPageLaunchGameRemoveOpenTeamProgressDescription}"/>
@@ -1209,7 +1209,7 @@
                                         Grid.Column="2"
                                         shuxcth:ControlMaterialState.IsManaged="True"
                                         Header="{shuxm:ResourceString Name=ViewPageLaunchGameDisablePlayerDiveMosaicHeader}"
-                                        IsOn="{x:Bind ((shvg:LaunchGameViewModel)DataContext).LaunchOptions.DisablePlayerDiveMosaic.Value, Mode=TwoWay}"
+                                        IsOn="{x:Bind DataContext.LaunchOptions.DisablePlayerDiveMosaic.Value, Mode=TwoWay}"
                                         OffContent="{shuxm:ResourceString Name=ViewPageLaunchGameDisableFogOff}"
                                         OnContent="{shuxm:ResourceString Name=ViewPageLaunchGameDisableFogOn}"/>
                                     <wl:LiquidGlassToggleSwitch
@@ -1217,7 +1217,7 @@
                                         Grid.Column="0"
                                         shuxcth:ControlMaterialState.IsManaged="True"
                                         Header="{shuxm:ResourceString Name=ViewPageLaunchGameEventCameraMoveHotSwitchHeader}"
-                                        IsOn="{x:Bind ((shvg:LaunchGameViewModel)DataContext).LaunchOptions.DisableEventCameraMove.Value, Mode=TwoWay}"
+                                        IsOn="{x:Bind DataContext.LaunchOptions.DisableEventCameraMove.Value, Mode=TwoWay}"
                                         OffContent="{shuxm:ResourceString Name=ViewPageLaunchGameDisableFogOff}"
                                         OnContent="{shuxm:ResourceString Name=ViewPageLaunchGameDisableFogOn}"
                                         ToolTipService.ToolTip="{shuxm:ResourceString Name=ViewPageLaunchGameHotSwitchDescription}"/>
@@ -1227,7 +1227,7 @@
                                         Grid.Row="3"
                                         Grid.Column="1"
                                         shuxcth:ControlMaterialState.IsManaged="True"
-                                        IsOn="{x:Bind ((shvg:LaunchGameViewModel)DataContext).LaunchOptions.RedirectCatherine.Value, Mode=TwoWay}"
+                                        IsOn="{x:Bind DataContext.LaunchOptions.RedirectCatherine.Value, Mode=TwoWay}"
                                         ToolTipService.ToolTip="{shuxm:ResourceString Name=ViewPageLaunchGameIslandRedirectCatherineDescription}">
                                         <mxi:Interaction.Behaviors>
                                             <shuxb:ToggleSwitchHeaderHitTestVisibleBehavior/>
@@ -1271,7 +1271,7 @@
                                         Grid.Row="3"
                                         Grid.Column="2"
                                         shuxcth:ControlMaterialState.IsManaged="True"
-                                        IsOn="{x:Bind ((shvg:LaunchGameViewModel)DataContext).LaunchOptions.RedirectCombineEntry.Value, Mode=TwoWay}"
+                                        IsOn="{x:Bind DataContext.LaunchOptions.RedirectCombineEntry.Value, Mode=TwoWay}"
                                         ToolTipService.ToolTip="{shuxm:ResourceString Name=ViewPageLaunchGameIslandRedirectCombineEntryDescription}">
                                         <mxi:Interaction.Behaviors>
                                             <shuxb:ToggleSwitchHeaderHitTestVisibleBehavior/>
@@ -1321,7 +1321,7 @@
                                         DisplayMemberPath="Name"
                                         Header="{shuxm:ResourceString Name=ViewPageLaunchGameIslandCombineMenuHotkeyHeader}"
                                         ItemsSource="{x:Bind shsg:LaunchOptions.VirtualKeys}"
-                                        SelectedValue="{x:Bind ((shvg:LaunchGameViewModel)DataContext).LaunchOptions.CombineMenuHotkey.Value, Mode=TwoWay, Converter={StaticResource IntToNameValueVirtualKeyConverter}}"
+                                        SelectedValue="{x:Bind DataContext.LaunchOptions.CombineMenuHotkey.Value, Mode=TwoWay, Converter={StaticResource IntToNameValueVirtualKeyConverter}}"
                                         ToolTipService.ToolTip="{shuxm:ResourceString Name=ViewPageLaunchGameIslandCombineMenuHotkeyDescription}"/>
 
                                     <wl:LiquidGlassToggleSwitch
@@ -1329,7 +1329,7 @@
                                         Grid.Column="1"
                                         shuxcth:ControlMaterialState.IsManaged="True"
                                         Header="{shuxm:ResourceString Name=ViewPageLaunchGameEnableInLevelClockPageSpeedUpHeader}"
-                                        IsOn="{x:Bind ((shvg:LaunchGameViewModel)DataContext).LaunchOptions.EnableInLevelClockPageSpeedUp.Value, Mode=TwoWay}"
+                                        IsOn="{x:Bind DataContext.LaunchOptions.EnableInLevelClockPageSpeedUp.Value, Mode=TwoWay}"
                                         OffContent="{shuxm:ResourceString Name=ViewPageLaunchGameDisableFogOff}"
                                         OnContent="{shuxm:ResourceString Name=ViewPageLaunchGameDisableFogOn}"
                                         ToolTipService.ToolTip="{shuxm:ResourceString Name=ViewPageLaunchGameEnableInLevelClockPageSpeedUpDescription}"/>
@@ -1339,27 +1339,27 @@
                                         Grid.Column="2"
                                         shuxcth:ControlMaterialState.IsManaged="True"
                                         Header="{shuxm:ResourceString Name=ViewPageLaunchGameIslandWeakMapCheckHeader}"
-                                        IsOn="{x:Bind ((shvg:LaunchGameViewModel)DataContext).LaunchOptions.WeakMapCheck.Value, Mode=TwoWay}"/>
+                                        IsOn="{x:Bind DataContext.LaunchOptions.WeakMapCheck.Value, Mode=TwoWay}"/>
                                     <wl:LiquidGlassToggleSwitch
                                         Grid.Row="5"
                                         Grid.Column="0"
                                         shuxcth:ControlMaterialState.IsManaged="True"
                                         Header="{shuxm:ResourceString Name=ViewPageLaunchGameIslandUsingTouchScreenHeader}"
                                         IsEnabled="{x:Bind shsg:LaunchOptions.IsGameRunning.Value, Converter={StaticResource BoolNegationConverter}, Mode=OneWay}"
-                                        IsOn="{x:Bind ((shvg:LaunchGameViewModel)DataContext).LaunchOptions.UsingTouchScreen.Value, Mode=TwoWay}"/>
+                                        IsOn="{x:Bind DataContext.LaunchOptions.UsingTouchScreen.Value, Mode=TwoWay}"/>
                                     <wl:LiquidGlassToggleSwitch
                                         Grid.Row="5"
                                         Grid.Column="1"
                                         shuxcth:ControlMaterialState.IsManaged="True"
                                         Header="{shuxm:ResourceString Name=ViewPageLaunchGameIslandGamepadHotSwitchEnabledHeader}"
-                                        IsOn="{x:Bind ((shvg:LaunchGameViewModel)DataContext).LaunchOptions.GamepadHotSwitchEnabled.Value, Mode=TwoWay}"
+                                        IsOn="{x:Bind DataContext.LaunchOptions.GamepadHotSwitchEnabled.Value, Mode=TwoWay}"
                                         ToolTipService.ToolTip="{shuxm:ResourceString Name=ViewPageLaunchGameIslandGamepadHotSwitchEnabledDescription}"/>
                                     <wl:LiquidGlassToggleSwitch
                                         Grid.Row="5"
                                         Grid.Column="2"
                                         shuxcth:ControlMaterialState.IsManaged="True"
                                         Header="{shuxm:ResourceString Name=ViewPageLaunchGameIslandDisplayPaimonHeader}"
-                                        IsOn="{x:Bind ((shvg:LaunchGameViewModel)DataContext).LaunchOptions.DisplayPaimon.Value, Mode=TwoWay}"
+                                        IsOn="{x:Bind DataContext.LaunchOptions.DisplayPaimon.Value, Mode=TwoWay}"
                                         ToolTipService.ToolTip="{shuxm:ResourceString Name=ViewPageLaunchGameIslandDisplayPaimonDescription}"/>
 
                                     <wl:LiquidGlassToggleSwitch
@@ -1368,7 +1368,7 @@
                                         Grid.Column="0"
                                         shuxcth:ControlMaterialState.IsManaged="True"
                                         Header="{shuxm:ResourceString Name=ViewPageLaunchGameIslandResinListItemAllowOriginalResinHeader}"
-                                        IsOn="{x:Bind ((shvg:LaunchGameViewModel)DataContext).LaunchOptions.ResinListItemId000106Allowed.Value, Mode=TwoWay}"
+                                        IsOn="{x:Bind DataContext.LaunchOptions.ResinListItemId000106Allowed.Value, Mode=TwoWay}"
                                         Unchecked="ResinListItemToggle_Toggled"/>
                                     <wl:LiquidGlassToggleSwitch
                                         x:Name="PrimogemAllowedToggleSwitch"
@@ -1376,7 +1376,7 @@
                                         Grid.Column="1"
                                         shuxcth:ControlMaterialState.IsManaged="True"
                                         Header="{shuxm:ResourceString Name=ViewPageLaunchGameIslandResinListItemAllowPrimogemHeader}"
-                                        IsOn="{x:Bind ((shvg:LaunchGameViewModel)DataContext).LaunchOptions.ResinListItemId000201Allowed.Value, Mode=TwoWay}"
+                                        IsOn="{x:Bind DataContext.LaunchOptions.ResinListItemId000201Allowed.Value, Mode=TwoWay}"
                                         Unchecked="ResinListItemToggle_Toggled"/>
                                     <wl:LiquidGlassToggleSwitch
                                         x:Name="FragileResinAllowedToggleSwitch"
@@ -1384,7 +1384,7 @@
                                         Grid.Column="2"
                                         shuxcth:ControlMaterialState.IsManaged="True"
                                         Header="{shuxm:ResourceString Name=ViewPageLaunchGameIslandResinListItemAllowFragileResinHeader}"
-                                        IsOn="{x:Bind ((shvg:LaunchGameViewModel)DataContext).LaunchOptions.ResinListItemId107009Allowed.Value, Mode=TwoWay}"
+                                        IsOn="{x:Bind DataContext.LaunchOptions.ResinListItemId107009Allowed.Value, Mode=TwoWay}"
                                         Unchecked="ResinListItemToggle_Toggled"/>
                                     <wl:LiquidGlassToggleSwitch
                                         x:Name="TransientResinAllowedToggleSwitch"
@@ -1392,7 +1392,7 @@
                                         Grid.Column="0"
                                         shuxcth:ControlMaterialState.IsManaged="True"
                                         Header="{shuxm:ResourceString Name=ViewPageLaunchGameIslandResinListItemAllowTransientResinHeader}"
-                                        IsOn="{x:Bind ((shvg:LaunchGameViewModel)DataContext).LaunchOptions.ResinListItemId107012Allowed.Value, Mode=TwoWay}"
+                                        IsOn="{x:Bind DataContext.LaunchOptions.ResinListItemId107012Allowed.Value, Mode=TwoWay}"
                                         Unchecked="ResinListItemToggle_Toggled"/>
                                     <wl:LiquidGlassToggleSwitch
                                         x:Name="CondensedResinAllowedToggleSwitch"
@@ -1400,14 +1400,14 @@
                                         Grid.Column="1"
                                         shuxcth:ControlMaterialState.IsManaged="True"
                                         Header="{shuxm:ResourceString Name=ViewPageLaunchGameIslandResinListItemAllowCondensedResinHeader}"
-                                        IsOn="{x:Bind ((shvg:LaunchGameViewModel)DataContext).LaunchOptions.ResinListItemId220007Allowed.Value, Mode=TwoWay}"
+                                        IsOn="{x:Bind DataContext.LaunchOptions.ResinListItemId220007Allowed.Value, Mode=TwoWay}"
                                         Unchecked="ResinListItemToggle_Toggled"/>
                                     <wl:LiquidGlassToggleSwitch
                                         Grid.Row="7"
                                         Grid.Column="2"
                                         shuxcth:ControlMaterialState.IsManaged="True"
                                         Header="{shuxm:ResourceString Name=ViewPageLaunchGameIslandHideGrassHeader}"
-                                        IsOn="{x:Bind ((shvg:LaunchGameViewModel)DataContext).LaunchOptions.HideGrass.Value, Mode=TwoWay}"
+                                        IsOn="{x:Bind DataContext.LaunchOptions.HideGrass.Value, Mode=TwoWay}"
                                         ToolTipService.ToolTip="{shuxm:ResourceString Name=ViewPageLaunchGameIslandHideGrassDescription}"/>
                                     <!--  Hidden items should be at the end  -->
                                     <wl:LiquidGlassToggleSwitch
@@ -1415,15 +1415,15 @@
                                         Grid.Column="0"
                                         shuxcth:ControlMaterialState.IsManaged="True"
                                         Header="{shuxm:ResourceString Name=ViewPageLaunchGameIslandDebugModeHeader}"
-                                        IsOn="{x:Bind ((shvg:LaunchGameViewModel)DataContext).LaunchOptions.DebugMode.Value, Mode=TwoWay}"
+                                        IsOn="{x:Bind DataContext.LaunchOptions.DebugMode.Value, Mode=TwoWay}"
                                         ToolTipService.ToolTip="{shuxm:ResourceString Name=ViewPageLaunchGameIslandDebugModeDescription}"/>
                                     <wl:LiquidGlassToggleSwitch
                                         Grid.Row="8"
                                         Grid.Column="1"
-                                        Visibility="{x:Bind ((shvg:LaunchGameViewModel)DataContext).IsDeveloperAndLoggedIn, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}"
+                                        Visibility="{x:Bind DataContext.IsDeveloperAndLoggedIn, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}"
                                         shuxcth:ControlMaterialState.IsManaged="True"
                                         Header="{shuxm:ResourceString Name=ViewPageLaunchGameIslandHidePlayerInfoHeader}"
-                                        IsOn="{x:Bind ((shvg:LaunchGameViewModel)DataContext).LaunchOptions.HidePlayerInfo.Value, Mode=TwoWay}"
+                                        IsOn="{x:Bind DataContext.LaunchOptions.HidePlayerInfo.Value, Mode=TwoWay}"
                                         ToolTipService.ToolTip="{shuxm:ResourceString Name=ViewPageLaunchGameIslandHidePlayerInfoDescription}"/>
                                     <wl:LiquidGlassToggleSwitch
                                         x:Name="FastSkipTalkToggleSwitch"
@@ -1431,16 +1431,16 @@
                                         Grid.Column="2"
                                         shuxcth:ControlMaterialState.IsManaged="True"
                                         Header="{shuxm:ResourceString Name=ViewPageLaunchGameIslandFastSkipTalkHeader}"
-                                        IsOn="{x:Bind ((shvg:LaunchGameViewModel)DataContext).LaunchOptions.FastSkipTalk.Value, Mode=TwoWay}"
+                                        IsOn="{x:Bind DataContext.LaunchOptions.FastSkipTalk.Value, Mode=TwoWay}"
                                         Checked="FastSkipTalkToggleSwitch_Toggled"
                                         ToolTipService.ToolTip="{shuxm:ResourceString Name=ViewPageLaunchGameIslandFastSkipTalkDescription}"
-                                        Visibility="{x:Bind ((shvg:LaunchGameViewModel)DataContext).IsDeveloperAndLoggedIn, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}"/>
+                                        Visibility="{x:Bind DataContext.IsDeveloperAndLoggedIn, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}"/>
                                     <wl:LiquidGlassToggleSwitch
                                         Grid.Row="9"
                                         Grid.Column="0"
                                         shuxcth:ControlMaterialState.IsManaged="True"
                                         Header="{shuxm:ResourceString Name=ViewOverlayDisableShowDamageTextToolTip}"
-                                        IsOn="{x:Bind ((shvg:LaunchGameViewModel)DataContext).LaunchOptions.DisableShowDamageText.Value, Mode=TwoWay}"
+                                        IsOn="{x:Bind DataContext.LaunchOptions.DisableShowDamageText.Value, Mode=TwoWay}"
                                         OffContent="{shuxm:ResourceString Name=ViewPageLaunchGameDisableFogOff}"
                                         OnContent="{shuxm:ResourceString Name=ViewPageLaunchGameDisableFogOn}"
                                         ToolTipService.ToolTip="{shuxm:ResourceString Name=ViewPageLaunchGameHotSwitchDescription}"/>

@@ -24,16 +24,16 @@
     Background="Transparent"
     BorderBrush="{x:Null}"
     BorderThickness="0"
-    Command="{x:Bind ((shvg:LaunchGameViewModelSlim)DataContext).NavigateCommand, Mode=OneWay}"
+    Command="{x:Bind DataContext.NavigateCommand, Mode=OneWay}"
     mc:Ignorable="d">
     <mxi:Interaction.Behaviors>
-        <shuxb:InvokeCommandOnLoadedBehavior Command="{x:Bind ((shvg:LaunchGameViewModelSlim)DataContext).LoadCommand, Mode=OneWay}"/>
+        <shuxb:InvokeCommandOnLoadedBehavior Command="{x:Bind DataContext.LoadCommand, Mode=OneWay}"/>
     </mxi:Interaction.Behaviors>
     <Grid CornerRadius="{ThemeResource ControlCornerRadius}">
         <Grid
             Margin="12"
             RowSpacing="6"
-            Visibility="{x:Bind ((shvg:LaunchGameViewModelSlim)DataContext).IsInitialized, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}">
+            Visibility="{x:Bind DataContext.IsInitialized, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}">
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
@@ -63,7 +63,7 @@
             </Grid>
 
             <StackPanel Grid.Row="1" Spacing="6">
-                <cwc:SwitchPresenter Visibility="{x:Bind ((shvg:LaunchGameViewModelSlim)DataContext).LaunchOptions.UsingHoyolabAccount.Value, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}" Value="{x:Bind shsg:LaunchOptions.IsGameRunning.Value, Mode=OneWay}">
+                <cwc:SwitchPresenter Visibility="{x:Bind DataContext.LaunchOptions.UsingHoyolabAccount.Value, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}" Value="{x:Bind shsg:LaunchOptions.IsGameRunning.Value, Mode=OneWay}">
                     <cwc:Case Value="{shuxm:Boolean Value=True}">
                         <Grid Padding="12" Style="{ThemeResource GridShimmerStyle}">
                             <Grid.ColumnDefinitions>
@@ -77,14 +77,14 @@
                                 HorizontalAlignment="Left"
                                 Background="#FFDAB79B"
                                 CornerRadius="{ThemeResource CornerRadiusAll16}"
-                                Source="{x:Bind ((shvg:LaunchGameViewModelSlim)DataContext).LaunchStatusOptions.UserGameRole.ProfilePictureIcon, Converter={StaticResource AvatarIconCircleConverter}, Mode=OneWay}"/>
+                                Source="{x:Bind DataContext.LaunchStatusOptions.UserGameRole.ProfilePictureIcon, Converter={StaticResource AvatarIconCircleConverter}, Mode=OneWay}"/>
                             <StackPanel Grid.Column="1" Margin="12,0">
-                                <TextBlock Text="{x:Bind ((shvg:LaunchGameViewModelSlim)DataContext).LaunchStatusOptions.UserGameRole.Nickname, Mode=OneWay}"/>
+                                <TextBlock Text="{x:Bind DataContext.LaunchStatusOptions.UserGameRole.Nickname, Mode=OneWay}"/>
                                 <TextBlock
                                     Margin="0,2,0,0"
                                     Opacity="0.6"
                                     Style="{StaticResource CaptionTextBlockStyle}"
-                                    Text="{x:Bind ((shvg:LaunchGameViewModelSlim)DataContext).LaunchStatusOptions.UserGameRole.Description, Mode=OneWay}"/>
+                                    Text="{x:Bind DataContext.LaunchStatusOptions.UserGameRole.Description, Mode=OneWay}"/>
                             </StackPanel>
                         </Grid>
                     </cwc:Case>
@@ -101,14 +101,14 @@
                                 HorizontalAlignment="Left"
                                 Background="#FFDAB79B"
                                 CornerRadius="{ThemeResource CornerRadiusAll16}"
-                                Source="{x:Bind ((shvg:LaunchGameViewModelSlim)DataContext).CurrentUserGameRole.ProfilePictureIcon, Converter={StaticResource AvatarIconCircleConverter}, Mode=OneWay}"/>
+                                Source="{x:Bind DataContext.CurrentUserGameRole.ProfilePictureIcon, Converter={StaticResource AvatarIconCircleConverter}, Mode=OneWay}"/>
                             <StackPanel Grid.Column="1" Margin="12,0">
-                                <TextBlock Text="{x:Bind ((shvg:LaunchGameViewModelSlim)DataContext).CurrentUserGameRole.Nickname, Mode=OneWay}"/>
+                                <TextBlock Text="{x:Bind DataContext.CurrentUserGameRole.Nickname, Mode=OneWay}"/>
                                 <TextBlock
                                     Margin="0,2,0,0"
                                     Opacity="0.6"
                                     Style="{StaticResource CaptionTextBlockStyle}"
-                                    Text="{x:Bind ((shvg:LaunchGameViewModelSlim)DataContext).CurrentUserGameRole.Description, Mode=OneWay}"/>
+                                    Text="{x:Bind DataContext.CurrentUserGameRole.Description, Mode=OneWay}"/>
                             </StackPanel>
                         </Grid>
                     </cwc:Case>
@@ -118,18 +118,18 @@
                     shuxcth:ControlMaterialState.IsManaged="True"
                     Padding="12"
                     DisplayMemberPath="Name"
-                    ItemsSource="{x:Bind ((shvg:LaunchGameViewModelSlim)DataContext).CurrentSchemeFilteredGameAccountsView.View, Mode=OneWay}"
+                    ItemsSource="{x:Bind DataContext.CurrentSchemeFilteredGameAccountsView.View, Mode=OneWay}"
                     PlaceholderText="{shuxm:ResourceString Name=ViewCardLaunchGameSelectAccountPlaceholder}"
-                    SelectedItem="{x:Bind ((shvg:LaunchGameViewModelSlim)DataContext).CurrentSchemeFilteredGameAccountsView.View.CurrentItem, FallbackValue={x:Null}, Mode=TwoWay}"
+                    SelectedItem="{x:Bind DataContext.CurrentSchemeFilteredGameAccountsView.View.CurrentItem, FallbackValue={x:Null}, Mode=TwoWay}"
                     Style="{ThemeResource ShimmerComboBoxStyle}"
-                    Visibility="{x:Bind ((shvg:LaunchGameViewModelSlim)DataContext).LaunchOptions.UsingHoyolabAccount.Value, Converter={StaticResource BoolToVisibilityRevertConverter}, Mode=OneWay}"/>
+                    Visibility="{x:Bind DataContext.LaunchOptions.UsingHoyolabAccount.Value, Converter={StaticResource BoolToVisibilityRevertConverter}, Mode=OneWay}"/>
             </StackPanel>
 
             <wl:LiquidGlassButton
                 Grid.Row="2"
                 VerticalAlignment="Stretch"
                 shuxcth:ControlMaterialState.IsManaged="True"
-                Command="{x:Bind ((shvg:LaunchGameViewModelSlim)DataContext).LaunchCommand, Mode=OneWay}"
+                Command="{x:Bind DataContext.LaunchCommand, Mode=OneWay}"
                 IsEnabled="{x:Bind shsg:LaunchOptions.IsGameRunning.Value, Converter={StaticResource BoolNegationConverter}, Mode=OneWay}"
                 Style="{ThemeResource SettingButtonStyle}">
                 <StackPanel Spacing="3">
@@ -142,12 +142,12 @@
                         HorizontalAlignment="Center"
                         Opacity="0.7"
                         Style="{StaticResource CaptionTextBlockStyle}"
-                        Text="{x:Bind ((shvg:LaunchGameViewModelSlim)DataContext).LaunchStatusOptions.LaunchStatus.Description, FallbackValue={x:Null}, Mode=OneWay}"
-                        Visibility="{x:Bind ((shvg:LaunchGameViewModelSlim)DataContext).LaunchStatusOptions.LaunchStatus, Converter={StaticResource EmptyObjectToVisibilityConverter}, Mode=OneWay}"/>
+                        Text="{x:Bind DataContext.LaunchStatusOptions.LaunchStatus.Description, FallbackValue={x:Null}, Mode=OneWay}"
+                        Visibility="{x:Bind DataContext.LaunchStatusOptions.LaunchStatus, Converter={StaticResource EmptyObjectToVisibilityConverter}, Mode=OneWay}"/>
                 </StackPanel>
             </wl:LiquidGlassButton>
         </Grid>
 
-        <shuxc:Loading IsLoading="{x:Bind ((shvg:LaunchGameViewModelSlim)DataContext).IsInitialized, Converter={StaticResource BoolNegationConverter}, Mode=OneWay}" Style="{ThemeResource DefaultLoadingCardStyle}"/>
+        <shuxc:Loading IsLoading="{x:Bind DataContext.IsInitialized, Converter={StaticResource BoolNegationConverter}, Mode=OneWay}" Style="{ThemeResource DefaultLoadingCardStyle}"/>
     </Grid>
 </shuxcth:MaterialCardButton>

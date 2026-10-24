@@ -27,7 +27,7 @@
     mc:Ignorable="d">
 
     <mxi:Interaction.Behaviors>
-        <shuxb:InvokeCommandOnLoadedBehavior Command="{x:Bind ((shva:AvatarPropertyViewModel)DataContext).LoadCommand, Mode=OneWay}"/>
+        <shuxb:InvokeCommandOnLoadedBehavior Command="{x:Bind DataContext.LoadCommand, Mode=OneWay}"/>
     </mxi:Interaction.Behaviors>
 
     <Page.Resources>
@@ -645,7 +645,7 @@
         </ResourceDictionary>
     </Page.Resources>
 
-    <shuxc:StandardView HideCondition="{x:Bind ((shva:AvatarPropertyViewModel)DataContext).IsInitialized, Converter={StaticResource BoolNegationConverter}, Mode=OneWay}" ShowCondition="{x:Bind ((shva:AvatarPropertyViewModel)DataContext).Summary, Converter={StaticResource EmptyObjectToBoolConverter}, Mode=OneWay}">
+    <shuxc:StandardView HideCondition="{x:Bind DataContext.IsInitialized, Converter={StaticResource BoolNegationConverter}, Mode=OneWay}" ShowCondition="{x:Bind DataContext.Summary, Converter={StaticResource EmptyObjectToBoolConverter}, Mode=OneWay}">
         <shuxc:StandardView.EmptyContent>
             <Border
                 HorizontalAlignment="Center"
@@ -668,7 +668,7 @@
                         <StackPanel Margin="0,24,0,0" Spacing="{StaticResource SettingsCardSpacing}">
                             <cwc:SettingsCard
                                 ActionIconToolTip="{shuxm:ResourceString Name=ViewPageAvatarPropertyRefreshAction}"
-                                Command="{x:Bind ((shva:AvatarPropertyViewModel)DataContext).RefreshFromHoyolabGameRecordCommand, Mode=OneWay}"
+                                Command="{x:Bind DataContext.RefreshFromHoyolabGameRecordCommand, Mode=OneWay}"
                                 Header="{shuxm:ResourceString Name=ViewPageAvatarPropertyRefreshFromHoyolabGameRecord}"
                                 IsClickEnabled="True"/>
                         </StackPanel>
@@ -698,8 +698,8 @@
                                         Padding="12,6,0,7"
                                         shuxcth:ComboBoxPopupLifetime.IsManaged="True"
                                         DisplayMemberPath="Name"
-                                        ItemsSource="{x:Bind ((shva:AvatarPropertyViewModel)DataContext).SortDescriptionKinds, Mode=OneWay}"
-                                        SelectedItem="{x:Bind ((shva:AvatarPropertyViewModel)DataContext).SortDescriptionKind, Mode=TwoWay}"
+                                        ItemsSource="{x:Bind DataContext.SortDescriptionKinds, Mode=OneWay}"
+                                        SelectedItem="{x:Bind DataContext.SortDescriptionKind, Mode=TwoWay}"
                                         Style="{ThemeResource DefaultComboBoxStyle}"/>
                                 </shuxc:SizeRestrictedContentControl>
                                 <shuxc:SizeRestrictedContentControl MaxWidth="220" Margin="8,8,0,0">
@@ -731,27 +731,27 @@
                                 Margin="6,-2,6,6"
                                 HorizontalAlignment="Right"
                                 VerticalContentAlignment="Center"
-                                AvailableTokens="{x:Bind ((shva:AvatarPropertyViewModel)DataContext).SearchData.AvailableTokens, Mode=OneWay}"
-                                FilterCommand="{x:Bind ((shva:AvatarPropertyViewModel)DataContext).FilterCommand, Mode=OneWay}"
-                                ItemsSource="{x:Bind ((shva:AvatarPropertyViewModel)DataContext).SearchData.FilterTokens, Mode=OneWay}"
+                                AvailableTokens="{x:Bind DataContext.SearchData.AvailableTokens, Mode=OneWay}"
+                                FilterCommand="{x:Bind DataContext.FilterCommand, Mode=OneWay}"
+                                ItemsSource="{x:Bind DataContext.SearchData.FilterTokens, Mode=OneWay}"
                                 MaximumTokens="5"
                                 PlaceholderText="{shuxm:ResourceString Name=ViewPageWiKiAvatarAutoSuggestBoxPlaceHolder}"
                                 QueryIcon="{cw:FontIconSource Glyph=&#xE721;}"
                                 Style="{StaticResource DefaultAutoSuggestTokenBoxStyle}"
                                 SuggestedItemTemplate="{StaticResource TokenTemplate}"
-                                SuggestedItemsSource="{x:Bind ((shva:AvatarPropertyViewModel)DataContext).SearchData.AvailableTokens.Values, Mode=OneWay}"
-                                Text="{x:Bind ((shva:AvatarPropertyViewModel)DataContext).SearchData.FilterToken, Mode=TwoWay}"
+                                SuggestedItemsSource="{x:Bind DataContext.SearchData.AvailableTokens.Values, Mode=OneWay}"
+                                Text="{x:Bind DataContext.SearchData.FilterToken, Mode=TwoWay}"
                                 TokenItemTemplate="{StaticResource TokenTemplate}"/>
                         </AppBarElementContainer>
                         <AppBarButton Icon="{shuxm:FontIcon Glyph=&#xEDE1;}" Label="{shuxm:ResourceString Name=ViewPageAvatarPropertyExportToTextLabel}">
                             <AppBarButton.Flyout>
                                 <MenuFlyout Placement="Bottom">
                                     <MenuFlyoutItem
-                                        Command="{x:Bind ((shva:AvatarPropertyViewModel)DataContext).ExportToTextCommand, Mode=OneWay}"
+                                        Command="{x:Bind DataContext.ExportToTextCommand, Mode=OneWay}"
                                         Icon="{shuxm:FontIcon Glyph=&#xE1CE;}"
                                         Text="{shuxm:ResourceString Name=ViewPageAvatarPropertyExportToText}"/>
                                     <MenuFlyoutItem
-                                        Command="{x:Bind ((shva:AvatarPropertyViewModel)DataContext).ExportAllToTextCommand, Mode=OneWay}"
+                                        Command="{x:Bind DataContext.ExportAllToTextCommand, Mode=OneWay}"
                                         Icon="{shuxm:FontIcon Glyph=&#xE81E;}"
                                         Text="{shuxm:ResourceString Name=ViewPageAvatarPropertyExportAllToText}"/>
                                 </MenuFlyout>
@@ -761,15 +761,15 @@
                             <AppBarButton.Flyout>
                                 <MenuFlyout>
                                     <MenuFlyoutItem
-                                        Command="{x:Bind ((shva:AvatarPropertyViewModel)DataContext).CultivateCommand, Mode=OneWay}"
-                                        CommandParameter="{x:Bind ((shva:AvatarPropertyViewModel)DataContext).Summary.Avatars.CurrentItem, Mode=OneWay}"
+                                        Command="{x:Bind DataContext.CultivateCommand, Mode=OneWay}"
+                                        CommandParameter="{x:Bind DataContext.Summary.Avatars.CurrentItem, Mode=OneWay}"
                                         Text="{shuxm:ResourceString Name=ViewPageAvatarPropertyCalculateCurrent}"/>
                                     <MenuFlyoutItem
-                                        Command="{x:Bind ((shva:AvatarPropertyViewModel)DataContext).BatchCultivateCommand, Mode=OneWay}"
+                                        Command="{x:Bind DataContext.BatchCultivateCommand, Mode=OneWay}"
                                         CommandParameter="{shuxm:Boolean Value=False}"
                                         Text="{shuxm:ResourceString Name=ViewPageAvatarPropertyCalculatePart}"/>
                                     <MenuFlyoutItem
-                                        Command="{x:Bind ((shva:AvatarPropertyViewModel)DataContext).BatchCultivateCommand, Mode=OneWay}"
+                                        Command="{x:Bind DataContext.BatchCultivateCommand, Mode=OneWay}"
                                         CommandParameter="{shuxm:Boolean Value=True}"
                                         Text="{shuxm:ResourceString Name=ViewPageAvatarPropertyCalculateAll}"/>
                                 </MenuFlyout>
@@ -777,7 +777,7 @@
                         </AppBarButton>
                         <AppBarSeparator/>
                         <AppBarButton
-                            Command="{x:Bind ((shva:AvatarPropertyViewModel)DataContext).RefreshFromHoyolabGameRecordCommand, Mode=OneWay}"
+                            Command="{x:Bind DataContext.RefreshFromHoyolabGameRecordCommand, Mode=OneWay}"
                             Icon="{shuxm:FontIcon Glyph=&#xE72C;}"
                             Label="{shuxm:ResourceString Name=ViewAvatarPropertySyncDataButtonLabel}"/>
                     </CommandBar>
@@ -794,8 +794,8 @@
                                 Margin="16,16,4,-4"
                                 ItemContainerStyle="{StaticResource LargeGridViewItemStyle}"
                                 ItemTemplate="{StaticResource AvatarGridViewTemplate}"
-                                ItemsSource="{x:Bind ((shva:AvatarPropertyViewModel)DataContext).Summary.Avatars, Mode=OneWay}"
-                                SelectedItem="{x:Bind ((shva:AvatarPropertyViewModel)DataContext).Summary.Avatars.CurrentItem, Mode=TwoWay}"/>
+                                ItemsSource="{x:Bind DataContext.Summary.Avatars, Mode=OneWay}"
+                                SelectedItem="{x:Bind DataContext.Summary.Avatars.CurrentItem, Mode=TwoWay}"/>
                         </cwc:Case>
                         <cwc:Case Value="List">
                             <SplitView
@@ -813,10 +813,10 @@
                                         <ListView
                                             Grid.Row="0"
                                             Padding="{ThemeResource ListViewInSplitPanePadding}"
-                                            shuxc:ListViewHelper.ScrollToTopAssociatedObject="{x:Bind ((shva:AvatarPropertyViewModel)DataContext).SortDescriptionKind, Mode=OneWay}"
+                                            shuxc:ListViewHelper.ScrollToTopAssociatedObject="{x:Bind DataContext.SortDescriptionKind, Mode=OneWay}"
                                             ItemTemplate="{StaticResource AvatarListViewTemplate}"
-                                            ItemsSource="{x:Bind ((shva:AvatarPropertyViewModel)DataContext).Summary.Avatars, Mode=OneWay}"
-                                            SelectedItem="{x:Bind ((shva:AvatarPropertyViewModel)DataContext).Summary.Avatars.CurrentItem, Mode=TwoWay}"/>
+                                            ItemsSource="{x:Bind DataContext.Summary.Avatars, Mode=OneWay}"
+                                            SelectedItem="{x:Bind DataContext.Summary.Avatars.CurrentItem, Mode=TwoWay}"/>
                                         <Border
                                             Grid.Row="1"
                                             Background="{ThemeResource ControlFillColorSecondaryBrush}"
@@ -826,13 +826,13 @@
                                                 Margin="0,6"
                                                 HorizontalAlignment="Center"
                                                 Style="{ThemeResource CaptionTextBlockStyle}"
-                                                Text="{x:Bind ((shva:AvatarPropertyViewModel)DataContext).FormattedTotalAvatarCount, Mode=OneWay}"/>
+                                                Text="{x:Bind DataContext.FormattedTotalAvatarCount, Mode=OneWay}"/>
                                         </Border>
                                     </Grid>
                                 </SplitView.Pane>
                                 <SplitView.Content>
                                     <Grid>
-                                        <StackPanel VerticalAlignment="Center" Visibility="{x:Bind ((shva:AvatarPropertyViewModel)DataContext).Summary.Avatars.CurrentItem, Converter={StaticResource EmptyObjectToVisibilityRevertConverter}, Mode=OneWay}">
+                                        <StackPanel VerticalAlignment="Center" Visibility="{x:Bind DataContext.Summary.Avatars.CurrentItem, Converter={StaticResource EmptyObjectToVisibilityRevertConverter}, Mode=OneWay}">
                                             <shuxci:CachedImage
                                                 Height="120"
                                                 MinWidth="{ThemeResource SettingsCardContentControlMinWidth}"
@@ -843,7 +843,7 @@
                                                 Style="{StaticResource SubtitleTextBlockStyle}"
                                                 Text="{shuxm:ResourceString Name=ControlAutoSuggestBoxNotFoundValue}"/>
                                         </StackPanel>
-                                        <ScrollViewer shuxc:ScrollViewerHelper.ScrollToTopAssociatedObject="{x:Bind ((shva:AvatarPropertyViewModel)DataContext).Summary.Avatars.CurrentItem, Mode=OneWay}" Visibility="{x:Bind ((shva:AvatarPropertyViewModel)DataContext).Summary.Avatars.CurrentItem, Converter={StaticResource EmptyObjectToVisibilityConverter}, Mode=OneWay}">
+                                        <ScrollViewer shuxc:ScrollViewerHelper.ScrollToTopAssociatedObject="{x:Bind DataContext.Summary.Avatars.CurrentItem, Mode=OneWay}" Visibility="{x:Bind DataContext.Summary.Avatars.CurrentItem, Converter={StaticResource EmptyObjectToVisibilityConverter}, Mode=OneWay}">
                                             <StackPanel
                                                 MaxWidth="800"
                                                 Margin="16"
@@ -876,7 +876,7 @@
                                                             <shuxci:CachedImage
                                                                 HorizontalAlignment="Center"
                                                                 VerticalAlignment="Center"
-                                                                Source="{x:Bind ((shva:AvatarPropertyViewModel)DataContext).Summary.Avatars.CurrentItem.NameCard, Mode=OneWay}"
+                                                                Source="{x:Bind DataContext.Summary.Avatars.CurrentItem.NameCard, Mode=OneWay}"
                                                                 Stretch="UniformToFill"/>
                                                         </cwc:ConstrainedBox>
 
@@ -902,23 +902,23 @@
                                                                 </Grid.ColumnDefinitions>
                                                                 <shuxc:ItemIcon
                                                                     cw:Effects.Shadow="{ThemeResource CompatCardShadow}"
-                                                                    Icon="{x:Bind ((shva:AvatarPropertyViewModel)DataContext).Summary.Avatars.CurrentItem.Icon, Mode=OneWay}"
-                                                                    Quality="{x:Bind ((shva:AvatarPropertyViewModel)DataContext).Summary.Avatars.CurrentItem.Quality, Mode=OneWay}"/>
+                                                                    Icon="{x:Bind DataContext.Summary.Avatars.CurrentItem.Icon, Mode=OneWay}"
+                                                                    Quality="{x:Bind DataContext.Summary.Avatars.CurrentItem.Quality, Mode=OneWay}"/>
                                                                 <StackPanel Grid.Column="1" Margin="16,0,0,0">
                                                                     <TextBlock
                                                                         Foreground="#FFFFFFFF"
                                                                         Style="{StaticResource SubtitleTextBlockStyle}"
-                                                                        Text="{x:Bind ((shva:AvatarPropertyViewModel)DataContext).Summary.Avatars.CurrentItem.Name, Mode=OneWay}"/>
+                                                                        Text="{x:Bind DataContext.Summary.Avatars.CurrentItem.Name, Mode=OneWay}"/>
                                                                     <ItemsControl
                                                                         Margin="0,2,0,0"
                                                                         ItemTemplate="{StaticResource PromoteArrayTemplate}"
                                                                         ItemsPanel="{ThemeResource HorizontalStackPanelSpacing2Template}"
-                                                                        ItemsSource="{x:Bind ((shva:AvatarPropertyViewModel)DataContext).Summary.Avatars.CurrentItem.PromoteArray, Mode=OneWay}"/>
+                                                                        ItemsSource="{x:Bind DataContext.Summary.Avatars.CurrentItem.PromoteArray, Mode=OneWay}"/>
                                                                     <TextBlock
                                                                         Margin="0,2,0,0"
                                                                         Foreground="#FFFFFFFF"
                                                                         Style="{StaticResource BaseTextBlockStyle}"
-                                                                        Text="{x:Bind ((shva:AvatarPropertyViewModel)DataContext).Summary.Avatars.CurrentItem.Level, Mode=OneWay}"/>
+                                                                        Text="{x:Bind DataContext.Summary.Avatars.CurrentItem.Level, Mode=OneWay}"/>
                                                                     <StackPanel Margin="0,2,0,0" Orientation="Horizontal">
                                                                         <Image
                                                                             Width="16"
@@ -930,7 +930,7 @@
                                                                             Foreground="#FFFFFFFF"
                                                                             HorizontalTextAlignment="Center"
                                                                             Style="{StaticResource CaptionTextBlockStyle}"
-                                                                            Text="{x:Bind ((shva:AvatarPropertyViewModel)DataContext).Summary.Avatars.CurrentItem.FetterLevel, Mode=OneWay}"
+                                                                            Text="{x:Bind DataContext.Summary.Avatars.CurrentItem.FetterLevel, Mode=OneWay}"
                                                                             TextAlignment="Center"
                                                                             TextTrimming="None"
                                                                             TextWrapping="NoWrap"/>
@@ -945,7 +945,7 @@
                                                                             VerticalAlignment="Center"
                                                                             FontWeight="Bold"
                                                                             Style="{StaticResource BaseTextBlockStyle}"
-                                                                            Text="{x:Bind ((shva:AvatarPropertyViewModel)DataContext).Summary.Avatars.CurrentItem.DisplayScore, Mode=OneWay}">
+                                                                            Text="{x:Bind DataContext.Summary.Avatars.CurrentItem.DisplayScore, Mode=OneWay}">
                                                                             <TextBlock.Foreground>
                                                                                 <SolidColorBrush Color="{Binding Summary.Avatars.CurrentItem.ScoreColorValue, Converter={ThemeResource TotalScoreToColorConverter}, Mode=OneWay}"/>
                                                                             </TextBlock.Foreground>
@@ -956,7 +956,7 @@
                                                             <Grid
                                                                 Margin="0,16,0,0"
                                                                 HorizontalAlignment="Left"
-                                                                DataContext="{x:Bind ((shva:AvatarPropertyViewModel)DataContext).Summary.Avatars.CurrentItem.Weapon, Mode=OneWay}">
+                                                                DataContext="{x:Bind DataContext.Summary.Avatars.CurrentItem.Weapon, Mode=OneWay}">
                                                                 <Grid.ColumnDefinitions>
                                                                     <ColumnDefinition/>
                                                                     <ColumnDefinition Width="auto"/>
@@ -968,7 +968,7 @@
                                                                     BorderBrush="{x:Null}"
                                                                     BorderThickness="0">
                                                                     <wl:LiquidGlassButton.Content>
-                                                                        <shuxc:ItemIcon Icon="{x:Bind ((shva:AvatarPropertyViewModel)DataContext).Summary.Avatars.CurrentItem.Weapon.Icon, Mode=OneWay}" Quality="{x:Bind ((shva:AvatarPropertyViewModel)DataContext).Summary.Avatars.CurrentItem.Weapon.Quality, Mode=OneWay}"/>
+                                                                        <shuxc:ItemIcon Icon="{x:Bind DataContext.Summary.Avatars.CurrentItem.Weapon.Icon, Mode=OneWay}" Quality="{x:Bind DataContext.Summary.Avatars.CurrentItem.Weapon.Quality, Mode=OneWay}"/>
                                                                     </wl:LiquidGlassButton.Content>
                                                                     <wl:LiquidGlassButton.Flyout>
                                                                         <Flyout essential:FlyoutHelper.AcrylicWorkaround="True" Placement="BottomEdgeAlignedLeft">
@@ -984,19 +984,19 @@
                                                                                 <cwc:SettingsCard
                                                                                     Margin="0,2,0,0"
                                                                                     Padding="12"
-                                                                                    Header="{x:Bind ((shva:AvatarPropertyViewModel)DataContext).Summary.Avatars.CurrentItem.Weapon.MainProperty.Name, Mode=OneWay}">
-                                                                                    <TextBlock Text="{x:Bind ((shva:AvatarPropertyViewModel)DataContext).Summary.Avatars.CurrentItem.Weapon.MainProperty.Value, Mode=OneWay}"/>
+                                                                                    Header="{x:Bind DataContext.Summary.Avatars.CurrentItem.Weapon.MainProperty.Name, Mode=OneWay}">
+                                                                                    <TextBlock Text="{x:Bind DataContext.Summary.Avatars.CurrentItem.Weapon.MainProperty.Value, Mode=OneWay}"/>
                                                                                 </cwc:SettingsCard>
                                                                                 <cwc:SettingsCard
                                                                                     Margin="0,2,0,0"
                                                                                     Padding="12"
-                                                                                    Header="{x:Bind ((shva:AvatarPropertyViewModel)DataContext).Summary.Avatars.CurrentItem.Weapon.SubProperty.Name, Mode=OneWay}">
-                                                                                    <TextBlock Text="{x:Bind ((shva:AvatarPropertyViewModel)DataContext).Summary.Avatars.CurrentItem.Weapon.SubProperty.Value, Mode=OneWay}"/>
+                                                                                    Header="{x:Bind DataContext.Summary.Avatars.CurrentItem.Weapon.SubProperty.Name, Mode=OneWay}">
+                                                                                    <TextBlock Text="{x:Bind DataContext.Summary.Avatars.CurrentItem.Weapon.SubProperty.Value, Mode=OneWay}"/>
                                                                                 </cwc:SettingsCard>
                                                                                 <shuxct:DescriptionTextBlock
                                                                                     MaxWidth="320"
                                                                                     Margin="0,12,0,0"
-                                                                                    Description="{x:Bind ((shva:AvatarPropertyViewModel)DataContext).Summary.Avatars.CurrentItem.Weapon.AffixDescription, Mode=OneWay}"/>
+                                                                                    Description="{x:Bind DataContext.Summary.Avatars.CurrentItem.Weapon.AffixDescription, Mode=OneWay}"/>
                                                                             </StackPanel>
                                                                         </Flyout>
                                                                     </wl:LiquidGlassButton.Flyout>
@@ -1005,22 +1005,22 @@
                                                                     <TextBlock
                                                                         Foreground="#FFFFFFFF"
                                                                         Style="{StaticResource SubtitleTextBlockStyle}"
-                                                                        Text="{x:Bind ((shva:AvatarPropertyViewModel)DataContext).Summary.Avatars.CurrentItem.Weapon.Name, Mode=OneWay}"/>
+                                                                        Text="{x:Bind DataContext.Summary.Avatars.CurrentItem.Weapon.Name, Mode=OneWay}"/>
                                                                     <ItemsControl
                                                                         Margin="0,2,0,0"
                                                                         ItemTemplate="{StaticResource PromoteArrayTemplate}"
                                                                         ItemsPanel="{ThemeResource HorizontalStackPanelSpacing2Template}"
-                                                                        ItemsSource="{x:Bind ((shva:AvatarPropertyViewModel)DataContext).Summary.Avatars.CurrentItem.Weapon.PromoteArray, Mode=OneWay}"/>
+                                                                        ItemsSource="{x:Bind DataContext.Summary.Avatars.CurrentItem.Weapon.PromoteArray, Mode=OneWay}"/>
                                                                     <TextBlock
                                                                         Margin="0,2,0,0"
                                                                         Foreground="#FFFFFFFF"
                                                                         Style="{StaticResource BaseTextBlockStyle}"
-                                                                        Text="{x:Bind ((shva:AvatarPropertyViewModel)DataContext).Summary.Avatars.CurrentItem.Weapon.Level, Mode=OneWay}"/>
+                                                                        Text="{x:Bind DataContext.Summary.Avatars.CurrentItem.Weapon.Level, Mode=OneWay}"/>
                                                                     <TextBlock
                                                                         Margin="0,2,0,0"
                                                                         Foreground="#FFFFFFFF"
                                                                         Style="{StaticResource CaptionTextBlockStyle}"
-                                                                        Text="{x:Bind ((shva:AvatarPropertyViewModel)DataContext).Summary.Avatars.CurrentItem.Weapon.AffixLevel, Mode=OneWay}"/>
+                                                                        Text="{x:Bind DataContext.Summary.Avatars.CurrentItem.Weapon.AffixLevel, Mode=OneWay}"/>
                                                                 </StackPanel>
                                                             </Grid>
                                                         </StackPanel>
@@ -1032,7 +1032,7 @@
                                                             Margin="16"
                                                             VerticalAlignment="Bottom"
                                                             ItemTemplate="{StaticResource AvatarSkillTemplate}"
-                                                            ItemsSource="{x:Bind ((shva:AvatarPropertyViewModel)DataContext).Summary.Avatars.CurrentItem.Skills, Mode=OneWay}"/>
+                                                            ItemsSource="{x:Bind DataContext.Summary.Avatars.CurrentItem.Skills, Mode=OneWay}"/>
 
                                                         <ItemsControl
                                                             Grid.Row="1"
@@ -1040,7 +1040,7 @@
                                                             Margin="16"
                                                             ItemTemplate="{StaticResource AvatarConstellationTemplate}"
                                                             ItemsPanel="{StaticResource HorizontalStackPanelSpacing0Template}"
-                                                            ItemsSource="{x:Bind ((shva:AvatarPropertyViewModel)DataContext).Summary.Avatars.CurrentItem.Constellations, Mode=OneWay}"/>
+                                                            ItemsSource="{x:Bind DataContext.Summary.Avatars.CurrentItem.Constellations, Mode=OneWay}"/>
                                                     </Grid>
                                                 </Border>
 
@@ -1064,7 +1064,7 @@
                                                             shuxcth:MaterialBackground.GlassBrush="{ThemeResource HutaoSurfaceBrush}"
                                                             shuxcth:MaterialBackground.NativeBrush="{ThemeResource ControlAltFillColorSecondaryBrush}"
                                                             BorderThickness="0">
-                                                            <ItemsControl ItemTemplate="{StaticResource AvatarPropertyTemplate}" ItemsSource="{x:Bind ((shva:AvatarPropertyViewModel)DataContext).Summary.Avatars.CurrentItem.Properties, Mode=OneWay}"/>
+                                                            <ItemsControl ItemTemplate="{StaticResource AvatarPropertyTemplate}" ItemsSource="{x:Bind DataContext.Summary.Avatars.CurrentItem.Properties, Mode=OneWay}"/>
                                                         </Border>
                                                     </Expander>
                                                 </Border>
@@ -1089,7 +1089,7 @@
                                                                 Margin="12"
                                                                 VerticalAlignment="Center"
                                                                 ItemsPanel="{StaticResource WrapPanelSpacing4Template}"
-                                                                ItemsSource="{x:Bind ((shva:AvatarPropertyViewModel)DataContext).Summary.Avatars.CurrentItem.RecommendedProperties.SandProperties, Mode=OneWay}"/>
+                                                                ItemsSource="{x:Bind DataContext.Summary.Avatars.CurrentItem.RecommendedProperties.SandProperties, Mode=OneWay}"/>
                                                         </shuxcc:VerticalCard.Bottom>
                                                     </shuxcc:VerticalCard>
                                                     <Image
@@ -1113,7 +1113,7 @@
                                                                 Margin="12"
                                                                 VerticalAlignment="Center"
                                                                 ItemsPanel="{StaticResource WrapPanelSpacing4Template}"
-                                                                ItemsSource="{x:Bind ((shva:AvatarPropertyViewModel)DataContext).Summary.Avatars.CurrentItem.RecommendedProperties.GobletProperties, Mode=OneWay}"/>
+                                                                ItemsSource="{x:Bind DataContext.Summary.Avatars.CurrentItem.RecommendedProperties.GobletProperties, Mode=OneWay}"/>
                                                         </shuxcc:VerticalCard.Bottom>
                                                     </shuxcc:VerticalCard>
                                                     <Image
@@ -1137,7 +1137,7 @@
                                                                 Margin="12"
                                                                 VerticalAlignment="Center"
                                                                 ItemsPanel="{StaticResource WrapPanelSpacing4Template}"
-                                                                ItemsSource="{x:Bind ((shva:AvatarPropertyViewModel)DataContext).Summary.Avatars.CurrentItem.RecommendedProperties.CircletProperties, Mode=OneWay}"/>
+                                                                ItemsSource="{x:Bind DataContext.Summary.Avatars.CurrentItem.RecommendedProperties.CircletProperties, Mode=OneWay}"/>
                                                         </shuxcc:VerticalCard.Bottom>
                                                     </shuxcc:VerticalCard>
                                                     <Image
@@ -1161,13 +1161,13 @@
                                                                 Margin="12"
                                                                 VerticalAlignment="Center"
                                                                 ItemsPanel="{StaticResource WrapPanelSpacing4Template}"
-                                                                ItemsSource="{x:Bind ((shva:AvatarPropertyViewModel)DataContext).Summary.Avatars.CurrentItem.RecommendedProperties.SubProperties, Mode=OneWay}"/>
+                                                                ItemsSource="{x:Bind DataContext.Summary.Avatars.CurrentItem.RecommendedProperties.SubProperties, Mode=OneWay}"/>
                                                         </shuxcc:VerticalCard.Bottom>
                                                     </shuxcc:VerticalCard>
                                                 </Grid>
 
                                                 <!--  圣遗物  -->
-                                                <ItemsControl ItemTemplate="{StaticResource AvatarReliquaryTemplate}" ItemsSource="{x:Bind ((shva:AvatarPropertyViewModel)DataContext).Summary.Avatars.CurrentItem.Reliquaries, Mode=OneWay}">
+                                                <ItemsControl ItemTemplate="{StaticResource AvatarReliquaryTemplate}" ItemsSource="{x:Bind DataContext.Summary.Avatars.CurrentItem.Reliquaries, Mode=OneWay}">
                                                     <ItemsControl.ItemsPanel>
                                                         <ItemsPanelTemplate>
                                                             <shuxcp:UniformPanel

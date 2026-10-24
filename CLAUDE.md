@@ -398,6 +398,24 @@ the build fails with `CS9275`); write a normal constructor in that case.
 
 - **MVVM first** — UI logic in ViewModels; code-behind only for view mechanics. No business
   decisions in `Page`/`Window` code-behind (`CODE_REVIEW.md#ARCH-04`).
+- **`x:Bind` starts at a typed `DataContext`** — a view that binds its view model declares one
+  shadow property in its code-behind
+  (`public new FooViewModel DataContext { get => (FooViewModel)base.DataContext; set => base.DataContext = value; }`),
+  and XAML writes `{x:Bind DataContext.Bar, Mode=OneWay}`. The shadow does **not** replace the
+  dependency property: `DataContext` is still the DP, so one-way tracking keeps working through
+  `RegisterPropertyChangedCallback(DataContextProperty)` and `DataContext` may be assigned later
+  (pages assign it in `Loading`). Never write `x:Bind ((vm:Type)DataContext).Bar` and never bind the
+  view model through `{Binding}` — the cast is per binding-site noise that this property removes.
+  (Element casts such as `((PivotItem)Pivot.SelectedItem).Tag` are a different case and stay.)
+  The property **cannot** move into a generic base such as `ScopedPage<TViewModel>`: the XAML root
+  tag *is* the generated partial's base-class declaration, so a code-behind base other than the tag
+  fails with `CS0263`, and WinUI XAML has no `x:TypeArguments` to spell `ScopedPage<FooViewModel>`
+  in the tag (verified; generic base members are also invisible to `x:Bind`).
+  A **source generator** cannot emit it either: `x:Bind` resolves members of the x:Class root from a
+  type snapshot that excludes generator output, so `{x:Bind Vm.Bar}` fails with `WMC1110 … not found
+  on type '<View>'` while the same member on the *view model* type resolves fine (verified on a
+  throwaway WinUI project; a build-time `*.g.cs` written into `obj` and added to `@(Compile)` does
+  work, but that extra build step was judged not worth it — the 30 hand-written lines stay).
 - **Async for I/O**, no UI-thread blocking, no `.Result`/`.Wait()` without a timeout.
 - **Guard clauses** — `ArgumentNullException.ThrowIfNull(x)` (237 uses) and
   `Verify.Operation(condition, "why")` (14 uses; `Verify`/`Requires` come from
@@ -485,6 +503,7 @@ ID — do not "fix" these by documenting them as if they were intended.
 | Date | Change |
 |---|---|
 | 2026-10-24 | Replaced the cwc:SwitchPresenter material trees (317 blocks) with single glass instances plus MaterialAppearance/MaterialNative.xaml style-and-background switching; MaterialSwap for slider/password/search; documented the glass-brush, caller-background and ToggleSwitch/behavior rules in §5.3. |
+| 2026-10-24 | Removed the 921 `x:Bind ((vm:Type)DataContext)` casts: every binding view now declares one typed `DataContext` shadow property (§6); documented that `DataContext` stays a dependency property so one-way tracking is unchanged. |
 | 2026-10-20 | Enabled default R2R for Debug and Release; connected the SDK-selected images to local runnable output and MSIX deployment, switched all Cake packaging inputs to publish output, and added final-image header validation. |
 | 2026-10-20 | Separated JSON wire policy from reflection, added generated infrastructure/metadata collection contracts, static enum converters, typed ID/HTTP metadata APIs, and finite cultivation navigation. |
 | 2026-10-20 | Adopted source-generated settings/database JSON and EF's compiled model; preserved plugin/script support, storage formats, and migrations. Removed extra experiment scripts; retained optional AOT diagnostics. |

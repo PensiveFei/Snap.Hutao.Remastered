@@ -54,4 +54,6 @@ public sealed partial class MainView : UserControl, IDataContextInitialized
         UserView.DataContext<UserViewModel>()?.IsViewUnloaded.Value = true;
         this.DataContext<MainViewModel>()?.Uninitialize();
     }
+
+    public new MainViewModel DataContext { get => (MainViewModel)base.DataContext; set => base.DataContext = value; }
 }

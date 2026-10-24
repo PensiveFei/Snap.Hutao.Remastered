@@ -26,7 +26,7 @@
     mc:Ignorable="d">
 
     <mxi:Interaction.Behaviors>
-        <shuxb:InvokeCommandOnLoadedBehavior Command="{x:Bind ((shvs:SettingViewModel)DataContext).LoadCommand, Mode=OneWay}"/>
+        <shuxb:InvokeCommandOnLoadedBehavior Command="{x:Bind DataContext.LoadCommand, Mode=OneWay}"/>
     </mxi:Interaction.Behaviors>
 
     <Page.Resources>
@@ -109,8 +109,8 @@
                                 <TextBlock Style="{StaticResource SettingsCardHeaderTextBlockStyle}" Text="{shuxm:ResourceString Name=ViewPageSettingAppBehaviorHeader}"/>
 
                                 <cwc:SettingsCard
-                                    Command="{x:Bind ((shvs:SettingViewModel)DataContext).CheckUpdateCommand, Mode=OneWay}"
-                                    Description="{x:Bind ((shvs:SettingViewModel)DataContext).UpdateInfo, Mode=OneWay}"
+                                    Command="{x:Bind DataContext.CheckUpdateCommand, Mode=OneWay}"
+                                    Description="{x:Bind DataContext.UpdateInfo, Mode=OneWay}"
                                     Header="{shuxm:ResourceString Name=ViewPageSettingCheckUpdateHeader}"
                                     HeaderIcon="{shuxm:FontIcon Glyph=&#xE895;}"
                                     IsClickEnabled="True"/>
@@ -124,13 +124,13 @@
                                         <wl:LiquidGlassButton
                                             shuxcth:ControlMaterialState.IsManaged="True"
                                             HorizontalAlignment="Right"
-                                            Command="{x:Bind ((shvs:SettingViewModel)DataContext).RestartAsElevatedCommand, Mode=OneWay}"
+                                            Command="{x:Bind DataContext.RestartAsElevatedCommand, Mode=OneWay}"
                                             Content="{shuxm:ResourceString Name=ViewPageSettingElevatedModeRestartAction}"
                                             IsEnabled="{shuxm:IsProcessNotElevated}"/>
                                     </StackPanel>
                                     <cwc:SettingsExpander.Items>
                                         <cwc:SettingsCard Description="{shuxm:ResourceString Name=ViewPageSettingAutoRestartAsAdminDescription}" Header="{shuxm:ResourceString Name=ViewPageSettingAutoRestartAsAdminHeader}">
-                                            <wl:LiquidGlassToggleSwitch shuxcth:ControlMaterialState.IsManaged="True" IsOn="{x:Bind ((shvs:SettingViewModel)DataContext).AutoRestartAsAdminEnabled, Mode=TwoWay}"/>
+                                            <wl:LiquidGlassToggleSwitch shuxcth:ControlMaterialState.IsManaged="True" IsOn="{x:Bind DataContext.AutoRestartAsAdminEnabled, Mode=TwoWay}"/>
                                         </cwc:SettingsCard>
                                     </cwc:SettingsExpander.Items>
                                 </cwc:SettingsExpander>
@@ -140,13 +140,13 @@
                                     Description="{shuxm:ResourceString Name=ViewPageSettingAutoStartDescription}"
                                     Header="{shuxm:ResourceString Name=ViewPageSettingAutoStartHeader}"
                                     HeaderIcon="{shuxm:FontIcon Glyph=&#xE7E8;}"
-                                    IsEnabled="{x:Bind ((shvs:SettingViewModel)DataContext).IsStartupSettingsEnabled, Mode=OneWay}">
+                                    IsEnabled="{x:Bind DataContext.IsStartupSettingsEnabled, Mode=OneWay}">
                                     <cwc:SettingsExpander.Items>
                                         <cwc:SettingsCard
                                             Header="{shuxm:ResourceString Name=ViewPageSettingAutoStartEnableCardHeader}"
                                             HeaderIcon="{shuxm:FontIcon Glyph=&#xE7EE;}"
                                             IsClickEnabled="False">
-                                            <wl:LiquidGlassToggleSwitch shuxcth:ControlMaterialState.IsManaged="True" IsOn="{x:Bind ((shvs:SettingViewModel)DataContext).IsStartupEnabled, Mode=TwoWay}"/>
+                                            <wl:LiquidGlassToggleSwitch shuxcth:ControlMaterialState.IsManaged="True" IsOn="{x:Bind DataContext.IsStartupEnabled, Mode=TwoWay}"/>
                                         </cwc:SettingsCard>
 
                                         <!--  Will keep enable if AutoRestartAsAdmin is enabled, because it will start as admin when startup and avoid UAC prompt and keep consistent with the behavior  -->
@@ -155,21 +155,21 @@
                                             Header="{shuxm:ResourceString Name=ViewPageSettingAutoStartAdminActionCardHeader}"
                                             HeaderIcon="{shuxm:FontIcon Glyph=&#xE7EF;}"
                                             IsClickEnabled="False"
-                                            IsEnabled="{x:Bind ((shvs:SettingViewModel)DataContext).IsStartupAsAdminCardEnabled, Mode=OneWay}">
-                                            <wl:LiquidGlassToggleSwitch shuxcth:ControlMaterialState.IsManaged="True" IsOn="{x:Bind ((shvs:SettingViewModel)DataContext).IsStartupAsAdminEnabled, Mode=TwoWay}"/>
+                                            IsEnabled="{x:Bind DataContext.IsStartupAsAdminCardEnabled, Mode=OneWay}">
+                                            <wl:LiquidGlassToggleSwitch shuxcth:ControlMaterialState.IsManaged="True" IsOn="{x:Bind DataContext.IsStartupAsAdminEnabled, Mode=TwoWay}"/>
                                         </cwc:SettingsCard>
                                     </cwc:SettingsExpander.Items>
                                 </cwc:SettingsExpander>
 
                                 <cwc:SettingsCard
                                     ActionIconToolTip="{shuxm:ResourceString Name=ViewPageSettingCreateDesktopShortcutAction}"
-                                    Command="{x:Bind ((shvs:SettingViewModel)DataContext).CreateDesktopShortcutCommand, Mode=OneWay}"
+                                    Command="{x:Bind DataContext.CreateDesktopShortcutCommand, Mode=OneWay}"
                                     Header="{shuxm:ResourceString Name=ViewPageSettingCreateDesktopShortcutHeader}"
                                     HeaderIcon="{shuxm:FontIcon Glyph=&#xE72D;}"
                                     IsClickEnabled="True"/>
                                 <cwc:SettingsCard
                                     ActionIconToolTip="{shuxm:ResourceString Name=ViewPageSettingCreateDesktopShortcutAction}"
-                                    Command="{x:Bind ((shvs:SettingViewModel)DataContext).CreateGameLaunchShortcutCommand, Mode=OneWay}"
+                                    Command="{x:Bind DataContext.CreateGameLaunchShortcutCommand, Mode=OneWay}"
                                     Header="{shuxm:ResourceString Name=ViewPageLaunchGameCreateGameLaunchShortcut}"
                                     HeaderIcon="{shuxm:FontIcon Glyph=&#xE72D;}"
                                     IsClickEnabled="True"/>
@@ -253,8 +253,8 @@
                                 <TextBlock Style="{StaticResource SettingsCardHeaderTextBlockStyle}" Text="{shuxm:ResourceString Name=ViewPageSettingAppBehaviorHeader}"/>
 
                                 <cwc:SettingsCard
-                                    Command="{x:Bind ((shvs:SettingViewModel)DataContext).CheckUpdateCommand, Mode=OneWay}"
-                                    Description="{x:Bind ((shvs:SettingViewModel)DataContext).UpdateInfo, Mode=OneWay}"
+                                    Command="{x:Bind DataContext.CheckUpdateCommand, Mode=OneWay}"
+                                    Description="{x:Bind DataContext.UpdateInfo, Mode=OneWay}"
                                     Header="{shuxm:ResourceString Name=ViewPageSettingCheckUpdateHeader}"
                                     HeaderIcon="{shuxm:FontIcon Glyph=&#xE895;}"
                                     IsClickEnabled="True"/>
@@ -268,13 +268,13 @@
                                         <wl:LiquidGlassButton
                                             shuxcth:ControlMaterialState.IsManaged="True"
                                             HorizontalAlignment="Right"
-                                            Command="{x:Bind ((shvs:SettingViewModel)DataContext).RestartAsElevatedCommand, Mode=OneWay}"
+                                            Command="{x:Bind DataContext.RestartAsElevatedCommand, Mode=OneWay}"
                                             Content="{shuxm:ResourceString Name=ViewPageSettingElevatedModeRestartAction}"
                                             IsEnabled="{shuxm:IsProcessNotElevated}"/>
                                     </StackPanel>
                                     <cwc:SettingsExpander.Items>
                                         <cwc:SettingsCard Description="{shuxm:ResourceString Name=ViewPageSettingAutoRestartAsAdminDescription}" Header="{shuxm:ResourceString Name=ViewPageSettingAutoRestartAsAdminHeader}">
-                                            <wl:LiquidGlassToggleSwitch shuxcth:ControlMaterialState.IsManaged="True" IsOn="{x:Bind ((shvs:SettingViewModel)DataContext).AutoRestartAsAdminEnabled, Mode=TwoWay}"/>
+                                            <wl:LiquidGlassToggleSwitch shuxcth:ControlMaterialState.IsManaged="True" IsOn="{x:Bind DataContext.AutoRestartAsAdminEnabled, Mode=TwoWay}"/>
                                         </cwc:SettingsCard>
                                     </cwc:SettingsExpander.Items>
                                 </cwc:SettingsExpander>
@@ -284,7 +284,7 @@
                                     Description="{shuxm:ResourceString Name=ViewPageSettingAutoStartDescription}"
                                     Header="{shuxm:ResourceString Name=ViewPageSettingAutoStartHeader}"
                                     HeaderIcon="{shuxm:FontIcon Glyph=&#xE7E8;}"
-                                    IsEnabled="{x:Bind ((shvs:SettingViewModel)DataContext).IsStartupSettingsEnabled, Mode=OneWay}"
+                                    IsEnabled="{x:Bind DataContext.IsStartupSettingsEnabled, Mode=OneWay}"
                                     IsExpanded="True">
                                     <cwc:SettingsExpander.Items>
                                         <!--  当前用户自启动  -->
@@ -292,7 +292,7 @@
                                             Header="{shuxm:ResourceString Name=ViewPageSettingAutoStartEnableCardHeader}"
                                             HeaderIcon="{shuxm:FontIcon Glyph=&#xE7EE;}"
                                             IsClickEnabled="False">
-                                            <wl:LiquidGlassToggleSwitch shuxcth:ControlMaterialState.IsManaged="True" IsOn="{x:Bind ((shvs:SettingViewModel)DataContext).IsStartupEnabled, Mode=TwoWay}"/>
+                                            <wl:LiquidGlassToggleSwitch shuxcth:ControlMaterialState.IsManaged="True" IsOn="{x:Bind DataContext.IsStartupEnabled, Mode=TwoWay}"/>
                                         </cwc:SettingsCard>
 
                                         <!--  Will keep enable if AutoRestartAsAdmin is enabled, because it will start as admin when startup and avoid UAC prompt and keep consistent with the behavior  -->
@@ -301,21 +301,21 @@
                                             Header="{shuxm:ResourceString Name=ViewPageSettingAutoStartAdminActionCardHeader}"
                                             HeaderIcon="{shuxm:FontIcon Glyph=&#xE7EF;}"
                                             IsClickEnabled="False"
-                                            IsEnabled="{x:Bind ((shvs:SettingViewModel)DataContext).IsStartupAsAdminCardEnabled, Mode=OneWay}">
-                                            <wl:LiquidGlassToggleSwitch shuxcth:ControlMaterialState.IsManaged="True" IsOn="{x:Bind ((shvs:SettingViewModel)DataContext).IsStartupAsAdminEnabled, Mode=TwoWay}"/>
+                                            IsEnabled="{x:Bind DataContext.IsStartupAsAdminCardEnabled, Mode=OneWay}">
+                                            <wl:LiquidGlassToggleSwitch shuxcth:ControlMaterialState.IsManaged="True" IsOn="{x:Bind DataContext.IsStartupAsAdminEnabled, Mode=TwoWay}"/>
                                         </cwc:SettingsCard>
                                     </cwc:SettingsExpander.Items>
                                 </cwc:SettingsExpander>
 
                                 <cwc:SettingsCard
                                     ActionIconToolTip="{shuxm:ResourceString Name=ViewPageSettingCreateDesktopShortcutAction}"
-                                    Command="{x:Bind ((shvs:SettingViewModel)DataContext).CreateDesktopShortcutCommand, Mode=OneWay}"
+                                    Command="{x:Bind DataContext.CreateDesktopShortcutCommand, Mode=OneWay}"
                                     Header="{shuxm:ResourceString Name=ViewPageSettingCreateDesktopShortcutHeader}"
                                     HeaderIcon="{shuxm:FontIcon Glyph=&#xE72D;}"
                                     IsClickEnabled="True"/>
                                 <cwc:SettingsCard
                                     ActionIconToolTip="{shuxm:ResourceString Name=ViewPageSettingCreateDesktopShortcutAction}"
-                                    Command="{x:Bind ((shvs:SettingViewModel)DataContext).CreateGameLaunchShortcutCommand, Mode=OneWay}"
+                                    Command="{x:Bind DataContext.CreateGameLaunchShortcutCommand, Mode=OneWay}"
                                     Header="{shuxm:ResourceString Name=ViewPageLaunchGameCreateGameLaunchShortcut}"
                                     HeaderIcon="{shuxm:FontIcon Glyph=&#xE72D;}"
                                     IsClickEnabled="True"/>
@@ -324,14 +324,14 @@
                     </Border>
 
                     <!--  无感验证  -->
-                    <Border cw:Effects.Shadow="{ThemeResource CompatCardShadow}" DataContext="{x:Bind ((shvs:SettingViewModel)DataContext).Geetest, Mode=OneWay}">
+                    <Border cw:Effects.Shadow="{ThemeResource CompatCardShadow}" DataContext="{x:Bind DataContext.Geetest, Mode=OneWay}">
                         <Border Padding="16" Style="{ThemeResource AcrylicBorderCardStyle}">
                             <StackPanel Spacing="{ThemeResource SettingsCardSpacing}">
                                 <TextBlock Style="{StaticResource SettingsCardHeaderTextBlockStyle}" Text="{shuxm:ResourceString Name=ViewPageSettingGeetestVerificationHeader}"/>
                                 <cwc:SettingsCard
                                     ActionIcon="{shuxm:FontIcon Glyph=&#xF32A;}"
                                     ActionIconToolTip="{shuxm:ResourceString Name=ViewPageSettingGeetestCustomUrlAction}"
-                                    Command="{x:Bind ((shvs:SettingViewModel)DataContext).Geetest.ConfigureGeetestUrlCommand, Mode=OneWay}"
+                                    Command="{x:Bind DataContext.Geetest.ConfigureGeetestUrlCommand, Mode=OneWay}"
                                     Description="{shuxm:ResourceString Name=ViewPageSettingGeetestCustomUrlDescription}"
                                     Header="{shuxm:ResourceString Name=ViewPageSettingGeetestCustomUrlHeader}"
                                     HeaderIcon="{shuxm:FontIcon Glyph=&#xE776;}"
@@ -341,7 +341,7 @@
                     </Border>
 
                     <!--  外观  -->
-                    <Border cw:Effects.Shadow="{ThemeResource CompatCardShadow}" DataContext="{x:Bind ((shvs:SettingViewModel)DataContext).Appearance, Mode=OneWay}">
+                    <Border cw:Effects.Shadow="{ThemeResource CompatCardShadow}" DataContext="{x:Bind DataContext.Appearance, Mode=OneWay}">
                         <Border Padding="16" Style="{ThemeResource AcrylicBorderCardStyle}">
                             <StackPanel Spacing="{ThemeResource SettingsCardSpacing}">
                                 <TextBlock Style="{StaticResource SettingsCardHeaderTextBlockStyle}" Text="{shuxm:ResourceString Name=ViewPageSettingApperanceHeader}"/>
@@ -355,7 +355,7 @@
                                             shuxcth:ComboBoxPopupLifetime.IsManaged="True"
                                             DisplayMemberPath="Name"
                                             ItemsSource="{x:Bind shs:CultureOptions.Cultures}"
-                                            SelectedItem="{x:Bind ((shvs:SettingViewModel)DataContext).Appearance.SelectedCulture, Mode=TwoWay}"/>
+                                            SelectedItem="{x:Bind DataContext.Appearance.SelectedCulture, Mode=TwoWay}"/>
                                     </shuxc:SizeRestrictedContentControl>
                                 </cwc:SettingsCard>
                                 <cwc:SettingsCard
@@ -367,8 +367,8 @@
                                             shuxcth:ControlMaterialState.IsManaged="True"
                                             shuxcth:ComboBoxPopupLifetime.IsManaged="True"
                                             DisplayMemberPath="Name"
-                                            ItemsSource="{x:Bind ((shvs:SettingViewModel)DataContext).Appearance.CultureOptions.DayOfWeeks, Mode=OneWay}"
-                                            SelectedItem="{x:Bind ((shvs:SettingViewModel)DataContext).Appearance.SelectedFirstDayOfWeek, Mode=TwoWay}"/>
+                                            ItemsSource="{x:Bind DataContext.Appearance.CultureOptions.DayOfWeeks, Mode=OneWay}"
+                                            SelectedItem="{x:Bind DataContext.Appearance.SelectedFirstDayOfWeek, Mode=TwoWay}"/>
                                     </shuxc:SizeRestrictedContentControl>
                                 </cwc:SettingsCard>
                                 <cwc:SettingsCard
@@ -380,9 +380,9 @@
                                             shuxcth:ControlMaterialState.IsManaged="True"
                                             shuxcth:ComboBoxPopupLifetime.IsManaged="True"
                                             DisplayMemberPath="Name"
-                                            IsEnabled="{x:Bind ((shvs:SettingViewModel)DataContext).Appearance.IsBackdropSelectionEnabled, Mode=OneWay}"
-                                            ItemsSource="{x:Bind ((shvs:SettingViewModel)DataContext).Appearance.AppOptions.BackdropTypes, Mode=OneWay}"
-                                            SelectedItem="{x:Bind ((shvs:SettingViewModel)DataContext).Appearance.SelectedBackdropType, Mode=TwoWay}"/>
+                                            IsEnabled="{x:Bind DataContext.Appearance.IsBackdropSelectionEnabled, Mode=OneWay}"
+                                            ItemsSource="{x:Bind DataContext.Appearance.AppOptions.BackdropTypes, Mode=OneWay}"
+                                            SelectedItem="{x:Bind DataContext.Appearance.SelectedBackdropType, Mode=TwoWay}"/>
                                     </shuxc:SizeRestrictedContentControl>
                                 </cwc:SettingsCard>
                                 <cwc:SettingsCard
@@ -394,8 +394,8 @@
                                             shuxcth:ControlMaterialState.IsManaged="True"
                                             shuxcth:ComboBoxPopupLifetime.IsManaged="True"
                                             DisplayMemberPath="Name"
-                                            ItemsSource="{x:Bind ((shvs:SettingViewModel)DataContext).Appearance.AppOptions.LazyElementThemes.Value, Mode=OneWay}"
-                                            SelectedItem="{x:Bind ((shvs:SettingViewModel)DataContext).Appearance.SelectedElementTheme, Mode=TwoWay}"/>
+                                            ItemsSource="{x:Bind DataContext.Appearance.AppOptions.LazyElementThemes.Value, Mode=OneWay}"
+                                            SelectedItem="{x:Bind DataContext.Appearance.SelectedElementTheme, Mode=TwoWay}"/>
                                     </shuxc:SizeRestrictedContentControl>
                                 </cwc:SettingsCard>
                                 <cwc:SettingsCard
@@ -407,8 +407,8 @@
                                             shuxcth:ControlMaterialState.IsManaged="True"
                                             shuxcth:ComboBoxPopupLifetime.IsManaged="True"
                                             DisplayMemberPath="Name"
-                                            ItemsSource="{x:Bind ((shvs:SettingViewModel)DataContext).Appearance.AppOptions.ControlMaterials, Mode=OneWay}"
-                                            SelectedItem="{x:Bind ((shvs:SettingViewModel)DataContext).Appearance.SelectedControlMaterial, Mode=TwoWay}"/>
+                                            ItemsSource="{x:Bind DataContext.Appearance.AppOptions.ControlMaterials, Mode=OneWay}"
+                                            SelectedItem="{x:Bind DataContext.Appearance.SelectedControlMaterial, Mode=TwoWay}"/>
                                     </shuxc:SizeRestrictedContentControl>
                                 </cwc:SettingsCard>
                                 <cwc:SettingsCard
@@ -427,34 +427,34 @@
                                     Description="{shuxm:ResourceString Name=ViewPageSettingBackgroundImageDescription}"
                                     Header="{shuxm:ResourceString Name=ViewPageSettingBackgroundImageHeader}"
                                     HeaderIcon="{shuxm:FontIcon Glyph=&#xE8B9;}"
-                                    IsExpanded="{x:Bind ((shvs:SettingViewModel)DataContext).Appearance.BackgroundImageOptions.Wallpaper, Converter={StaticResource EmptyObjectToBoolConverter}, Mode=OneWay}">
+                                    IsExpanded="{x:Bind DataContext.Appearance.BackgroundImageOptions.Wallpaper, Converter={StaticResource EmptyObjectToBoolConverter}, Mode=OneWay}">
                                     <shuxc:SizeRestrictedContentControl VerticalAlignment="Center">
                                         <wl:LiquidGlassComboBox
                                             shuxcth:ControlMaterialState.IsManaged="True"
                                             shuxcth:ComboBoxPopupLifetime.IsManaged="True"
                                             DisplayMemberPath="Name"
-                                            ItemsSource="{x:Bind ((shvs:SettingViewModel)DataContext).Appearance.AppOptions.BackgroundImageTypes, Mode=OneWay}"
-                                            SelectedItem="{x:Bind ((shvs:SettingViewModel)DataContext).Appearance.SelectedBackgroundImageType, Mode=TwoWay}"/>
+                                            ItemsSource="{x:Bind DataContext.Appearance.AppOptions.BackgroundImageTypes, Mode=OneWay}"
+                                            SelectedItem="{x:Bind DataContext.Appearance.SelectedBackgroundImageType, Mode=TwoWay}"/>
                                     </shuxc:SizeRestrictedContentControl>
                                     <cwc:SettingsExpander.Items>
                                         <!--  SettingsExpander uses ItemsRepeater, where first item will behave abnormally in binding  -->
-                                        <cwc:SettingsCard Header="{shuxm:ResourceString Name=ViewPageSettingBackgroundImageLocalFolderCopyrightHeader}" Visibility="{x:Bind ((shvs:SettingViewModel)DataContext).Appearance.BackgroundImageOptions.Wallpaper, Converter={StaticResource EmptyObjectToBoolRevertConverter}, Mode=OneWay}"/>
+                                        <cwc:SettingsCard Header="{shuxm:ResourceString Name=ViewPageSettingBackgroundImageLocalFolderCopyrightHeader}" Visibility="{x:Bind DataContext.Appearance.BackgroundImageOptions.Wallpaper, Converter={StaticResource EmptyObjectToBoolRevertConverter}, Mode=OneWay}"/>
                                         <cwc:SettingsCard
                                             ActionIcon="{shuxm:FontIcon Glyph=&#xE76C;}"
                                             ActionIconToolTip="{shuxm:ResourceString Name=ViewPageSettingBackgroundImageSetFolderAction}"
-                                            Command="{x:Bind ((shvs:SettingViewModel)DataContext).Appearance.SetBackgroundImageFolderCommand, Mode=OneWay}"
-                                            Description="{x:Bind ((shvs:SettingViewModel)DataContext).Appearance.AppOptions.BackgroundImagePath.Value, Mode=OneWay}"
+                                            Command="{x:Bind DataContext.Appearance.SetBackgroundImageFolderCommand, Mode=OneWay}"
+                                            Description="{x:Bind DataContext.Appearance.AppOptions.BackgroundImagePath.Value, Mode=OneWay}"
                                             Header="{shuxm:ResourceString Name=ViewPageSettingBackgroundImageCustomFolderHeader}"
                                             IsClickEnabled="True"
-                                            Visibility="{x:Bind ((shvs:SettingViewModel)DataContext).Appearance.BackgroundImageOptions.Wallpaper, Converter={StaticResource EmptyObjectToBoolRevertConverter}, Mode=OneWay}"/>
+                                            Visibility="{x:Bind DataContext.Appearance.BackgroundImageOptions.Wallpaper, Converter={StaticResource EmptyObjectToBoolRevertConverter}, Mode=OneWay}"/>
                                         <cwc:SettingsCard
-                                            Description="{x:Bind ((shvs:SettingViewModel)DataContext).Appearance.BackgroundImageOptions.Wallpaper.Author, Mode=OneWay}"
+                                            Description="{x:Bind DataContext.Appearance.BackgroundImageOptions.Wallpaper.Author, Mode=OneWay}"
                                             Header="{shuxm:ResourceString Name=ViewPageSettingBackgroundImageCopyrightHeader}"
                                             IsClickEnabled="True"
-                                            Visibility="{x:Bind ((shvs:SettingViewModel)DataContext).Appearance.BackgroundImageOptions.Wallpaper, Converter={StaticResource EmptyObjectToVisibilityConverter}, Mode=OneWay}">
+                                            Visibility="{x:Bind DataContext.Appearance.BackgroundImageOptions.Wallpaper, Converter={StaticResource EmptyObjectToVisibilityConverter}, Mode=OneWay}">
                                             <mxi:Interaction.Behaviors>
                                                 <mxi:EventTriggerBehavior EventName="Click">
-                                                    <cwb:NavigateToUriAction NavigateUri="{x:Bind ((shvs:SettingViewModel)DataContext).Appearance.BackgroundImageOptions.Wallpaper.SourceUrl, Mode=OneWay}"/>
+                                                    <cwb:NavigateToUriAction NavigateUri="{x:Bind DataContext.Appearance.BackgroundImageOptions.Wallpaper.SourceUrl, Mode=OneWay}"/>
                                                 </mxi:EventTriggerBehavior>
                                             </mxi:Interaction.Behaviors>
                                         </cwc:SettingsCard>
@@ -472,21 +472,21 @@
                                             shuxcth:ControlMaterialState.IsManaged="True"
                                             shuxcth:ComboBoxPopupLifetime.IsManaged="True"
                                             DisplayMemberPath="Name"
-                                            ItemsSource="{x:Bind ((shvs:SettingViewModel)DataContext).Appearance.AppOptions.BackgroundMediaTypes, Mode=OneWay}"
-                                            SelectedItem="{x:Bind ((shvs:SettingViewModel)DataContext).Appearance.SelectedBackgroundMediaType, Mode=TwoWay}"/>
+                                            ItemsSource="{x:Bind DataContext.Appearance.AppOptions.BackgroundMediaTypes, Mode=OneWay}"
+                                            SelectedItem="{x:Bind DataContext.Appearance.SelectedBackgroundMediaType, Mode=TwoWay}"/>
                                     </shuxc:SizeRestrictedContentControl>
                                     <cwc:SettingsExpander.Items>
                                         <cwc:SettingsCard Header="{shuxm:ResourceString Name=ViewPageSettingBackgroundVideoIsMutedHeader}" HeaderIcon="{shuxm:FontIcon Glyph=&#xE8D6;}">
-                                            <wl:LiquidGlassToggleSwitch shuxcth:ControlMaterialState.IsManaged="True" IsOn="{x:Bind ((shvs:SettingViewModel)DataContext).Appearance.IsMuted, Mode=TwoWay}"/>
+                                            <wl:LiquidGlassToggleSwitch shuxcth:ControlMaterialState.IsManaged="True" IsOn="{x:Bind DataContext.Appearance.IsMuted, Mode=TwoWay}"/>
                                         </cwc:SettingsCard>
                                         <cwc:SettingsCard Header="{shuxm:ResourceString Name=ViewPageSettingBackgroundVideoIsLoopingHeader}" HeaderIcon="{shuxm:FontIcon Glyph=&#xE8ED;}">
-                                            <wl:LiquidGlassToggleSwitch shuxcth:ControlMaterialState.IsManaged="True" IsOn="{x:Bind ((shvs:SettingViewModel)DataContext).Appearance.IsLooping, Mode=TwoWay}"/>
+                                            <wl:LiquidGlassToggleSwitch shuxcth:ControlMaterialState.IsManaged="True" IsOn="{x:Bind DataContext.Appearance.IsLooping, Mode=TwoWay}"/>
                                         </cwc:SettingsCard>
                                         <cwc:SettingsCard
                                             ActionIcon="{shuxm:FontIcon Glyph=&#xE76C;}"
                                             ActionIconToolTip="{shuxm:ResourceString Name=ViewPageSettingBackgroundVideoSetFolderAction}"
-                                            Command="{x:Bind ((shvs:SettingViewModel)DataContext).Appearance.SetBackgroundMediaFolderCommand, Mode=OneWay}"
-                                            Description="{x:Bind ((shvs:SettingViewModel)DataContext).Appearance.BackgroundMediaPath, Mode=OneWay}"
+                                            Command="{x:Bind DataContext.Appearance.SetBackgroundMediaFolderCommand, Mode=OneWay}"
+                                            Description="{x:Bind DataContext.Appearance.BackgroundMediaPath, Mode=OneWay}"
                                             Header="{shuxm:ResourceString Name=ViewPageSettingBackgroundVideoCustomFolderHeader}"
                                             IsClickEnabled="True"/>
                                     </cwc:SettingsExpander.Items>
@@ -507,8 +507,8 @@
                                             shuxcth:ControlMaterialState.IsManaged="True"
                                             shuxcth:ComboBoxPopupLifetime.IsManaged="True"
                                             DisplayMemberPath="Name"
-                                            ItemsSource="{x:Bind ((shvs:SettingViewModel)DataContext).Appearance.AppOptions.LastWindowCloseBehaviors, Mode=OneWay}"
-                                            SelectedItem="{x:Bind ((shvs:SettingViewModel)DataContext).Appearance.SelectedLastWindowCloseBehavior, Mode=TwoWay}"/>
+                                            ItemsSource="{x:Bind DataContext.Appearance.AppOptions.LastWindowCloseBehaviors, Mode=OneWay}"
+                                            SelectedItem="{x:Bind DataContext.Appearance.SelectedLastWindowCloseBehavior, Mode=TwoWay}"/>
                                     </shuxc:SizeRestrictedContentControl>
                                 </cwc:SettingsCard>
                                 <cwc:SettingsCard
@@ -516,7 +516,7 @@
                                     Header="{shuxm:ResourceString Name=ViewPageSettingAppearanceNotifyIconBackgroundHintHeader}"
                                     HeaderIcon="{shuxm:FontIcon Glyph=&#xE946;}"
                                     IsEnabled="{x:Bind shs:AppOptions.NotifyIconCreated, Mode=OneWay}">
-                                    <wl:LiquidGlassToggleSwitch shuxcth:ControlMaterialState.IsManaged="True" IsOn="{x:Bind ((shvs:SettingViewModel)DataContext).Appearance.AppOptions.IsNotifyIconBackgroundHintEnabled.Value, Mode=TwoWay}"/>
+                                    <wl:LiquidGlassToggleSwitch shuxcth:ControlMaterialState.IsManaged="True" IsOn="{x:Bind DataContext.Appearance.AppOptions.IsNotifyIconBackgroundHintEnabled.Value, Mode=TwoWay}"/>
                                 </cwc:SettingsCard>
                             </StackPanel>
                         </Border>
@@ -536,13 +536,13 @@
                                             shuxcth:ControlMaterialState.IsManaged="True"
                                             shuxcth:ComboBoxPopupLifetime.IsManaged="True"
                                             DisplayMemberPath="Name"
-                                            ItemsSource="{x:Bind ((shvs:SettingViewModel)DataContext).AppOptions.ServerDomainModes, Mode=OneWay}"
-                                            SelectedItem="{x:Bind ((shvs:SettingViewModel)DataContext).SelectedServerDomainMode, Mode=TwoWay}"/>
+                                            ItemsSource="{x:Bind DataContext.AppOptions.ServerDomainModes, Mode=OneWay}"
+                                            SelectedItem="{x:Bind DataContext.SelectedServerDomainMode, Mode=TwoWay}"/>
                                     </shuxc:SizeRestrictedContentControl>
                                 </cwc:SettingsCard>
                                 <!--  Account history charts and API analysis  -->
                                 <cwc:SettingsCard
-                                    Command="{x:Bind ((shvs:SettingViewModel)DataContext).OpenAccountInsightsCommand, Mode=OneWay}"
+                                    Command="{x:Bind DataContext.OpenAccountInsightsCommand, Mode=OneWay}"
                                     Description="{shuxm:ResourceString Name=ViewDialogAccountInsightsDescription}"
                                     Header="{shuxm:ResourceString Name=ViewDialogAccountInsightsOpen}"
                                     HeaderIcon="{shuxm:FontIcon Glyph=&#xE9D9;}"
@@ -552,19 +552,19 @@
                     </Border>
 
                     <!--  存储空间  -->
-                    <Border cw:Effects.Shadow="{ThemeResource CompatCardShadow}" DataContext="{x:Bind ((shvs:SettingViewModel)DataContext).Storage, Mode=OneWay}">
+                    <Border cw:Effects.Shadow="{ThemeResource CompatCardShadow}" DataContext="{x:Bind DataContext.Storage, Mode=OneWay}">
                         <Border Padding="16" Style="{ThemeResource AcrylicBorderCardStyle}">
                             <StackPanel Spacing="{ThemeResource SettingsCardSpacing}">
                                 <TextBlock Style="{StaticResource SettingsCardHeaderTextBlockStyle}" Text="{shuxm:ResourceString Name=ViewPageSettingStorageHeader}"/>
                                 <cwc:SettingsExpander
-                                    Description="{x:Bind ((shvs:SettingViewModel)DataContext).Storage.DataFolderView.Size, Mode=OneWay}"
+                                    Description="{x:Bind DataContext.Storage.DataFolderView.Size, Mode=OneWay}"
                                     Header="{shuxm:ResourceString Name=ViewPageSettingDataFolderHeader}"
                                     HeaderIcon="{shuxm:FontIcon Glyph=&#xEC25;}"
                                     IsExpanded="True">
                                     <cwc:SettingsExpander.Content>
                                         <wl:LiquidGlassButton
                                             shuxcth:ControlMaterialState.IsManaged="True"
-                                            Command="{x:Bind ((shvs:SettingViewModel)DataContext).Storage.DataFolderView.OpenFolderCommand, Mode=OneWay}"
+                                            Command="{x:Bind DataContext.Storage.DataFolderView.OpenFolderCommand, Mode=OneWay}"
                                             Content="{shuxm:ResourceString Name=ViewSettingFolderViewOpenFolderAction}"
                                             Style="{ThemeResource SettingButtonStyle}"/>
                                     </cwc:SettingsExpander.Content>
@@ -583,40 +583,40 @@
                                         <cwc:SettingsCard
                                             ActionIcon="{shuxm:FontIcon Glyph=&#xE76C;}"
                                             ActionIconToolTip="{shuxm:ResourceString Name=ViewPageSettingStorageSetAction}"
-                                            Command="{x:Bind ((shvs:SettingViewModel)DataContext).Storage.SetDataFolderCommand, Mode=OneWay}"
+                                            Command="{x:Bind DataContext.Storage.SetDataFolderCommand, Mode=OneWay}"
                                             Description="{shuxm:ResourceString Name=ViewPageSettingSetDataFolderDescription}"
                                             Header="{shuxm:ResourceString Name=ViewPageSettingSetDataFolderHeader}"
                                             IsClickEnabled="True"/>
                                         <cwc:SettingsCard
                                             ActionIcon="{shuxm:FontIcon Glyph=&#xE76C;}"
-                                            Command="{x:Bind ((shvs:SettingViewModel)DataContext).Storage.DeleteServerCacheFolderCommand, Mode=OneWay}"
+                                            Command="{x:Bind DataContext.Storage.DeleteServerCacheFolderCommand, Mode=OneWay}"
                                             Description="{shuxm:ResourceString Name=ViewSettingDeleteServerCacheFolderDescription}"
                                             Header="{shuxm:ResourceString Name=ViewSettingDeleteServerCacheFolderHeader}"
                                             IsClickEnabled="True"/>
                                     </cwc:SettingsExpander.Items>
                                 </cwc:SettingsExpander>
                                 <cwc:SettingsExpander
-                                    Description="{x:Bind ((shvs:SettingViewModel)DataContext).Storage.CacheFolderView.Size, Mode=OneWay}"
+                                    Description="{x:Bind DataContext.Storage.CacheFolderView.Size, Mode=OneWay}"
                                     Header="{shuxm:ResourceString Name=ViewPageSettingCacheFolderHeader}"
                                     HeaderIcon="{shuxm:FontIcon Glyph=&#xE8B7;}"
                                     IsExpanded="True">
                                     <cwc:SettingsExpander.Content>
                                         <wl:LiquidGlassButton
                                             shuxcth:ControlMaterialState.IsManaged="True"
-                                            Command="{x:Bind ((shvs:SettingViewModel)DataContext).Storage.CacheFolderView.OpenFolderCommand, Mode=OneWay}"
+                                            Command="{x:Bind DataContext.Storage.CacheFolderView.OpenFolderCommand, Mode=OneWay}"
                                             Content="{shuxm:ResourceString Name=ViewSettingFolderViewOpenFolderAction}"
                                             Style="{ThemeResource SettingButtonStyle}"/>
                                     </cwc:SettingsExpander.Content>
                                     <cwc:SettingsExpander.Items>
                                         <cwc:SettingsCard
-                                            Command="{x:Bind ((shvs:SettingViewModel)DataContext).Storage.RemoveDuplicateImagesCommand, Mode=OneWay}"
+                                            Command="{x:Bind DataContext.Storage.RemoveDuplicateImagesCommand, Mode=OneWay}"
                                             Description="{shuxm:ResourceString Name=ViewSettingImageDuplicatesDescription}"
                                             Header="{shuxm:ResourceString Name=ViewSettingImageDuplicatesHeader}"
                                             IsClickEnabled="True"/>
                                         <cwc:SettingsCard
                                             ActionIcon="{shuxm:FontIcon Glyph=&#xE76C;}"
                                             ActionIconToolTip="{shuxm:ResourceString Name=ViewPageSettingResetAction}"
-                                            Command="{x:Bind ((shvs:SettingViewModel)DataContext).Storage.ResetStaticResourceCommand, Mode=OneWay}"
+                                            Command="{x:Bind DataContext.Storage.ResetStaticResourceCommand, Mode=OneWay}"
                                             Description="{shuxm:ResourceString Name=ViewPageSettingResetStaticResourceDescription}"
                                             Header="{shuxm:ResourceString Name=ViewPageSettingResetStaticResourceHeader}"
                                             IsClickEnabled="True"/>
@@ -627,7 +627,7 @@
                     </Border>
 
                     <!--  快捷键 & 紧凑网页窗口  -->
-                    <Border cw:Effects.Shadow="{ThemeResource CompatCardShadow}" DataContext="{x:Bind ((shvs:SettingViewModel)DataContext).HotKey, Mode=OneWay}">
+                    <Border cw:Effects.Shadow="{ThemeResource CompatCardShadow}" DataContext="{x:Bind DataContext.HotKey, Mode=OneWay}">
                         <Border Padding="16" Style="{ThemeResource AcrylicBorderCardStyle}">
                             <StackPanel Spacing="{ThemeResource SettingsCardSpacing}">
                                 <TextBlock Style="{StaticResource SettingsCardHeaderTextBlockStyle}" Text="{shuxm:ResourceString Name=ViewPageSettingKeyShortcutHeader}"/>
@@ -693,19 +693,19 @@
                                                             MinWidth="64"
                                                             VerticalAlignment="Center"
                                                             Content="Ctrl"
-                                                            IsChecked="{x:Bind ((shvs:SettingViewModel)DataContext).HotKey.HotKeyOptions.MouseClickRepeatForeverKeyCombination.ModifierHasControl, Mode=TwoWay}"/>
+                                                            IsChecked="{x:Bind DataContext.HotKey.HotKeyOptions.MouseClickRepeatForeverKeyCombination.ModifierHasControl, Mode=TwoWay}"/>
                                                         <wl:LiquidGlassCheckBox
                                                             shuxcth:ControlMaterialState.IsManaged="True"
                                                             MinWidth="64"
                                                             VerticalAlignment="Center"
                                                             Content="Shift"
-                                                            IsChecked="{x:Bind ((shvs:SettingViewModel)DataContext).HotKey.HotKeyOptions.MouseClickRepeatForeverKeyCombination.ModifierHasShift, Mode=TwoWay}"/>
+                                                            IsChecked="{x:Bind DataContext.HotKey.HotKeyOptions.MouseClickRepeatForeverKeyCombination.ModifierHasShift, Mode=TwoWay}"/>
                                                         <wl:LiquidGlassCheckBox
                                                             shuxcth:ControlMaterialState.IsManaged="True"
                                                             MinWidth="64"
                                                             VerticalAlignment="Center"
                                                             Content="Alt"
-                                                            IsChecked="{x:Bind ((shvs:SettingViewModel)DataContext).HotKey.HotKeyOptions.MouseClickRepeatForeverKeyCombination.ModifierHasAlt, Mode=TwoWay}"/>
+                                                            IsChecked="{x:Bind DataContext.HotKey.HotKeyOptions.MouseClickRepeatForeverKeyCombination.ModifierHasAlt, Mode=TwoWay}"/>
                                                     </cwc:UniformGrid>
                                                 </Flyout>
                                             </wl:LiquidGlassButton.Flyout>
@@ -718,13 +718,13 @@
                                                 shuxcth:ComboBoxPopupLifetime.IsManaged="True"
                                                 DisplayMemberPath="Name"
                                                 ItemsSource="{x:Bind shuih:HotKeyOptions.VirtualKeys}"
-                                                SelectedItem="{x:Bind ((shvs:SettingViewModel)DataContext).HotKey.HotKeyOptions.MouseClickRepeatForeverKeyCombination.KeyNameValue, Mode=TwoWay}"/>
+                                                SelectedItem="{x:Bind DataContext.HotKey.HotKeyOptions.MouseClickRepeatForeverKeyCombination.KeyNameValue, Mode=TwoWay}"/>
                                         </shuxc:SizeRestrictedContentControl>
                                         <wl:LiquidGlassToggleSwitch
                                             shuxcth:ControlMaterialState.IsManaged="True"
                                             MinWidth="120"
                                             VerticalAlignment="Center"
-                                            IsOn="{x:Bind ((shvs:SettingViewModel)DataContext).HotKey.HotKeyOptions.MouseClickRepeatForeverKeyCombination.IsEnabled, Mode=TwoWay}"/>
+                                            IsOn="{x:Bind DataContext.HotKey.HotKeyOptions.MouseClickRepeatForeverKeyCombination.IsEnabled, Mode=TwoWay}"/>
                                     </StackPanel>
                                 </cwc:SettingsCard>
                                 <cwc:SettingsCard
@@ -764,19 +764,19 @@
                                                             MinWidth="64"
                                                             VerticalAlignment="Center"
                                                             Content="Ctrl"
-                                                            IsChecked="{x:Bind ((shvs:SettingViewModel)DataContext).HotKey.HotKeyOptions.KeyPressRepeatForeverKeyCombination.ModifierHasControl, Mode=TwoWay}"/>
+                                                            IsChecked="{x:Bind DataContext.HotKey.HotKeyOptions.KeyPressRepeatForeverKeyCombination.ModifierHasControl, Mode=TwoWay}"/>
                                                         <wl:LiquidGlassCheckBox
                                                             shuxcth:ControlMaterialState.IsManaged="True"
                                                             MinWidth="64"
                                                             VerticalAlignment="Center"
                                                             Content="Shift"
-                                                            IsChecked="{x:Bind ((shvs:SettingViewModel)DataContext).HotKey.HotKeyOptions.KeyPressRepeatForeverKeyCombination.ModifierHasShift, Mode=TwoWay}"/>
+                                                            IsChecked="{x:Bind DataContext.HotKey.HotKeyOptions.KeyPressRepeatForeverKeyCombination.ModifierHasShift, Mode=TwoWay}"/>
                                                         <wl:LiquidGlassCheckBox
                                                             shuxcth:ControlMaterialState.IsManaged="True"
                                                             MinWidth="64"
                                                             VerticalAlignment="Center"
                                                             Content="Alt"
-                                                            IsChecked="{x:Bind ((shvs:SettingViewModel)DataContext).HotKey.HotKeyOptions.KeyPressRepeatForeverKeyCombination.ModifierHasAlt, Mode=TwoWay}"/>
+                                                            IsChecked="{x:Bind DataContext.HotKey.HotKeyOptions.KeyPressRepeatForeverKeyCombination.ModifierHasAlt, Mode=TwoWay}"/>
                                                     </cwc:UniformGrid>
                                                 </Flyout>
                                             </wl:LiquidGlassButton.Flyout>
@@ -789,13 +789,13 @@
                                                 shuxcth:ComboBoxPopupLifetime.IsManaged="True"
                                                 DisplayMemberPath="Name"
                                                 ItemsSource="{x:Bind shuih:HotKeyOptions.VirtualKeys}"
-                                                SelectedItem="{x:Bind ((shvs:SettingViewModel)DataContext).HotKey.HotKeyOptions.KeyPressRepeatForeverKeyCombination.KeyNameValue, Mode=TwoWay}"/>
+                                                SelectedItem="{x:Bind DataContext.HotKey.HotKeyOptions.KeyPressRepeatForeverKeyCombination.KeyNameValue, Mode=TwoWay}"/>
                                         </shuxc:SizeRestrictedContentControl>
                                         <wl:LiquidGlassToggleSwitch
                                             shuxcth:ControlMaterialState.IsManaged="True"
                                             MinWidth="120"
                                             VerticalAlignment="Center"
-                                            IsOn="{x:Bind ((shvs:SettingViewModel)DataContext).HotKey.HotKeyOptions.KeyPressRepeatForeverKeyCombination.IsEnabled, Mode=TwoWay}"/>
+                                            IsOn="{x:Bind DataContext.HotKey.HotKeyOptions.KeyPressRepeatForeverKeyCombination.IsEnabled, Mode=TwoWay}"/>
                                     </StackPanel>
                                 </cwc:SettingsCard>
                                 <TextBlock
@@ -822,7 +822,7 @@
                                                 shuxcth:ComboBoxPopupLifetime.IsManaged="True"
                                                 DisplayMemberPath="Name"
                                                 ItemsSource="{x:Bind shuil:LowLevelKeyOptions.VirtualKeys}"
-                                                SelectedItem="{x:Bind ((shvs:SettingViewModel)DataContext).HotKey.LowLevelKeyOptions.WebView2VideoPlayPauseKey, Mode=TwoWay}"/>
+                                                SelectedItem="{x:Bind DataContext.HotKey.LowLevelKeyOptions.WebView2VideoPlayPauseKey, Mode=TwoWay}"/>
                                         </shuxc:SizeRestrictedContentControl>
                                     </StackPanel>
                                 </cwc:SettingsCard>
@@ -841,7 +841,7 @@
                                             VerticalAlignment="Center"
                                             essential:NumberBoxHelper.AcrylicWorkaround="True"
                                             AcceptsExpression="False"
-                                            Value="{x:Bind ((shvs:SettingViewModel)DataContext).HotKey.VideoSeekSeconds, Mode=TwoWay}"/>
+                                            Value="{x:Bind DataContext.HotKey.VideoSeekSeconds, Mode=TwoWay}"/>
                                         <TextBlock VerticalAlignment="Center" Text="秒"/>
                                     </StackPanel>
                                 </cwc:SettingsCard>
@@ -860,7 +860,7 @@
                                                 shuxcth:ComboBoxPopupLifetime.IsManaged="True"
                                                 DisplayMemberPath="Name"
                                                 ItemsSource="{x:Bind shuil:LowLevelKeyOptions.VirtualKeys}"
-                                                SelectedItem="{x:Bind ((shvs:SettingViewModel)DataContext).HotKey.LowLevelKeyOptions.WebView2VideoFastForwardKey, Mode=TwoWay}"/>
+                                                SelectedItem="{x:Bind DataContext.HotKey.LowLevelKeyOptions.WebView2VideoFastForwardKey, Mode=TwoWay}"/>
                                         </shuxc:SizeRestrictedContentControl>
                                     </StackPanel>
                                 </cwc:SettingsCard>
@@ -879,7 +879,7 @@
                                                 shuxcth:ComboBoxPopupLifetime.IsManaged="True"
                                                 DisplayMemberPath="Name"
                                                 ItemsSource="{x:Bind shuil:LowLevelKeyOptions.VirtualKeys}"
-                                                SelectedItem="{x:Bind ((shvs:SettingViewModel)DataContext).HotKey.LowLevelKeyOptions.WebView2VideoRewindKey, Mode=TwoWay}"/>
+                                                SelectedItem="{x:Bind DataContext.HotKey.LowLevelKeyOptions.WebView2VideoRewindKey, Mode=TwoWay}"/>
                                         </shuxc:SizeRestrictedContentControl>
                                     </StackPanel>
                                 </cwc:SettingsCard>
@@ -898,7 +898,7 @@
                                                 shuxcth:ComboBoxPopupLifetime.IsManaged="True"
                                                 DisplayMemberPath="Name"
                                                 ItemsSource="{x:Bind shuil:LowLevelKeyOptions.VirtualKeys}"
-                                                SelectedItem="{x:Bind ((shvs:SettingViewModel)DataContext).HotKey.LowLevelKeyOptions.WebView2HideKey, Mode=TwoWay}"/>
+                                                SelectedItem="{x:Bind DataContext.HotKey.LowLevelKeyOptions.WebView2HideKey, Mode=TwoWay}"/>
                                         </shuxc:SizeRestrictedContentControl>
                                     </StackPanel>
                                 </cwc:SettingsCard>
@@ -921,7 +921,7 @@
                                             Maximum="100"
                                             Minimum="1"
                                             SmallChange="1"
-                                            Value="{x:Bind ((shvs:SettingViewModel)DataContext).HotKey.InactiveWindowOpacity, Mode=TwoWay}"/>
+                                            Value="{x:Bind DataContext.HotKey.InactiveWindowOpacity, Mode=TwoWay}"/>
                                     </StackPanel>
                                 </cwc:SettingsCard>
                             </StackPanel>
@@ -929,7 +929,7 @@
                     </Border>
 
                     <!--  主页  -->
-                    <Border cw:Effects.Shadow="{ThemeResource CompatCardShadow}" DataContext="{x:Bind ((shvs:SettingViewModel)DataContext).Home, Mode=OneWay}">
+                    <Border cw:Effects.Shadow="{ThemeResource CompatCardShadow}" DataContext="{x:Bind DataContext.Home, Mode=OneWay}">
                         <Border Padding="16" Style="{ThemeResource AcrylicBorderCardStyle}">
                             <StackPanel Spacing="{ThemeResource SettingsCardSpacing}">
                                 <TextBlock Style="{StaticResource SettingsCardHeaderTextBlockStyle}" Text="{shuxm:ResourceString Name=ViewPageSettingHomeHeader}"/>
@@ -942,7 +942,7 @@
                                     AllowDrop="{shuxm:IsProcessNotElevated}"
                                     CanReorderItems="{shuxm:IsProcessNotElevated}"
                                     ItemContainerStyle="{StaticResource NoneSelectionListViewItemStyleMarginTop3}"
-                                    ItemsSource="{x:Bind ((shvs:SettingViewModel)DataContext).Home.HomeCards, Mode=OneWay}"
+                                    ItemsSource="{x:Bind DataContext.Home.HomeCards, Mode=OneWay}"
                                     SelectionMode="None">
                                     <ListView.Header>
                                         <InfoBar
@@ -977,8 +977,8 @@
                                             shuxcth:ControlMaterialState.IsManaged="True"
                                             shuxcth:ComboBoxPopupLifetime.IsManaged="True"
                                             DisplayMemberPath="Name"
-                                            ItemsSource="{x:Bind ((shvs:SettingViewModel)DataContext).Home.AppOptions.LazyCalendarServerTimeZoneOffsets.Value, Mode=OneWay}"
-                                            SelectedItem="{x:Bind ((shvs:SettingViewModel)DataContext).Home.SelectedCalendarServerTimeZoneOffset, Mode=TwoWay}"/>
+                                            ItemsSource="{x:Bind DataContext.Home.AppOptions.LazyCalendarServerTimeZoneOffsets.Value, Mode=OneWay}"
+                                            SelectedItem="{x:Bind DataContext.Home.SelectedCalendarServerTimeZoneOffset, Mode=TwoWay}"/>
                                     </shuxc:SizeRestrictedContentControl>
                                 </cwc:SettingsCard>
                                 <cwc:SettingsCard
@@ -990,8 +990,8 @@
                                             shuxcth:ControlMaterialState.IsManaged="True"
                                             shuxcth:ComboBoxPopupLifetime.IsManaged="True"
                                             DisplayMemberPath="Name"
-                                            ItemsSource="{x:Bind ((shvs:SettingViewModel)DataContext).Home.AppOptions.LazyRegions.Value, Mode=OneWay}"
-                                            SelectedItem="{x:Bind ((shvs:SettingViewModel)DataContext).Home.SelectedRegion, Mode=TwoWay}"/>
+                                            ItemsSource="{x:Bind DataContext.Home.AppOptions.LazyRegions.Value, Mode=OneWay}"
+                                            SelectedItem="{x:Bind DataContext.Home.SelectedRegion, Mode=TwoWay}"/>
                                     </shuxc:SizeRestrictedContentControl>
                                 </cwc:SettingsCard>
                                 <cwc:SettingsExpander
@@ -1003,7 +1003,7 @@
                                             <shuxc:SizeRestrictedContentControl>
                                                 <wl:LiquidGlassToggleSwitch
                                                     shuxcth:ControlMaterialState.IsManaged="True"
-                                                    IsOn="{x:Bind ((shvs:SettingViewModel)DataContext).Home.IsHomeAnnouncementActivityCalendarPresented, Mode=TwoWay}"
+                                                    IsOn="{x:Bind DataContext.Home.IsHomeAnnouncementActivityCalendarPresented, Mode=TwoWay}"
                                                     OffContent="{shuxm:ResourceString Name=ViewPageSettingHomeCardOff}"
                                                     OnContent="{shuxm:ResourceString Name=ViewPageSettingHomeCardOn}"/>
                                             </shuxc:SizeRestrictedContentControl>
@@ -1012,7 +1012,7 @@
                                             <shuxc:SizeRestrictedContentControl>
                                                 <wl:LiquidGlassToggleSwitch
                                                     shuxcth:ControlMaterialState.IsManaged="True"
-                                                    IsOn="{x:Bind ((shvs:SettingViewModel)DataContext).Home.IsHomeAnnouncementActPreviewEnabled, Mode=TwoWay}"
+                                                    IsOn="{x:Bind DataContext.Home.IsHomeAnnouncementActPreviewEnabled, Mode=TwoWay}"
                                                     OffContent="{shuxm:ResourceString Name=ViewPageSettingHomeCardOff}"
                                                     OnContent="{shuxm:ResourceString Name=ViewPageSettingHomeCardOn}"/>
                                             </shuxc:SizeRestrictedContentControl>
@@ -1024,14 +1024,14 @@
                     </Border>
 
                     <!--  游戏  -->
-                    <Border cw:Effects.Shadow="{ThemeResource CompatCardShadow}" DataContext="{x:Bind ((shvs:SettingViewModel)DataContext).Game, Mode=OneWay}">
+                    <Border cw:Effects.Shadow="{ThemeResource CompatCardShadow}" DataContext="{x:Bind DataContext.Game, Mode=OneWay}">
                         <Border Padding="16" Style="{ThemeResource AcrylicBorderCardStyle}">
                             <StackPanel Spacing="{ThemeResource SettingsCardSpacing}">
                                 <TextBlock Style="{StaticResource SettingsCardHeaderTextBlockStyle}" Text="{shuxm:ResourceString Name=ViewPageSettingGameHeader}"/>
                                 <cwc:SettingsCard
                                     ActionIcon="{shuxm:FontIcon Glyph=&#xE76C;}"
                                     ActionIconToolTip="{shuxm:ResourceString Name=ViewPageSettingDeleteCacheAction}"
-                                    Command="{x:Bind ((shvs:SettingViewModel)DataContext).Game.DeleteGameWebCacheCommand, Mode=OneWay}"
+                                    Command="{x:Bind DataContext.Game.DeleteGameWebCacheCommand, Mode=OneWay}"
                                     Description="{shuxm:ResourceString Name=ViewPageSettingDeleteCacheDescription}"
                                     Header="{shuxm:ResourceString Name=ViewPageSettingDeleteCacheHeader}"
                                     HeaderIcon="{shuxm:FontIcon Glyph=&#xE74D;}"
@@ -1040,7 +1040,7 @@
                                     Description="{shuxm:ResourceString Name=ViewPageSettingLaunchForceUsingTouchScreenDescription}"
                                     Header="{shuxm:ResourceString Name=ViewPageSettingLaunchForceUsingTouchScreenHeader}"
                                     HeaderIcon="{shuxm:FontIcon Glyph=&#xEDA4;}">
-                                    <wl:LiquidGlassToggleSwitch shuxcth:ControlMaterialState.IsManaged="True" IsOn="{x:Bind ((shvs:SettingViewModel)DataContext).Game.ForceUsingTouchScreenWhenIntegratedTouchPresent, Mode=TwoWay}"/>
+                                    <wl:LiquidGlassToggleSwitch shuxcth:ControlMaterialState.IsManaged="True" IsOn="{x:Bind DataContext.Game.ForceUsingTouchScreenWhenIntegratedTouchPresent, Mode=TwoWay}"/>
                                 </cwc:SettingsCard>
                                 <cwc:SettingsCard
                                     Description="{shuxm:ResourceString Name=ViewPageSettingSpeedLimitDescription}"
@@ -1055,7 +1055,7 @@
                                             VerticalAlignment="Center"
                                             essential:NumberBoxHelper.AcrylicWorkaround="True"
                                             AcceptsExpression="False"
-                                            Value="{x:Bind ((shvs:SettingViewModel)DataContext).Game.AppOptions.DownloadSpeedLimitPerSecondInKiloByte.Value, Mode=TwoWay}"/>
+                                            Value="{x:Bind DataContext.Game.AppOptions.DownloadSpeedLimitPerSecondInKiloByte.Value, Mode=TwoWay}"/>
                                         <TextBlock VerticalAlignment="Center" Text="KB/s (1MB = 1024KB)"/>
                                     </StackPanel>
                                 </cwc:SettingsCard>
@@ -1063,13 +1063,13 @@
                                     Description="{shuxm:ResourceString Name=ViewCardSignInAutoSignInDescription}"
                                     Header="{shuxm:ResourceString Name=ViewCardSignInAutoSignIn}"
                                     HeaderIcon="{shuxm:FontIcon Glyph=&#xEC8F;}">
-                                    <wl:LiquidGlassToggleSwitch shuxcth:ControlMaterialState.IsManaged="True" IsOn="{x:Bind ((shvs:SettingViewModel)DataContext).Game.AutoSignInEnabled, Mode=TwoWay}"/>
+                                    <wl:LiquidGlassToggleSwitch shuxcth:ControlMaterialState.IsManaged="True" IsOn="{x:Bind DataContext.Game.AutoSignInEnabled, Mode=TwoWay}"/>
                                 </cwc:SettingsCard>
                                 <cwc:SettingsCard
                                     Description="{shuxm:ResourceString Name=ViewPageSettingLaunchCloseWhenGameStartedDescription}"
                                     Header="{shuxm:ResourceString Name=ViewPageSettingLaunchCloseWhenGameStartedHeader}"
                                     HeaderIcon="{shuxm:FontIcon Glyph=&#xE8BB;}">
-                                    <wl:LiquidGlassToggleSwitch shuxcth:ControlMaterialState.IsManaged="True" IsOn="{x:Bind ((shvs:SettingViewModel)DataContext).Game.CloseWhenGameStarted, Mode=TwoWay}"/>
+                                    <wl:LiquidGlassToggleSwitch shuxcth:ControlMaterialState.IsManaged="True" IsOn="{x:Bind DataContext.Game.CloseWhenGameStarted, Mode=TwoWay}"/>
                                 </cwc:SettingsCard>
                             </StackPanel>
                         </Border>
@@ -1079,7 +1079,7 @@
                     <Border
                         x:Name="GachaLogBorder"
                         cw:Effects.Shadow="{ThemeResource CompatCardShadow}"
-                        DataContext="{x:Bind ((shvs:SettingViewModel)DataContext).GachaLog, Mode=OneWay}">
+                        DataContext="{x:Bind DataContext.GachaLog, Mode=OneWay}">
                         <Border Padding="16" Style="{ThemeResource AcrylicBorderCardStyle}">
                             <StackPanel Spacing="{ThemeResource SettingsCardSpacing}">
                                 <TextBlock Style="{StaticResource SettingsCardHeaderTextBlockStyle}" Text="{shuxm:ResourceString Name=ViewPageSettingGachaLogHeader}"/>
@@ -1089,7 +1089,7 @@
                                     HeaderIcon="{shuxm:FontIcon Glyph=&#xE8FD;}">
                                     <wl:LiquidGlassToggleSwitch
                                         shuxcth:ControlMaterialState.IsManaged="True"
-                                        IsOn="{x:Bind ((shvs:SettingViewModel)DataContext).GachaLog.AppOptions.IsEmptyOverviewVisible.Value, Mode=TwoWay}"
+                                        IsOn="{x:Bind DataContext.GachaLog.AppOptions.IsEmptyOverviewVisible.Value, Mode=TwoWay}"
                                         OffContent="{shuxm:ResourceString Name=ViewPageSettingEmptyHistoryVisibleOff}"
                                         OnContent="{shuxm:ResourceString Name=ViewPageSettingEmptyHistoryVisibleOn}"/>
                                 </cwc:SettingsCard>
@@ -1099,7 +1099,7 @@
                                     HeaderIcon="{shuxm:FontIcon Glyph=&#xE81C;}">
                                     <wl:LiquidGlassToggleSwitch
                                         shuxcth:ControlMaterialState.IsManaged="True"
-                                        IsOn="{x:Bind ((shvs:SettingViewModel)DataContext).GachaLog.AppOptions.IsEmptyHistoryWishVisible.Value, Mode=TwoWay}"
+                                        IsOn="{x:Bind DataContext.GachaLog.AppOptions.IsEmptyHistoryWishVisible.Value, Mode=TwoWay}"
                                         OffContent="{shuxm:ResourceString Name=ViewPageSettingEmptyHistoryVisibleOff}"
                                         OnContent="{shuxm:ResourceString Name=ViewPageSettingEmptyHistoryVisibleOn}"/>
                                 </cwc:SettingsCard>
@@ -1109,7 +1109,7 @@
                                     HeaderIcon="{shuxm:FontIcon Glyph=&#xE890;}">
                                     <wl:LiquidGlassToggleSwitch
                                         shuxcth:ControlMaterialState.IsManaged="True"
-                                        IsOn="{x:Bind ((shvs:SettingViewModel)DataContext).GachaLog.AppOptions.IsUnobtainedWishItemVisible.Value, Mode=TwoWay}"
+                                        IsOn="{x:Bind DataContext.GachaLog.AppOptions.IsUnobtainedWishItemVisible.Value, Mode=TwoWay}"
                                         OffContent="{shuxm:ResourceString Name=ViewPageSettingEmptyHistoryVisibleOff}"
                                         OnContent="{shuxm:ResourceString Name=ViewPageSettingEmptyHistoryVisibleOn}"/>
                                 </cwc:SettingsCard>
@@ -1126,8 +1126,8 @@
                                             shuxcth:ControlMaterialState.IsManaged="True"
                                             MinWidth="100"
                                             shuxcth:ComboBoxPopupLifetime.IsManaged="True"
-                                            ItemsSource="{x:Bind ((shvs:SettingViewModel)DataContext).GachaLog.UIGFVersions, Mode=OneWay}"
-                                            SelectedIndex="{x:Bind ((shvs:SettingViewModel)DataContext).GachaLog.SelectedUIGFVersionIndex, Mode=TwoWay}">
+                                            ItemsSource="{x:Bind DataContext.GachaLog.UIGFVersions, Mode=OneWay}"
+                                            SelectedIndex="{x:Bind DataContext.GachaLog.SelectedUIGFVersionIndex, Mode=TwoWay}">
                                             <wl:LiquidGlassComboBox.ItemTemplate>
                                                 <DataTemplate x:DataType="shsu:UIGFVersion">
                                                     <TextBlock Text="{Binding Converter={StaticResource UIGFVersionToStringConverter}, Mode=OneWay}"/>
@@ -1136,12 +1136,12 @@
                                         </wl:LiquidGlassComboBox>
                                         <wl:LiquidGlassButton
                                             shuxcth:ControlMaterialState.IsManaged="True"
-                                            Command="{x:Bind ((shvs:SettingViewModel)DataContext).GachaLog.ExportUIGFJsonCommand, Mode=OneWay}"
+                                            Command="{x:Bind DataContext.GachaLog.ExportUIGFJsonCommand, Mode=OneWay}"
                                             Content="{shuxm:ResourceString Name=ViewPageSettingUIGFExportContent}"
                                             Style="{ThemeResource SettingButtonStyle}"/>
                                         <wl:LiquidGlassButton
                                             shuxcth:ControlMaterialState.IsManaged="True"
-                                            Command="{x:Bind ((shvs:SettingViewModel)DataContext).GachaLog.ImportUIGFJsonCommand, Mode=OneWay}"
+                                            Command="{x:Bind DataContext.GachaLog.ImportUIGFJsonCommand, Mode=OneWay}"
                                             Content="{shuxm:ResourceString Name=ViewPageSettingUIGFImportContent}"
                                             Style="{ThemeResource SettingButtonStyle}"/>
                                     </StackPanel>
@@ -1151,7 +1151,7 @@
                     </Border>
 
                     <!--  WebView  -->
-                    <Border cw:Effects.Shadow="{ThemeResource CompatCardShadow}" DataContext="{x:Bind ((shvs:SettingViewModel)DataContext).WebView, Mode=OneWay}">
+                    <Border cw:Effects.Shadow="{ThemeResource CompatCardShadow}" DataContext="{x:Bind DataContext.WebView, Mode=OneWay}">
                         <Border Padding="16" Style="{ThemeResource AcrylicBorderCardStyle}">
                             <StackPanel Spacing="{ThemeResource SettingsCardSpacing}">
                                 <TextBlock Style="{StaticResource SettingsCardHeaderTextBlockStyle}" Text="{shuxm:ResourceString Name=ViewPageSettingWebViewHeader}"/>
@@ -1164,8 +1164,8 @@
                                             shuxcth:ControlMaterialState.IsManaged="True"
                                             shuxcth:ComboBoxPopupLifetime.IsManaged="True"
                                             DisplayMemberPath="Name"
-                                            ItemsSource="{x:Bind ((shvs:SettingViewModel)DataContext).WebView.AppOptions.BridgeShareSaveTypes, Mode=OneWay}"
-                                            SelectedItem="{x:Bind ((shvs:SettingViewModel)DataContext).WebView.SelectedShareSaveType, Mode=TwoWay}"/>
+                                            ItemsSource="{x:Bind DataContext.WebView.AppOptions.BridgeShareSaveTypes, Mode=OneWay}"
+                                            SelectedItem="{x:Bind DataContext.WebView.SelectedShareSaveType, Mode=TwoWay}"/>
                                     </shuxc:SizeRestrictedContentControl>
                                 </cwc:SettingsCard>
                             </StackPanel>

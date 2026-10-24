@@ -21,7 +21,7 @@
     mc:Ignorable="d">
 
     <mxi:Interaction.Behaviors>
-        <shuxb:InvokeCommandOnLoadedBehavior Command="{x:Bind ((shvp:PluginSettingViewModel)DataContext).LoadCommand, Mode=OneWay}"/>
+        <shuxb:InvokeCommandOnLoadedBehavior Command="{x:Bind DataContext.LoadCommand, Mode=OneWay}"/>
     </mxi:Interaction.Behaviors>
 
     <Page.Resources>
@@ -35,7 +35,7 @@
     </Page.Resources>
 
     <Grid x:Name="Root">
-        <shuxc:StandardView ShowCondition="{x:Bind ((shvp:PluginSettingViewModel)DataContext).IsInitialized, Mode=OneWay}">
+        <shuxc:StandardView ShowCondition="{x:Bind DataContext.IsInitialized, Mode=OneWay}">
             <shuxc:StandardView.EmptyContent>
                 <Grid>
                     <ProgressRing
@@ -63,7 +63,7 @@
                             Spacing="12">
                             <wl:LiquidGlassButton
                                 shuxcth:ControlMaterialState.IsManaged="True"
-                                Command="{x:Bind ((shvp:PluginSettingViewModel)DataContext).GoBackCommand, Mode=OneWay}"
+                                Command="{x:Bind DataContext.GoBackCommand, Mode=OneWay}"
                                 Content="{shuxm:ResourceString Name=ViewPagePluginSettingBackButton}"
                                 Style="{StaticResource DefaultButtonStyle}">
                                 <wl:LiquidGlassButton.ContentTemplate>
@@ -79,7 +79,7 @@
                             <TextBlock
                                 VerticalAlignment="Center"
                                 Style="{StaticResource TitleTextBlockStyle}"
-                                Text="{x:Bind ((shvp:PluginSettingViewModel)DataContext).PluginName, Mode=OneWay}"/>
+                                Text="{x:Bind DataContext.PluginName, Mode=OneWay}"/>
 
                             <TextBlock
                                 VerticalAlignment="Center"
@@ -92,7 +92,7 @@
                 <!--  设置列表  -->
                 <Border Grid.Row="1" cw:Effects.Shadow="{ThemeResource CompatCardShadow}">
                     <Grid Style="{ThemeResource AcrylicGridCardStyle}">
-                        <shuxc:StandardView ShowCondition="{x:Bind ((shvp:PluginSettingViewModel)DataContext).Settings.Count, Converter={StaticResource Int32ToBoolConverter}, Mode=OneWay}">
+                        <shuxc:StandardView ShowCondition="{x:Bind DataContext.Settings.Count, Converter={StaticResource Int32ToBoolConverter}, Mode=OneWay}">
                             <shuxc:StandardView.EmptyContent>
                                 <StackPanel
                                     HorizontalAlignment="Center"
@@ -118,7 +118,7 @@
                                     Margin="16"
                                     ItemContainerTransitions="{ThemeResource ListViewLikeThemeTransitions}"
                                     ItemsPanel="{ThemeResource StackPanelSpacing8Template}"
-                                    ItemsSource="{x:Bind ((shvp:PluginSettingViewModel)DataContext).Settings, Mode=OneWay}">
+                                    ItemsSource="{x:Bind DataContext.Settings, Mode=OneWay}">
                                     <ItemsControl.ItemTemplate>
                                         <DataTemplate>
                                             <Border Padding="12" Style="{ThemeResource BorderCardStyle}">

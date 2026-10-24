@@ -158,4 +158,6 @@ public sealed partial class LaunchGamePage : ScopedPage
             }
         }
     }
+
+    public new LaunchGameViewModel DataContext { get => (LaunchGameViewModel)base.DataContext; set => base.DataContext = value; }
 }
