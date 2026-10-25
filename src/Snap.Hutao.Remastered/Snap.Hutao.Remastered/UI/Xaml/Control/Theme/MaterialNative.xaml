@@ -41,23 +41,30 @@
         by the ToggleButton visual states the control actually requests.
     -->
     <ControlTemplate x:Key="MaterialNativeToggleSwitchTemplate" TargetType="wl:LiquidGlassToggleSwitch">
-        <!--  The control's Background is its glass knob brush; the native look must not forward it.  -->
-        <Grid
-            BorderBrush="{TemplateBinding BorderBrush}"
-            BorderThickness="{TemplateBinding BorderThickness}"
-            CornerRadius="{TemplateBinding CornerRadius}">
+        <!--
+            The control's Background is its glass knob brush and ToggleButton's style
+            supplies a border; the native ToggleSwitch look forwards neither.
+        -->
+        <Grid Padding="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
+            <!--
+                Header is an alias for Content on LiquidGlassToggleSwitch, and the
+                control shows or hides this presenter from Content/ContentTemplate in
+                OnApplyTemplate. Bind the same values the glass template uses so a
+                caller that sets either property keeps working.
+            -->
             <ContentPresenter
                 x:Name="HeaderContentPresenter"
                 Grid.Row="0"
                 Margin="{ThemeResource ToggleSwitchTopHeaderMargin}"
                 VerticalAlignment="Top"
-                Content="{TemplateBinding Header}"
-                ContentTemplate="{TemplateBinding HeaderTemplate}"
+                AutomationProperties.AccessibilityView="Raw"
+                Content="{TemplateBinding Content}"
+                ContentTemplate="{TemplateBinding ContentTemplate}"
                 Foreground="{ThemeResource ToggleSwitchHeaderForeground}"
                 IsHitTestVisible="False"
                 TextWrapping="Wrap"
@@ -65,7 +72,7 @@
 
             <Grid
                 Grid.Row="1"
-                HorizontalAlignment="Left"
+                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                 VerticalAlignment="Top">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="{ThemeResource ToggleSwitchPreContentMargin}" />
@@ -93,7 +100,7 @@
                     Width="40"
                     Height="20">
                     <Rectangle
-                        x:Name="OuterBorder"
+                        x:Name="NativeOuterBorder"
                         Width="40"
                         Height="20"
                         Fill="{ThemeResource ToggleSwitchFillOff}"
@@ -102,7 +109,7 @@
                         Stroke="{ThemeResource ToggleSwitchStrokeOff}"
                         StrokeThickness="{ThemeResource ToggleSwitchOuterBorderStrokeThickness}" />
                     <Rectangle
-                        x:Name="SwitchKnobBounds"
+                        x:Name="NativeSwitchKnobBounds"
                         Width="40"
                         Height="20"
                         Fill="{ThemeResource ToggleSwitchFillOn}"
@@ -111,27 +118,41 @@
                         RadiusY="10"
                         Stroke="{ThemeResource ToggleSwitchStrokeOn}"
                         StrokeThickness="{ThemeResource ToggleSwitchOnStrokeThickness}" />
+                    <!--
+                        The names deliberately differ from the glass template's
+                        SwitchKnob/Track/SwitchKnobSurface. The Kube visual model looks
+                        those names up on every template change; reusing them would let
+                        it attach its composition track or knob transform to the native
+                        visuals and leak the glass surface into the default material.
+                    -->
                     <Grid
-                        x:Name="SwitchKnob"
+                        x:Name="NativeSwitchKnob"
                         Width="20"
                         Height="20"
                         HorizontalAlignment="Left">
                         <Border
-                            x:Name="SwitchKnobOn"
+                            x:Name="NativeSwitchKnobOn"
                             Width="12"
                             Height="12"
+                            Margin="0,0,1,0"
+                            HorizontalAlignment="Center"
                             Background="{ThemeResource ToggleSwitchKnobFillOn}"
                             BackgroundSizing="OuterBorderEdge"
                             BorderBrush="{ThemeResource ToggleSwitchKnobStrokeOn}"
                             CornerRadius="7"
                             Opacity="0" />
                         <Rectangle
-                            x:Name="SwitchKnobOff"
+                            x:Name="NativeSwitchKnobOff"
                             Width="12"
                             Height="12"
+                            Margin="-1,0,0,0"
+                            HorizontalAlignment="Center"
                             Fill="{ThemeResource ToggleSwitchKnobFillOff}"
                             RadiusX="7"
                             RadiusY="7" />
+                        <Grid.RenderTransform>
+                            <TranslateTransform x:Name="NativeKnobTranslateTransform" />
+                        </Grid.RenderTransform>
                     </Grid>
                 </Grid>
 
@@ -160,120 +181,184 @@
                 <VisualStateGroup x:Name="CommonStates">
                     <VisualState x:Name="Normal">
                         <VisualState.Setters>
-                            <Setter Target="SwitchKnob.HorizontalAlignment" Value="Left" />
-                            <Setter Target="SwitchKnobBounds.Opacity" Value="0" />
-                            <Setter Target="SwitchKnobOff.Opacity" Value="1" />
-                            <Setter Target="SwitchKnobOn.Opacity" Value="0" />
+                            <Setter Target="NativeOuterBorder.Opacity" Value="1" />
+                            <Setter Target="NativeSwitchKnobBounds.Opacity" Value="0" />
+                            <Setter Target="NativeSwitchKnobOff.Opacity" Value="1" />
+                            <Setter Target="NativeSwitchKnobOn.Opacity" Value="0" />
                             <Setter Target="OffContentPresenter.Opacity" Value="1" />
                             <Setter Target="OnContentPresenter.Opacity" Value="0" />
-                            <Setter Target="OuterBorder.Fill" Value="{ThemeResource ToggleSwitchFillOff}" />
-                            <Setter Target="OuterBorder.Stroke" Value="{ThemeResource ToggleSwitchStrokeOff}" />
-                            <Setter Target="SwitchKnobOff.Fill" Value="{ThemeResource ToggleSwitchKnobFillOff}" />
+                            <Setter Target="NativeOuterBorder.Fill" Value="{ThemeResource ToggleSwitchFillOff}" />
+                            <Setter Target="NativeOuterBorder.Stroke" Value="{ThemeResource ToggleSwitchStrokeOff}" />
+                            <Setter Target="NativeSwitchKnobOff.Fill" Value="{ThemeResource ToggleSwitchKnobFillOff}" />
                         </VisualState.Setters>
+                        <Storyboard>
+                            <DoubleAnimation
+                                Storyboard.TargetName="NativeKnobTranslateTransform"
+                                Storyboard.TargetProperty="X"
+                                To="0"
+                                Duration="0:0:0.167"
+                                EnableDependentAnimation="True" />
+                        </Storyboard>
                     </VisualState>
 
                     <VisualState x:Name="Checked">
                         <VisualState.Setters>
-                            <Setter Target="SwitchKnob.HorizontalAlignment" Value="Right" />
-                            <Setter Target="SwitchKnobBounds.Opacity" Value="1" />
-                            <Setter Target="SwitchKnobOff.Opacity" Value="0" />
-                            <Setter Target="SwitchKnobOn.Opacity" Value="1" />
+                            <Setter Target="NativeOuterBorder.Opacity" Value="0" />
+                            <Setter Target="NativeSwitchKnobBounds.Opacity" Value="1" />
+                            <Setter Target="NativeSwitchKnobOff.Opacity" Value="0" />
+                            <Setter Target="NativeSwitchKnobOn.Opacity" Value="1" />
                             <Setter Target="OffContentPresenter.Opacity" Value="0" />
                             <Setter Target="OnContentPresenter.Opacity" Value="1" />
-                            <Setter Target="SwitchKnobBounds.Fill" Value="{ThemeResource ToggleSwitchFillOn}" />
-                            <Setter Target="SwitchKnobBounds.Stroke" Value="{ThemeResource ToggleSwitchStrokeOn}" />
-                            <Setter Target="SwitchKnobOn.Background" Value="{ThemeResource ToggleSwitchKnobFillOn}" />
+                            <Setter Target="NativeSwitchKnobBounds.Fill" Value="{ThemeResource ToggleSwitchFillOn}" />
+                            <Setter Target="NativeSwitchKnobBounds.Stroke" Value="{ThemeResource ToggleSwitchStrokeOn}" />
+                            <Setter Target="NativeSwitchKnobOn.Background" Value="{ThemeResource ToggleSwitchKnobFillOn}" />
                         </VisualState.Setters>
+                        <Storyboard>
+                            <DoubleAnimation
+                                Storyboard.TargetName="NativeKnobTranslateTransform"
+                                Storyboard.TargetProperty="X"
+                                To="20"
+                                Duration="0:0:0.167"
+                                EnableDependentAnimation="True" />
+                        </Storyboard>
                     </VisualState>
 
                     <VisualState x:Name="PointerOver">
                         <VisualState.Setters>
-                            <Setter Target="SwitchKnob.HorizontalAlignment" Value="Left" />
-                            <Setter Target="SwitchKnobBounds.Opacity" Value="0" />
-                            <Setter Target="SwitchKnobOff.Opacity" Value="1" />
-                            <Setter Target="SwitchKnobOn.Opacity" Value="0" />
+                            <Setter Target="NativeOuterBorder.Opacity" Value="1" />
+                            <Setter Target="NativeSwitchKnobBounds.Opacity" Value="0" />
+                            <Setter Target="NativeSwitchKnobOff.Opacity" Value="1" />
+                            <Setter Target="NativeSwitchKnobOn.Opacity" Value="0" />
                             <Setter Target="OffContentPresenter.Opacity" Value="1" />
                             <Setter Target="OnContentPresenter.Opacity" Value="0" />
-                            <Setter Target="OuterBorder.Fill" Value="{ThemeResource ToggleSwitchFillOffPointerOver}" />
-                            <Setter Target="OuterBorder.Stroke" Value="{ThemeResource ToggleSwitchStrokeOffPointerOver}" />
-                            <Setter Target="SwitchKnobOff.Fill" Value="{ThemeResource ToggleSwitchKnobFillOffPointerOver}" />
+                            <Setter Target="NativeOuterBorder.Fill" Value="{ThemeResource ToggleSwitchFillOffPointerOver}" />
+                            <Setter Target="NativeOuterBorder.Stroke" Value="{ThemeResource ToggleSwitchStrokeOffPointerOver}" />
+                            <Setter Target="NativeSwitchKnobOff.Fill" Value="{ThemeResource ToggleSwitchKnobFillOffPointerOver}" />
                         </VisualState.Setters>
+                        <Storyboard>
+                            <DoubleAnimation
+                                Storyboard.TargetName="NativeKnobTranslateTransform"
+                                Storyboard.TargetProperty="X"
+                                To="0"
+                                Duration="0:0:0.167"
+                                EnableDependentAnimation="True" />
+                        </Storyboard>
                     </VisualState>
 
                     <VisualState x:Name="CheckedPointerOver">
                         <VisualState.Setters>
-                            <Setter Target="SwitchKnob.HorizontalAlignment" Value="Right" />
-                            <Setter Target="SwitchKnobBounds.Opacity" Value="1" />
-                            <Setter Target="SwitchKnobOff.Opacity" Value="0" />
-                            <Setter Target="SwitchKnobOn.Opacity" Value="1" />
+                            <Setter Target="NativeOuterBorder.Opacity" Value="0" />
+                            <Setter Target="NativeSwitchKnobBounds.Opacity" Value="1" />
+                            <Setter Target="NativeSwitchKnobOff.Opacity" Value="0" />
+                            <Setter Target="NativeSwitchKnobOn.Opacity" Value="1" />
                             <Setter Target="OffContentPresenter.Opacity" Value="0" />
                             <Setter Target="OnContentPresenter.Opacity" Value="1" />
-                            <Setter Target="SwitchKnobBounds.Fill" Value="{ThemeResource ToggleSwitchFillOnPointerOver}" />
-                            <Setter Target="SwitchKnobBounds.Stroke" Value="{ThemeResource ToggleSwitchStrokeOnPointerOver}" />
-                            <Setter Target="SwitchKnobOn.Background" Value="{ThemeResource ToggleSwitchKnobFillOnPointerOver}" />
+                            <Setter Target="NativeSwitchKnobBounds.Fill" Value="{ThemeResource ToggleSwitchFillOnPointerOver}" />
+                            <Setter Target="NativeSwitchKnobBounds.Stroke" Value="{ThemeResource ToggleSwitchStrokeOnPointerOver}" />
+                            <Setter Target="NativeSwitchKnobOn.Background" Value="{ThemeResource ToggleSwitchKnobFillOnPointerOver}" />
                         </VisualState.Setters>
+                        <Storyboard>
+                            <DoubleAnimation
+                                Storyboard.TargetName="NativeKnobTranslateTransform"
+                                Storyboard.TargetProperty="X"
+                                To="20"
+                                Duration="0:0:0.167"
+                                EnableDependentAnimation="True" />
+                        </Storyboard>
                     </VisualState>
 
                     <VisualState x:Name="Pressed">
                         <VisualState.Setters>
-                            <Setter Target="SwitchKnob.HorizontalAlignment" Value="Left" />
-                            <Setter Target="SwitchKnobBounds.Opacity" Value="0" />
-                            <Setter Target="SwitchKnobOff.Opacity" Value="1" />
-                            <Setter Target="SwitchKnobOn.Opacity" Value="0" />
+                            <Setter Target="NativeOuterBorder.Opacity" Value="1" />
+                            <Setter Target="NativeSwitchKnobBounds.Opacity" Value="0" />
+                            <Setter Target="NativeSwitchKnobOff.Opacity" Value="1" />
+                            <Setter Target="NativeSwitchKnobOn.Opacity" Value="0" />
                             <Setter Target="OffContentPresenter.Opacity" Value="1" />
                             <Setter Target="OnContentPresenter.Opacity" Value="0" />
-                            <Setter Target="OuterBorder.Fill" Value="{ThemeResource ToggleSwitchFillOffPressed}" />
-                            <Setter Target="OuterBorder.Stroke" Value="{ThemeResource ToggleSwitchStrokeOffPressed}" />
-                            <Setter Target="SwitchKnobOff.Fill" Value="{ThemeResource ToggleSwitchKnobFillOffPressed}" />
+                            <Setter Target="NativeOuterBorder.Fill" Value="{ThemeResource ToggleSwitchFillOffPressed}" />
+                            <Setter Target="NativeOuterBorder.Stroke" Value="{ThemeResource ToggleSwitchStrokeOffPressed}" />
+                            <Setter Target="NativeSwitchKnobOff.Fill" Value="{ThemeResource ToggleSwitchKnobFillOffPressed}" />
                         </VisualState.Setters>
+                        <Storyboard>
+                            <DoubleAnimation
+                                Storyboard.TargetName="NativeKnobTranslateTransform"
+                                Storyboard.TargetProperty="X"
+                                To="0"
+                                Duration="0:0:0.167"
+                                EnableDependentAnimation="True" />
+                        </Storyboard>
                     </VisualState>
 
                     <VisualState x:Name="CheckedPressed">
                         <VisualState.Setters>
-                            <Setter Target="SwitchKnob.HorizontalAlignment" Value="Right" />
-                            <Setter Target="SwitchKnobBounds.Opacity" Value="1" />
-                            <Setter Target="SwitchKnobOff.Opacity" Value="0" />
-                            <Setter Target="SwitchKnobOn.Opacity" Value="1" />
+                            <Setter Target="NativeOuterBorder.Opacity" Value="0" />
+                            <Setter Target="NativeSwitchKnobBounds.Opacity" Value="1" />
+                            <Setter Target="NativeSwitchKnobOff.Opacity" Value="0" />
+                            <Setter Target="NativeSwitchKnobOn.Opacity" Value="1" />
                             <Setter Target="OffContentPresenter.Opacity" Value="0" />
                             <Setter Target="OnContentPresenter.Opacity" Value="1" />
-                            <Setter Target="SwitchKnobBounds.Fill" Value="{ThemeResource ToggleSwitchFillOnPressed}" />
-                            <Setter Target="SwitchKnobBounds.Stroke" Value="{ThemeResource ToggleSwitchStrokeOnPressed}" />
-                            <Setter Target="SwitchKnobOn.Background" Value="{ThemeResource ToggleSwitchKnobFillOnPressed}" />
+                            <Setter Target="NativeSwitchKnobBounds.Fill" Value="{ThemeResource ToggleSwitchFillOnPressed}" />
+                            <Setter Target="NativeSwitchKnobBounds.Stroke" Value="{ThemeResource ToggleSwitchStrokeOnPressed}" />
+                            <Setter Target="NativeSwitchKnobOn.Background" Value="{ThemeResource ToggleSwitchKnobFillOnPressed}" />
                         </VisualState.Setters>
+                        <Storyboard>
+                            <DoubleAnimation
+                                Storyboard.TargetName="NativeKnobTranslateTransform"
+                                Storyboard.TargetProperty="X"
+                                To="20"
+                                Duration="0:0:0.167"
+                                EnableDependentAnimation="True" />
+                        </Storyboard>
                     </VisualState>
 
                     <VisualState x:Name="Disabled">
                         <VisualState.Setters>
-                            <Setter Target="SwitchKnob.HorizontalAlignment" Value="Left" />
-                            <Setter Target="SwitchKnobBounds.Opacity" Value="0" />
-                            <Setter Target="SwitchKnobOff.Opacity" Value="1" />
-                            <Setter Target="SwitchKnobOn.Opacity" Value="0" />
+                            <Setter Target="NativeOuterBorder.Opacity" Value="1" />
+                            <Setter Target="NativeSwitchKnobBounds.Opacity" Value="0" />
+                            <Setter Target="NativeSwitchKnobOff.Opacity" Value="1" />
+                            <Setter Target="NativeSwitchKnobOn.Opacity" Value="0" />
                             <Setter Target="OffContentPresenter.Opacity" Value="1" />
                             <Setter Target="OnContentPresenter.Opacity" Value="0" />
-                            <Setter Target="OuterBorder.Fill" Value="{ThemeResource ToggleSwitchFillOffDisabled}" />
-                            <Setter Target="OuterBorder.Stroke" Value="{ThemeResource ToggleSwitchStrokeOffDisabled}" />
-                            <Setter Target="SwitchKnobOff.Fill" Value="{ThemeResource ToggleSwitchKnobFillOffDisabled}" />
+                            <Setter Target="NativeOuterBorder.Fill" Value="{ThemeResource ToggleSwitchFillOffDisabled}" />
+                            <Setter Target="NativeOuterBorder.Stroke" Value="{ThemeResource ToggleSwitchStrokeOffDisabled}" />
+                            <Setter Target="NativeSwitchKnobOff.Fill" Value="{ThemeResource ToggleSwitchKnobFillOffDisabled}" />
                             <Setter Target="HeaderContentPresenter.Foreground" Value="{ThemeResource ToggleSwitchHeaderForegroundDisabled}" />
                             <Setter Target="OffContentPresenter.Foreground" Value="{ThemeResource ToggleSwitchContentForegroundDisabled}" />
                             <Setter Target="OnContentPresenter.Foreground" Value="{ThemeResource ToggleSwitchContentForegroundDisabled}" />
                         </VisualState.Setters>
+                        <Storyboard>
+                            <DoubleAnimation
+                                Storyboard.TargetName="NativeKnobTranslateTransform"
+                                Storyboard.TargetProperty="X"
+                                To="0"
+                                Duration="0:0:0.167"
+                                EnableDependentAnimation="True" />
+                        </Storyboard>
                     </VisualState>
 
                     <VisualState x:Name="CheckedDisabled">
                         <VisualState.Setters>
-                            <Setter Target="SwitchKnob.HorizontalAlignment" Value="Right" />
-                            <Setter Target="SwitchKnobBounds.Opacity" Value="1" />
-                            <Setter Target="SwitchKnobOff.Opacity" Value="0" />
-                            <Setter Target="SwitchKnobOn.Opacity" Value="1" />
+                            <Setter Target="NativeOuterBorder.Opacity" Value="0" />
+                            <Setter Target="NativeSwitchKnobBounds.Opacity" Value="1" />
+                            <Setter Target="NativeSwitchKnobOff.Opacity" Value="0" />
+                            <Setter Target="NativeSwitchKnobOn.Opacity" Value="1" />
                             <Setter Target="OffContentPresenter.Opacity" Value="0" />
                             <Setter Target="OnContentPresenter.Opacity" Value="1" />
-                            <Setter Target="SwitchKnobBounds.Fill" Value="{ThemeResource ToggleSwitchFillOnDisabled}" />
-                            <Setter Target="SwitchKnobBounds.Stroke" Value="{ThemeResource ToggleSwitchStrokeOnDisabled}" />
-                            <Setter Target="SwitchKnobOn.Background" Value="{ThemeResource ToggleSwitchKnobFillOnDisabled}" />
+                            <Setter Target="NativeSwitchKnobBounds.Fill" Value="{ThemeResource ToggleSwitchFillOnDisabled}" />
+                            <Setter Target="NativeSwitchKnobBounds.Stroke" Value="{ThemeResource ToggleSwitchStrokeOnDisabled}" />
+                            <Setter Target="NativeSwitchKnobOn.Background" Value="{ThemeResource ToggleSwitchKnobFillOnDisabled}" />
                             <Setter Target="HeaderContentPresenter.Foreground" Value="{ThemeResource ToggleSwitchHeaderForegroundDisabled}" />
                             <Setter Target="OffContentPresenter.Foreground" Value="{ThemeResource ToggleSwitchContentForegroundDisabled}" />
                             <Setter Target="OnContentPresenter.Foreground" Value="{ThemeResource ToggleSwitchContentForegroundDisabled}" />
                         </VisualState.Setters>
+                        <Storyboard>
+                            <DoubleAnimation
+                                Storyboard.TargetName="NativeKnobTranslateTransform"
+                                Storyboard.TargetProperty="X"
+                                To="20"
+                                Duration="0:0:0.167"
+                                EnableDependentAnimation="True" />
+                        </Storyboard>
                     </VisualState>
                 </VisualStateGroup>
             </VisualStateManager.VisualStateGroups>
@@ -281,8 +366,18 @@
     </ControlTemplate>
 
     <Style x:Key="MaterialNativeToggleSwitchStyle" TargetType="wl:LiquidGlassToggleSwitch" BasedOn="{StaticResource DefaultToggleButtonStyle}">
+        <!--  Match the glass style's geometry so a material change does not reflow the control.  -->
+        <Setter Property="MinWidth" Value="0" />
+        <Setter Property="MinHeight" Value="0" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="HorizontalContentAlignment" Value="Left" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="Foreground" Value="{ThemeResource ToggleSwitchContentForeground}" />
         <Setter Property="FontFamily" Value="{StaticResource MiSans}" />
+        <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}" />
         <Setter Property="Template" Value="{StaticResource MaterialNativeToggleSwitchTemplate}" />
     </Style>
 </ResourceDictionary>

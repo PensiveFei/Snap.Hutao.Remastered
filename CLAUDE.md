@@ -267,6 +267,13 @@ the build fails with `CS9275`); write a normal constructor in that case.
   style, and clears the glass brush; in the liquid-glass material it restores the caller style and
   the glass brush. **Do not** reintroduce `cwc:SwitchPresenter` material trees, mirrored
   `x:Bind …Glass` properties, `ThemeSynchronization`, or a second control instance.
+- **Captured appearance survives an unload** — `MaterialAppearance` keeps the caller style and the
+  control's own glass brush in a `ConditionalWeakTable` keyed by the control and only removes the
+  control from the refresh set in `Release`. Re-capturing on the next `Loaded` would record the
+  `MaterialNative{Kind}Style` that `ApplyCore` assigned as if the caller had set it, and the control
+  could never return to glass. An `Unloaded` that arrives after a newer `Loaded` is ignored with an
+  `IsLoaded` guard, matching the guard in the glass visual model
+  (`microsoft/microsoft-ui-xaml#8402`).
 - **The glass brush lives in `Background`** — a liquid-glass control assigns its `GlassBrush` to its
   own `Background` in its constructor and its glass template only forwards that local value. A
   template that forwards `Background` therefore paints the composition brush (or nothing) instead
@@ -279,6 +286,13 @@ the build fails with `CS9275`); write a normal constructor in that case.
   silently stays on the previous page). Use `MaterialNativeToggleSwitchStyle` plus the
   `Checked`/`Unchecked` events, and target behaviors at a base type the glass control satisfies
   (see `ToggleSwitchHeaderHitTestVisibleBehavior`).
+- **The native toggle template must not reuse the glass element names** — `KubeToggleSwitchVisualModel`
+  looks up `SwitchKnob`, `SwitchKnobSurface` and `Track` by exact name on every template change.
+  Naming the native template's elements the same way lets the glass model attach its knob
+  translation/scale and composition track to the native switch, which leaves a glass-like surface
+  behind in the default material. Prefix the native names (`NativeSwitchKnob`, …). `ToggleButton`
+  never drives the native `ToggleSwitch`'s `ToggleStates`, so the knob movement lives in the
+  `CommonStates` Storyboards as a `TranslateTransform.X` animation.
 - **`shuxcth:MaterialSwap` hosts the kinds that cannot be restyled in place** — `Slider`,
   `PasswordBox` and `SearchBox` glass types hide the native thumb or paint an inner control, so
   those sites declare `MaterialSwap.Native` and `MaterialSwap.Glass` children. Keep event handlers
@@ -502,6 +516,7 @@ ID — do not "fix" these by documenting them as if they were intended.
 
 | Date | Change |
 |---|---|
+| 2026-10-25 | Kept captured material appearance across unload/reload (`ConditionalWeakTable`) and ignored stale `Unloaded` events; removed the ToggleButton border/padding from the native toggle-switch template and bound its header through the control's Content alias; gave the native toggle its own element names and restored the knob `TranslateTransform` slide animation; documented all of it in §5.3. |
 | 2026-10-24 | Replaced the cwc:SwitchPresenter material trees (317 blocks) with single glass instances plus MaterialAppearance/MaterialNative.xaml style-and-background switching; MaterialSwap for slider/password/search; documented the glass-brush, caller-background and ToggleSwitch/behavior rules in §5.3. |
 | 2026-10-24 | Removed the 921 `x:Bind ((vm:Type)DataContext)` casts: every binding view now declares one typed `DataContext` shadow property (§6); documented that `DataContext` stays a dependency property so one-way tracking is unchanged. |
 | 2026-10-20 | Enabled default R2R for Debug and Release; connected the SDK-selected images to local runnable output and MSIX deployment, switched all Cake packaging inputs to publish output, and added final-image header validation. |

@@ -2,8 +2,9 @@
 // Licensed under the MIT license.
 
 using Microsoft.UI.Xaml;
-using System.Diagnostics;
 using Microsoft.UI.Xaml.Media;
+using System.Diagnostics;
+using System.Runtime.CompilerServices;
 using WinUI.Composition.Hlsl;
 using XamlControl = Microsoft.UI.Xaml.Controls.Control;
 
@@ -19,12 +20,60 @@ internal static class MaterialAppearance
 {
     private const string StylePrefix = "MaterialNative";
 
-    private static readonly Dictionary<FrameworkElement, ElementState> MaterialControls = [];
+    // The appearance the caller handed the control must outlive an unload: Release
+    // leaves the native style assigned by ApplyCore on the element, so capturing it
+    // again on the next Loaded would make the native style look like the caller's own
+    // and the control could never return to glass. The table follows the control, so
+    // a detached control is still collectible.
+    private static readonly ConditionalWeakTable<FrameworkElement, ElementState> States = new();
+
+    // Controls that are currently in the visual tree. Only these are refreshed when
+    // the material changes; an unloaded control is refreshed by the next Track.
+    private static readonly HashSet<FrameworkElement> TrackedControls = [];
 
     internal static void Track(FrameworkElement element)
     {
-        if (MaterialControls.ContainsKey(element)) return;
+        if (TrackedControls.Add(element))
+        {
+            States.GetValue(element, static key => CaptureState(key));
+        }
 
+        // Loaded can be raised again for an instance whose appearance we already
+        // captured. Apply the current material instead of replacing the captured
+        // caller style with the native style we assigned.
+        Apply(element);
+    }
+
+    internal static void Release(FrameworkElement element)
+    {
+        TrackedControls.Remove(element);
+        if (!States.TryGetValue(element, out ElementState? state)) return;
+        if (state.BackgroundToken == 0) return;
+        if (element is XamlControl control)
+        {
+            control.UnregisterPropertyChangedCallback(XamlControl.BackgroundProperty, state.BackgroundToken);
+        }
+
+        // ApplyCore registers the callback again when the control is tracked in the
+        // native material after a reload.
+        state.BackgroundToken = 0;
+    }
+
+    internal static void RefreshAll()
+    {
+        if (XamlApplicationLifetime.Exiting) return;
+
+        // Do not filter on IsLoaded here. WinUI can report false for an element that
+        // is still in the tree while Loaded/Unloaded are being reordered; skipping it
+        // would leave that control in the previous material until its next reload.
+        foreach (FrameworkElement element in TrackedControls.ToArray())
+        {
+            Apply(element);
+        }
+    }
+
+    private static ElementState CaptureState(FrameworkElement element)
+    {
         // Capture what the glass control was handed by its own constructor. Every
         // LiquidGlass control assigns its GlassBrush to Background while it is created
         // and its glass template only forwards that local value, so the native
@@ -44,35 +93,13 @@ internal static class MaterialAppearance
             }
         }
 
-        MaterialControls[element] = new()
+        return new()
         {
             HasLocalStyle = hasLocalStyle,
             CallerSetsBackground = hasLocalStyle && styleSetsBackground,
             OriginalStyle = originalStyle,
             GlassBackground = glassBackground,
         };
-
-        Apply(element);
-    }
-
-    internal static void Release(FrameworkElement element)
-    {
-        if (!MaterialControls.Remove(element, out ElementState? state)) return;
-        if (state.BackgroundToken == 0) return;
-        if (element is XamlControl control)
-        {
-            control.UnregisterPropertyChangedCallback(XamlControl.BackgroundProperty, state.BackgroundToken);
-        }
-    }
-
-    internal static void RefreshAll()
-    {
-        if (XamlApplicationLifetime.Exiting) return;
-
-        foreach (FrameworkElement element in MaterialControls.Keys.ToArray())
-        {
-            Apply(element);
-        }
     }
 
     private static void Apply(FrameworkElement element)
@@ -93,7 +120,7 @@ internal static class MaterialAppearance
     {
         if (XamlApplicationLifetime.Exiting) return;
         if (element is not XamlControl control) return;
-        if (!MaterialControls.TryGetValue(element, out ElementState? state)) return;
+        if (!States.TryGetValue(element, out ElementState? state)) return;
 
         // These kinds cannot be restyled in place: the glass slider hides the native
         // thumb and paints its own lens, the password/search boxes paint an inner

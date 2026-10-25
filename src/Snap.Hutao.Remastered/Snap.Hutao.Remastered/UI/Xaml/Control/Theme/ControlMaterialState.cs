@@ -2,7 +2,6 @@
 // Licensed under the MIT license.
 
 using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Data;
 using Snap.Hutao.Remastered.Core.Setting;
 using Snap.Hutao.Remastered.Core.Property;
 using System.Runtime.CompilerServices;
@@ -474,7 +473,11 @@ public sealed partial class ControlMaterialState : DependencyObject
             element.Unloaded += OnManagedUnloaded;
             if (element.IsLoaded) OnManagedLoaded(element, new RoutedEventArgs());
         }
-        else ManagedControls.Remove(element);
+        else
+        {
+            ManagedControls.Remove(element);
+            MaterialAppearance.Release(element);
+        }
     }
 
     private static void OnManagedLoaded(object sender, RoutedEventArgs args)
@@ -514,11 +517,16 @@ public sealed partial class ControlMaterialState : DependencyObject
     // Detach without writing composition properties while the brush is disconnecting.
     private static void OnManagedUnloaded(object sender, RoutedEventArgs args)
     {
-        if (sender is FrameworkElement element)
-        {
-            ManagedControls.Remove(element);
-            MaterialAppearance.Release(element);
-        }
+        if (sender is not FrameworkElement element) return;
+
+        // WinUI can deliver Unloaded after the element has already been loaded again
+        // (a ContentDialog re-parents its content, flyouts move it). The newer Loaded
+        // has re-established the tracking, so tearing it down here would leave the
+        // control without material updates. Same guard as the glass visual model.
+        if (element.IsLoaded) return;
+
+        ManagedControls.Remove(element);
+        MaterialAppearance.Release(element);
     }
 
     internal static string LibraryKind(FrameworkElement element)
