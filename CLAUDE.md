@@ -267,6 +267,15 @@ the build fails with `CS9275`); write a normal constructor in that case.
   style, and clears the glass brush; in the liquid-glass material it restores the caller style and
   the glass brush. **Do not** reintroduce `cwc:SwitchPresenter` material trees, mirrored
   `x:Bind …Glass` properties, `ThemeSynchronization`, or a second control instance.
+- **Native styles must not override the font** — a `MaterialNative{Kind}Style` stays based on the
+  framework default style and must not set `FontFamily`. The glass default styles use the framework
+  font, so forcing `MiSans` only in the native material changed control content fonts when the
+  material switched. A caller style that genuinely wants another font still sets it locally.
+- **Glass pointer motion lives on the control, not the template** — `PointerMotionHelper` writes
+  `Scale`/`Translation` on the control element itself, so swapping in a native style does not stop a
+  glass button's float/sway. `MaterialAppearance` neutralizes `RestScale`, `PointerOverScale`,
+  `PressedScale`, `FocusedScale`, `Elasticity` and `PointerDisplacement`, stops the composition
+  animations in the native material, and restores the values captured at load when glass returns.
 - **Captured appearance survives an unload** — `MaterialAppearance` keeps the caller style and the
   control's own glass brush in a `ConditionalWeakTable` keyed by the control and only removes the
   control from the refresh set in `Release`. Re-capturing on the next `Loaded` would record the
@@ -516,7 +525,7 @@ ID — do not "fix" these by documenting them as if they were intended.
 
 | Date | Change |
 |---|---|
-| 2026-10-25 | Kept captured material appearance across unload/reload (`ConditionalWeakTable`) and ignored stale `Unloaded` events; removed the ToggleButton border/padding from the native toggle-switch template and bound its header through the control's Content alias; gave the native toggle its own element names and restored the knob `TranslateTransform` slide animation; documented all of it in §5.3. |
+| 2026-10-25 | Kept captured material appearance across unload/reload (`ConditionalWeakTable`) and ignored stale `Unloaded` events; removed the ToggleButton border/padding from the native toggle-switch template and bound its header through the control's Content alias; gave the native toggle its own element names and restored the knob `TranslateTransform` slide animation; made native styles stop overriding `FontFamily`; synchronized both `MaterialSwap` slider instances in the reliquary score dialog; neutralized `PointerMotionHelper` scale/translation and pointer lighting in the native material and restored them on glass; documented all of it in §5.3. |
 | 2026-10-24 | Replaced the cwc:SwitchPresenter material trees (317 blocks) with single glass instances plus MaterialAppearance/MaterialNative.xaml style-and-background switching; MaterialSwap for slider/password/search; documented the glass-brush, caller-background and ToggleSwitch/behavior rules in §5.3. |
 | 2026-10-24 | Removed the 921 `x:Bind ((vm:Type)DataContext)` casts: every binding view now declares one typed `DataContext` shadow property (§6); documented that `DataContext` stays a dependency property so one-way tracking is unchanged. |
 | 2026-10-20 | Enabled default R2R for Debug and Release; connected the SDK-selected images to local runnable output and MSIX deployment, switched all Cake packaging inputs to publish output, and added final-image header validation. |

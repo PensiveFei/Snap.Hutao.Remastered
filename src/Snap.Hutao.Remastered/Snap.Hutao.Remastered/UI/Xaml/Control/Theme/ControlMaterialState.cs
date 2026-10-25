@@ -206,6 +206,7 @@ public sealed partial class ControlMaterialState : DependencyObject
         ForEachState(state => state.UpdateSelection());
         if (changed) LiquidGlassProfiles.NotifySelectionChanged();
         MaterialAppearance.RefreshAll();
+        RefreshManagedInteractions();
         MaterialChanged?.Invoke();
     }
 
@@ -559,8 +560,9 @@ public sealed partial class ControlMaterialState : DependencyObject
     private static void ApplyControlSettings(FrameworkElement element)
     {
         LiquidGlassProfile profile = LiquidGlassProfiles.Get(LibraryKind(element));
-        LiquidGlassInteraction.SetPointerLightingEnabled(element, profile.PointerLightingEnabled);
-        LiquidGlassInteraction.SetPointerLightInfluence(element, profile.PointerLightInfluence);
+        bool glass = MaterialAppearance.IsGlass(element);
+        LiquidGlassInteraction.SetPointerLightingEnabled(element, glass && profile.PointerLightingEnabled);
+        LiquidGlassInteraction.SetPointerLightInfluence(element, glass ? profile.PointerLightInfluence : 0.0);
         if (element is LiquidGlassToggleSwitch toggleSwitch)
         {
             toggleSwitch.SwitchScale = profile.SwitchScale;

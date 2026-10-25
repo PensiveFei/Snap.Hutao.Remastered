@@ -1,11 +1,15 @@
 // Copyright (c) Millennium-Science-Technology-R&D-Inst. All rights reserved.
 // Licensed under the MIT license.
 
+using Microsoft.UI.Composition;
 using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Hosting;
 using Microsoft.UI.Xaml.Media;
 using System.Diagnostics;
+using System.Numerics;
 using System.Runtime.CompilerServices;
 using WinUI.Composition.Hlsl;
+using WinUI.LiquidGlass;
 using XamlControl = Microsoft.UI.Xaml.Controls.Control;
 
 namespace Snap.Hutao.Remastered.UI.Xaml.Control.Theme;
@@ -20,15 +24,8 @@ internal static class MaterialAppearance
 {
     private const string StylePrefix = "MaterialNative";
 
-    // The appearance the caller handed the control must outlive an unload: Release
-    // leaves the native style assigned by ApplyCore on the element, so capturing it
-    // again on the next Loaded would make the native style look like the caller's own
-    // and the control could never return to glass. The table follows the control, so
-    // a detached control is still collectible.
     private static readonly ConditionalWeakTable<FrameworkElement, ElementState> States = new();
 
-    // Controls that are currently in the visual tree. Only these are refreshed when
-    // the material changes; an unloaded control is refreshed by the next Track.
     private static readonly HashSet<FrameworkElement> TrackedControls = [];
 
     internal static void Track(FrameworkElement element)
@@ -38,9 +35,6 @@ internal static class MaterialAppearance
             States.GetValue(element, static key => CaptureState(key));
         }
 
-        // Loaded can be raised again for an instance whose appearance we already
-        // captured. Apply the current material instead of replacing the captured
-        // caller style with the native style we assigned.
         Apply(element);
     }
 
@@ -93,12 +87,21 @@ internal static class MaterialAppearance
             }
         }
 
+        MotionSettings motion = new(
+            LiquidGlassInteraction.GetRestScale(element),
+            LiquidGlassInteraction.GetPointerOverScale(element),
+            LiquidGlassInteraction.GetPressedScale(element),
+            LiquidGlassInteraction.GetFocusedScale(element),
+            LiquidGlassInteraction.GetElasticity(element),
+            LiquidGlassInteraction.GetPointerDisplacement(element));
+
         return new()
         {
             HasLocalStyle = hasLocalStyle,
             CallerSetsBackground = hasLocalStyle && styleSetsBackground,
             OriginalStyle = originalStyle,
             GlassBackground = glassBackground,
+            Motion = motion,
         };
     }
 
@@ -110,8 +113,6 @@ internal static class MaterialAppearance
         }
         catch (Exception ex) when (ex is not System.OutOfMemoryException)
         {
-            // Restyling runs from Loaded/Unloaded handlers, so an escaping exception would
-            // surface as an application-wide unhandled error and take the page down.
             Trace.WriteLine($"Material appearance failed for {element.GetType().Name}: {ex}");
         }
     }
@@ -122,12 +123,6 @@ internal static class MaterialAppearance
         if (element is not XamlControl control) return;
         if (!States.TryGetValue(element, out ElementState? state)) return;
 
-        // These kinds cannot be restyled in place: the glass slider hides the native
-        // thumb and paints its own lens, the password/search boxes paint an inner
-        // control, and applying a framework hyperlink style to LiquidGlassHyperlinkButton
-        // ends in a fatal stowed exception (0xC000027B) as soon as the debugger surfaces
-        // the framework style's FontFamily setter. Their sites host both controls through
-        // MaterialSwap instead.
         switch (ControlMaterialState.LibraryKind(element))
         {
             case "Slider":
@@ -146,8 +141,6 @@ internal static class MaterialAppearance
 
             if (state.CallerSetsBackground)
             {
-                // The caller style already paints this control. Painting the glass
-                // composition brush over it would hide the accent/danger fill.
                 if (control.ReadLocalValue(XamlControl.BackgroundProperty) is LiquidGlassBrush)
                 {
                     control.ClearValue(XamlControl.BackgroundProperty);
@@ -155,8 +148,6 @@ internal static class MaterialAppearance
             }
             else if (state.GlassBackground is { } glassBackground)
             {
-                // A caller-assigned local Background (a bound brush) owns the surface in
-                // both materials; only the brush the control handed itself is restored.
                 object local = control.ReadLocalValue(XamlControl.BackgroundProperty);
                 if (local == DependencyProperty.UnsetValue || local is LiquidGlassBrush)
                 {
@@ -164,12 +155,10 @@ internal static class MaterialAppearance
                 }
             }
 
+            ApplyMotion(element, state, true);
             return;
         }
 
-        // A caller-provided style already describes the native control (the styles in
-        // this app derive from the framework default style), so keep it and only take
-        // the glass brush away. Only the implicit glass style has to be replaced.
         if (!state.HasLocalStyle)
         {
             string key = StylePrefix + ControlMaterialState.LibraryKind(element) + "Style";
@@ -181,9 +170,6 @@ internal static class MaterialAppearance
                 }
                 catch (ArgumentException ex)
                 {
-                    // A framework style can fail while it resolves its own setters (a
-                    // missing font resource surfaces as an invalid FontFamily). Never
-                    // let one control take the whole page down.
                     Trace.WriteLine($"Material style {key} failed for {element.GetType().Name}: {ex.Message}");
                 }
             }
@@ -216,6 +202,53 @@ internal static class MaterialAppearance
                     }
                 });
         }
+
+        ApplyMotion(element, state, false);
+    }
+
+    /// <summary>
+    /// The glass library applies scale/translation springs to the control element itself
+    /// (PointerMotionHelper), not to its template. Replacing the style therefore leaves
+    /// the native button floating and swaying under the pointer. Neutralize those inputs
+    /// in the native material and restore the captured glass values when it comes back.
+    /// </summary>
+    private static void ApplyMotion(FrameworkElement element, ElementState state, bool glass)
+    {
+        if (state.AppliedMotionGlass == glass) return;
+        bool? previous = state.AppliedMotionGlass;
+
+        MotionSettings motion = glass ? state.Motion : NeutralMotion;
+        LiquidGlassInteraction.SetRestScale(element, motion.RestScale);
+        LiquidGlassInteraction.SetPointerOverScale(element, motion.PointerOverScale);
+        LiquidGlassInteraction.SetPressedScale(element, motion.PressedScale);
+        LiquidGlassInteraction.SetFocusedScale(element, motion.FocusedScale);
+        LiquidGlassInteraction.SetElasticity(element, motion.Elasticity);
+        LiquidGlassInteraction.SetPointerDisplacement(element, motion.PointerDisplacement);
+
+        if (!glass)
+        {
+            ResetMotion(element, Vector3.One);
+            state.AppliedMotionGlass = glass;
+            return;
+        }
+
+        if (previous == false)
+        {
+            float rest = (float)motion.RestScale;
+            ResetMotion(element, new Vector3(rest, rest, 1.0f));
+        }
+
+        state.AppliedMotionGlass = glass;
+    }
+
+    private static void ResetMotion(FrameworkElement element, Vector3 scale)
+    {
+        Visual visual = ElementCompositionPreview.GetElementVisual(element);
+        visual.StopAnimation("Scale");
+        visual.StopAnimation("Translation");
+        visual.Scale = scale;
+        element.Scale = scale;
+        element.Translation = Vector3.Zero;
     }
 
     private static bool StyleSetsBackground(Style? style)
@@ -231,7 +264,7 @@ internal static class MaterialAppearance
         return false;
     }
 
-    private static bool IsGlass(FrameworkElement element)
+    internal static bool IsGlass(FrameworkElement element)
     {
         // A pinned profile renders glass regardless of the selected material. Preview
         // surfaces and card hosts opt in this way and must not be restyled.
@@ -257,12 +290,24 @@ internal static class MaterialAppearance
         return null;
     }
 
+    private readonly record struct MotionSettings(
+        double RestScale,
+        double PointerOverScale,
+        double PressedScale,
+        double FocusedScale,
+        double Elasticity,
+        double PointerDisplacement);
+
+    private static readonly MotionSettings NeutralMotion = new(1.0, 1.0, 1.0, 1.0, 0.0, 0.0);
+
     private sealed class ElementState
     {
         public required bool HasLocalStyle { get; init; }
         public required bool CallerSetsBackground { get; init; }
+        public required MotionSettings Motion { get; init; }
         public Style? OriginalStyle { get; init; }
         public Brush? GlassBackground { get; set; }
         public long BackgroundToken { get; set; }
+        public bool? AppliedMotionGlass { get; set; }
     }
 }

@@ -10,29 +10,18 @@
 <ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:shuxdc="using:Snap.Hutao.Remastered.UI.Xaml.Data.Converter"
     xmlns:wl="using:WinUI.LiquidGlass">
 
-    <Style x:Key="MaterialNativeButtonStyle" TargetType="Button" BasedOn="{StaticResource DefaultButtonStyle}">
-        <Setter Property="FontFamily" Value="{StaticResource MiSans}" />
-    </Style>
-    <Style x:Key="MaterialNativeToggleButtonStyle" TargetType="ToggleButton" BasedOn="{StaticResource DefaultToggleButtonStyle}">
-        <Setter Property="FontFamily" Value="{StaticResource MiSans}" />
-    </Style>
-    <Style x:Key="MaterialNativeHyperlinkButtonStyle" TargetType="wl:LiquidGlassHyperlinkButton" BasedOn="{StaticResource DefaultHyperlinkButtonStyle}">
-        <Setter Property="FontFamily" Value="{StaticResource MiSans}" />
-    </Style>
-    <Style x:Key="MaterialNativeCheckBoxStyle" TargetType="CheckBox" BasedOn="{StaticResource DefaultCheckBoxStyle}">
-        <Setter Property="FontFamily" Value="{StaticResource MiSans}" />
-    </Style>
-    <Style x:Key="MaterialNativeRadioButtonStyle" TargetType="RadioButton" BasedOn="{StaticResource DefaultRadioButtonStyle}">
-        <Setter Property="FontFamily" Value="{StaticResource MiSans}" />
-    </Style>
-    <Style x:Key="MaterialNativeTextBoxStyle" TargetType="TextBox" BasedOn="{StaticResource DefaultTextBoxStyle}">
-        <Setter Property="FontFamily" Value="{StaticResource MiSans}" />
-    </Style>
-    <Style x:Key="MaterialNativeComboBoxStyle" TargetType="ComboBox" BasedOn="{StaticResource DefaultComboBoxStyle}">
-        <Setter Property="FontFamily" Value="{StaticResource MiSans}" />
-    </Style>
+    <shuxdc:EmptyObjectToVisibilityConverter x:Key="MaterialToggleHeaderVisibility" />
+
+    <Style x:Key="MaterialNativeButtonStyle" TargetType="Button" BasedOn="{StaticResource DefaultButtonStyle}" />
+    <Style x:Key="MaterialNativeToggleButtonStyle" TargetType="ToggleButton" BasedOn="{StaticResource DefaultToggleButtonStyle}" />
+    <Style x:Key="MaterialNativeHyperlinkButtonStyle" TargetType="wl:LiquidGlassHyperlinkButton" BasedOn="{StaticResource DefaultHyperlinkButtonStyle}" />
+    <Style x:Key="MaterialNativeCheckBoxStyle" TargetType="CheckBox" BasedOn="{StaticResource DefaultCheckBoxStyle}" />
+    <Style x:Key="MaterialNativeRadioButtonStyle" TargetType="RadioButton" BasedOn="{StaticResource DefaultRadioButtonStyle}" />
+    <Style x:Key="MaterialNativeTextBoxStyle" TargetType="TextBox" BasedOn="{StaticResource DefaultTextBoxStyle}" />
+    <Style x:Key="MaterialNativeComboBoxStyle" TargetType="ComboBox" BasedOn="{StaticResource DefaultComboBoxStyle}" />
 
     <!--
         LiquidGlassToggleSwitch derives from ToggleButton while ToggleSwitch is a
@@ -68,7 +57,7 @@
                 Foreground="{ThemeResource ToggleSwitchHeaderForeground}"
                 IsHitTestVisible="False"
                 TextWrapping="Wrap"
-                Visibility="Collapsed" />
+                Visibility="{Binding Content, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource MaterialToggleHeaderVisibility}}" />
 
             <Grid
                 Grid.Row="1"
@@ -376,7 +365,6 @@
         <Setter Property="HorizontalContentAlignment" Value="Left" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="Foreground" Value="{ThemeResource ToggleSwitchContentForeground}" />
-        <Setter Property="FontFamily" Value="{StaticResource MiSans}" />
         <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}" />
         <Setter Property="Template" Value="{StaticResource MaterialNativeToggleSwitchTemplate}" />
     </Style>
