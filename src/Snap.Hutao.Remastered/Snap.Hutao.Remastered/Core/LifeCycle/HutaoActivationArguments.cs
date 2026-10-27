@@ -66,4 +66,60 @@ public sealed class HutaoActivationArguments
 
         return result;
     }
+
+    /// <summary>
+    /// Reads the activation carried by the command line. The administrator restart forwards the
+    /// activation as an argument, see <c>Bootstrap.RestartAsAdministrator</c>.
+    /// </summary>
+    public static HutaoActivationArguments? TryCreateFromCommandLineArguments(IReadOnlyList<string> args)
+    {
+        if (args.Count is 0)
+        {
+            return null;
+        }
+
+        string? argument = args[0];
+        if (string.IsNullOrEmpty(argument))
+        {
+            return null;
+        }
+
+        if (argument.StartsWith("hutao://", StringComparison.OrdinalIgnoreCase))
+        {
+            return new()
+            {
+                Kind = HutaoActivationKind.Protocol,
+                ProtocolActivatedUri = new(argument),
+            };
+        }
+
+        return new()
+        {
+            Kind = HutaoActivationKind.Launch,
+            LaunchActivatedArguments = argument,
+        };
+    }
+
+    /// <summary>
+    /// Restores the protocol activation that the administrator restart forwards through the command
+    /// line. Without it the app model reports the forwarded <c>hutao://</c> argument as a plain
+    /// launch, which only brings the main window up instead of starting the game.
+    /// </summary>
+    public static HutaoActivationArguments ResolveFromAppActivationArguments(AppActivationArguments args, bool isRedirected = false)
+    {
+        HutaoActivationArguments result = FromAppActivationArguments(args, isRedirected);
+
+        if (result.Kind is not HutaoActivationKind.Launch)
+        {
+            return result;
+        }
+
+        if (TryCreateFromCommandLineArguments([result.LaunchActivatedArguments ?? string.Empty]) is not { Kind: HutaoActivationKind.Protocol } forwarded)
+        {
+            return result;
+        }
+
+        forwarded.IsRedirectTo = isRedirected;
+        return forwarded;
+    }
 }

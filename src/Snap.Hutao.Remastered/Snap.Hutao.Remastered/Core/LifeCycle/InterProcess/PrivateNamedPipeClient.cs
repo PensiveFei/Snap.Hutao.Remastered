@@ -7,6 +7,7 @@ using Snap.Hutao.Remastered.Core.LifeCycle.InterProcess.Model;
 using Snap.Hutao.Remastered.Factory.Process;
 using System.IO;
 using System.IO.Pipes;
+using WinRT;
 
 namespace Snap.Hutao.Remastered.Core.LifeCycle.InterProcess;
 
@@ -67,42 +68,19 @@ public sealed partial class PrivateNamedPipeClient : IDisposable
     /// <returns>true if a redirect was sent; false if pipe unavailable.</returns>
     public static bool TryLightweightRedirect(string[] args)
     {
-        HutaoActivationArguments hutaoArgs;
-
-        // Determine activation kind from command-line arguments
-        if (args.Length > 0)
-        {
-            string? arg = args[0];
-            if (arg is not null && arg.StartsWith("hutao://", StringComparison.OrdinalIgnoreCase))
+        // An app model host reports the activation through the app lifecycle instead of the command
+        // line, so the command line only speaks for an unpackaged launch. Without this the protocol
+        // activation of a second instance degrades to a plain launch and the URI is lost.
+        HutaoActivationArguments hutaoArgs = TryGetAppModelActivationArguments()
+            ?? HutaoActivationArguments.TryCreateFromCommandLineArguments(args)
+            ?? new()
             {
-                hutaoArgs = new()
-                {
-                    Kind = HutaoActivationKind.Protocol,
-                    ProtocolActivatedUri = new Uri(arg),
-                    IsRedirectTo = true,
-                };
-            }
-            else
-            {
-                // Regular launch with arguments
-                hutaoArgs = new()
-                {
-                    Kind = HutaoActivationKind.Launch,
-                    LaunchActivatedArguments = arg,
-                    IsRedirectTo = true,
-                };
-            }
-        }
-        else
-        {
-            // No arguments, treat as a regular launch to bring existing instance to foreground
-            hutaoArgs = new()
-            {
+                // No arguments, treat as a regular launch to bring existing instance to foreground
                 Kind = HutaoActivationKind.Launch,
                 LaunchActivatedArguments = string.Empty,
-                IsRedirectTo = true,
             };
-        }
+
+        hutaoArgs.IsRedirectTo = true;
 
         using NamedPipeClientStream clientStream = new(".", PrivateNamedPipe.PrivateName, PipeDirection.InOut, PipeOptions.Asynchronous | PipeOptions.WriteThrough);
 
@@ -158,5 +136,24 @@ public sealed partial class PrivateNamedPipeClient : IDisposable
         }
 
         SpinWaitPolyfill.SpinUntil(response, static response => !ProcessFactory.TryGetById(response.ProcessId, out _));
+    }
+
+    private static HutaoActivationArguments? TryGetAppModelActivationArguments()
+    {
+        if (RuntimeEnvironment.IsUnpackaged)
+        {
+            return null;
+        }
+
+        try
+        {
+            ComWrappersSupport.InitializeComWrappers();
+            return HutaoActivationArguments.ResolveFromAppActivationArguments(AppInstance.GetCurrent().GetActivatedEventArgs());
+        }
+        catch (Exception ex)
+        {
+            SentrySdk.CaptureException(ex);
+            return null;
+        }
     }
 }
