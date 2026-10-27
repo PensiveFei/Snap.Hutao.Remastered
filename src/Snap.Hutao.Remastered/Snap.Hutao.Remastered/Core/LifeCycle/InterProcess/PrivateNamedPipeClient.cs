@@ -68,10 +68,9 @@ public sealed partial class PrivateNamedPipeClient : IDisposable
     /// <returns>true if a redirect was sent; false if pipe unavailable.</returns>
     public static bool TryLightweightRedirect(string[] args)
     {
-        // An app model host reports the activation through the app lifecycle instead of the command
-        // line, so the command line only speaks for an unpackaged launch. Without this the protocol
-        // activation of a second instance degrades to a plain launch and the URI is lost.
-        HutaoActivationArguments hutaoArgs = TryGetAppModelActivationArguments()
+        // Prefer rich app-model activation. A packaged administrator restart can instead be a
+        // plain Launch, so also pass its parsed process arguments to restore the forwarded URI.
+        HutaoActivationArguments hutaoArgs = TryGetAppModelActivationArguments(args)
             ?? HutaoActivationArguments.TryCreateFromCommandLineArguments(args)
             ?? new()
             {
@@ -138,7 +137,7 @@ public sealed partial class PrivateNamedPipeClient : IDisposable
         SpinWaitPolyfill.SpinUntil(response, static response => !ProcessFactory.TryGetById(response.ProcessId, out _));
     }
 
-    private static HutaoActivationArguments? TryGetAppModelActivationArguments()
+    private static HutaoActivationArguments? TryGetAppModelActivationArguments(string[] args)
     {
         if (RuntimeEnvironment.IsUnpackaged)
         {
@@ -148,7 +147,7 @@ public sealed partial class PrivateNamedPipeClient : IDisposable
         try
         {
             ComWrappersSupport.InitializeComWrappers();
-            return HutaoActivationArguments.ResolveFromAppActivationArguments(AppInstance.GetCurrent().GetActivatedEventArgs());
+            return HutaoActivationArguments.ResolveFromAppActivationArguments(AppInstance.GetCurrent().GetActivatedEventArgs(), args);
         }
         catch (Exception ex)
         {

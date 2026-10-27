@@ -114,7 +114,7 @@ public sealed partial class App : Application
                 // The administrator restart forwards the activation through the command line, which
                 // the app model reports as a plain launch: restore it before the redirect so that the
                 // forwarded URI still starts the game on the instance that receives it.
-                resolvedActivation = HutaoActivationArguments.ResolveFromAppActivationArguments(activatedEventArgs);
+                resolvedActivation = HutaoActivationArguments.ResolveFromAppActivationArguments(activatedEventArgs, Environment.GetCommandLineArgs()[1..]);
                 resolvedActivation.IsRedirectTo = true;
 
                 if (serviceProvider.GetRequiredService<PrivateNamedPipeClient>().TryRedirectActivationTo(resolvedActivation))

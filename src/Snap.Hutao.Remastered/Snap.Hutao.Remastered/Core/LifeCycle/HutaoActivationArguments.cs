@@ -71,7 +71,7 @@ public sealed class HutaoActivationArguments
     /// Reads the activation carried by the command line. The administrator restart forwards the
     /// activation as an argument, see <c>Bootstrap.RestartAsAdministrator</c>.
     /// </summary>
-    public static HutaoActivationArguments? TryCreateFromCommandLineArguments(IReadOnlyList<string> args)
+    internal static HutaoActivationArguments? TryCreateFromCommandLineArguments(IReadOnlyList<string> args)
     {
         if (args.Count is 0)
         {
@@ -84,12 +84,13 @@ public sealed class HutaoActivationArguments
             return null;
         }
 
-        if (argument.StartsWith("hutao://", StringComparison.OrdinalIgnoreCase))
+        if (argument.StartsWith("hutao://", StringComparison.OrdinalIgnoreCase)
+            && Uri.TryCreate(argument, UriKind.Absolute, out Uri? uri))
         {
             return new()
             {
                 Kind = HutaoActivationKind.Protocol,
-                ProtocolActivatedUri = new(argument),
+                ProtocolActivatedUri = uri,
             };
         }
 
@@ -105,7 +106,7 @@ public sealed class HutaoActivationArguments
     /// line. Without it the app model reports the forwarded <c>hutao://</c> argument as a plain
     /// launch, which only brings the main window up instead of starting the game.
     /// </summary>
-    public static HutaoActivationArguments ResolveFromAppActivationArguments(AppActivationArguments args, bool isRedirected = false)
+    internal static HutaoActivationArguments ResolveFromAppActivationArguments(AppActivationArguments args, IReadOnlyList<string> commandLineArguments, bool isRedirected = false)
     {
         HutaoActivationArguments result = FromAppActivationArguments(args, isRedirected);
 
@@ -114,7 +115,17 @@ public sealed class HutaoActivationArguments
             return result;
         }
 
-        if (TryCreateFromCommandLineArguments([result.LaunchActivatedArguments ?? string.Empty]) is not { Kind: HutaoActivationKind.Protocol } forwarded)
+        // LaunchActivatedArguments can be a quoted URI or the entire command line, including
+        // the executable. Main's arguments (or Environment.GetCommandLineArgs()[1..]) have
+        // already been split and unquoted by the runtime; never treat the raw line as argv[0].
+        HutaoActivationArguments? forwarded = TryCreateFromCommandLineArguments(commandLineArguments);
+        if (forwarded is not { Kind: HutaoActivationKind.Protocol })
+        {
+            // Keep supporting an app-model launch payload that is itself a bare URI.
+            forwarded = TryCreateFromCommandLineArguments([result.LaunchActivatedArguments ?? string.Empty]);
+        }
+
+        if (forwarded is not { Kind: HutaoActivationKind.Protocol })
         {
             return result;
         }
