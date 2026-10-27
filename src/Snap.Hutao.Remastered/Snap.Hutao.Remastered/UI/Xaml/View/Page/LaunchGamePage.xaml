@@ -330,7 +330,6 @@
                     <AppBarButton
                         Command="{x:Bind ((shvg:LaunchGameViewModel)DataContext).KillGameProcessCommand, Mode=OneWay}"
                         Icon="{shuxm:FontIcon Glyph=&#xE733;}"
-                        IsEnabled="{x:Bind shsg:LaunchOptions.CanKillGameProcess.Value, Mode=OneWay}"
                         Label="{shuxm:ResourceString Name=ViewPageLaunchGameKillGameProcessAction}"/>
                     <AppBarButton
                         Command="{x:Bind ((shvg:LaunchGameViewModel)DataContext).LaunchCommand, Mode=OneWay}"

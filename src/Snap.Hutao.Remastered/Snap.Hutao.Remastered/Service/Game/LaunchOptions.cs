@@ -28,9 +28,6 @@ public sealed partial class LaunchOptions : DbStoreOptions, IRestrictedGamePathA
     [field: MaybeNull]
     public static IObservableProperty<bool> IsGameRunning { get => field ??= GameLifeCycle.IsGameRunningProperty; }
 
-    [field: MaybeNull]
-    public static IReadOnlyObservableProperty<bool> CanKillGameProcess { get => field ??= IsGameRunning.AsReadOnly(); }
-
     public AsyncReaderWriterLock GamePathLock { get; } = new();
 
     [field: MaybeNull]

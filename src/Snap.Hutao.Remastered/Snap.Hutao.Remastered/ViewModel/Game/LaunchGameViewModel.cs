@@ -453,8 +453,14 @@ public sealed partial class LaunchGameViewModel : Abstraction.ViewModel, IViewMo
     [Command("KillGameProcessCommand")]
     private async Task KillGameProcess()
     {
-        if (!LaunchOptions.CanKillGameProcess.Value)
+        SentrySdk.AddBreadcrumb(BreadcrumbFactory.CreateUI("Kill game process", "LaunchGameViewModel.Command"));
+
+        // The running state is refreshed by the page observer, which stops as soon as the page
+        // unloads. A game process that outlives the launcher can appear after that, so the cached
+        // state must not gate the command: discover the process again when the button is pressed.
+        if (!await GameLifeCycle.IsGameRunningAsync(taskContext).ConfigureAwait(false))
         {
+            messenger.Send(InfoBarMessage.Warning(SH.ViewModelLaunchGameKillGameProcessNotFound));
             return;
         }
 

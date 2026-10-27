@@ -2237,6 +2237,9 @@
   <data name="ViewModelLaunchGameIdentifyMonitorsAction" xml:space="preserve">
     <value>识别显示器</value>
   </data>
+  <data name="ViewModelLaunchGameKillGameProcessNotFound" xml:space="preserve">
+    <value>没有检测到正在运行的游戏进程</value>
+  </data>
   <data name="ViewModelLaunchGameSchemeNotSelected" xml:space="preserve">
     <value>尚未选择任何服务器</value>
   </data>
