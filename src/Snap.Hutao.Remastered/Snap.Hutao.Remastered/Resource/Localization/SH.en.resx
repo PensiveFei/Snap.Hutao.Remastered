@@ -2237,9 +2237,6 @@ Space Available: {2}</value>
   <data name="ViewModelLaunchGameIdentifyMonitorsAction" xml:space="preserve">
     <value>Identify Monitors</value>
   </data>
-  <data name="ViewModelLaunchGameKillGameProcessNotFound" xml:space="preserve">
-    <value>No running game process was found</value>
-  </data>
   <data name="ViewModelLaunchGameSchemeNotSelected" xml:space="preserve">
     <value>No server selected</value>
   </data>
