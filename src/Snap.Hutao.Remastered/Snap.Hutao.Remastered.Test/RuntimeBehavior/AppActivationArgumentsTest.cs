@@ -11,9 +11,7 @@ public sealed class AppActivationArgumentsTest
     [TestMethod]
     [DataRow(ForwardedUri)]
     [DataRow("")]
-    [DataRow("\"" + ForwardedUri + "\"")]
-    [DataRow("\"C:\\Program Files\\胡桃\\Snap.Hutao.Remastered.exe\" \"" + ForwardedUri + "\"")]
-    public void PackagedLaunchRestoresProtocolFromParsedProcessArguments(string rawLaunchArguments)
+    public void LaunchRestoresProtocolFromParsedProcessArguments(string rawLaunchArguments)
     {
         AppActivationArguments args = new() { Kind = ExtendedActivationKind.Launch, Arguments = rawLaunchArguments };
 
@@ -29,7 +27,7 @@ public sealed class AppActivationArgumentsTest
     [DataRow(true)]
     public void RestoredProtocolKeepsTheRedirectFlag(bool redirected)
     {
-        AppActivationArguments args = new() { Kind = ExtendedActivationKind.Launch, Arguments = "\"hutao://launch/\"" };
+        AppActivationArguments args = new() { Kind = ExtendedActivationKind.Launch };
 
         HutaoActivationArguments result = HutaoActivationArguments.ResolveFromAppActivationArguments(args, [ForwardedUri], redirected);
 
@@ -64,6 +62,17 @@ public sealed class AppActivationArgumentsTest
     }
 
     [TestMethod]
+    public void NonLaunchActivationDoesNotBecomeProtocolFromProcessArguments()
+    {
+        AppActivationArguments args = new() { Kind = ExtendedActivationKind.File };
+
+        HutaoActivationArguments result = HutaoActivationArguments.ResolveFromAppActivationArguments(args, [ForwardedUri]);
+
+        Assert.AreEqual(HutaoActivationKind.None, result.Kind);
+        Assert.IsNull(result.ProtocolActivatedUri);
+    }
+
+    [TestMethod]
     [DataRow(false)]
     [DataRow(true)]
     public void NotificationPayloadAndUserInputAreNotReplacedByProcessArguments(bool redirected)
@@ -89,7 +98,6 @@ public sealed class AppActivationArgumentsTest
     [TestMethod]
     [DataRow("")]
     [DataRow("--ordinary-launch")]
-    [DataRow("\"C:\\Program Files\\胡桃\\Snap.Hutao.Remastered.exe\" --ordinary-launch")]
     public void OrdinaryLaunchKeepsItsAppModelPayload(string rawLaunchArguments)
     {
         AppActivationArguments args = new() { Kind = ExtendedActivationKind.Launch, Arguments = rawLaunchArguments };

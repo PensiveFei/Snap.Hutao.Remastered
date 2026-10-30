@@ -8,6 +8,7 @@ public enum ExtendedActivationKind
     Launch,
     Protocol,
     AppNotification,
+    File,
 }
 
 public sealed class AppActivationArguments

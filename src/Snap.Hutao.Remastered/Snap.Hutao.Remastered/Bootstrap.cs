@@ -208,7 +208,7 @@ public static partial class Bootstrap
 
             string forwardedArguments = RuntimeEnvironment.IsUnpackaged
                 ? GetForwardedArguments(args)
-                : GetAppModelForwardedArguments();
+                : GetAppModelForwardedArguments(args);
 
             ProcessFactory.StartUsingShellExecuteRunAs(currentProcessPath, forwardedArguments);
             Environment.Exit(0);
@@ -224,13 +224,13 @@ public static partial class Bootstrap
         return string.Join(' ', args.Select(static arg => arg.Contains(' ') ? $"\"{arg}\"" : arg));
     }
 
-    private static string GetAppModelForwardedArguments()
+    private static string GetAppModelForwardedArguments(string[] args)
     {
         try
         {
             ComWrappersSupport.InitializeComWrappers();
 
-            HutaoActivationArguments activation = HutaoActivationArguments.FromAppActivationArguments(AppInstance.GetCurrent().GetActivatedEventArgs());
+            HutaoActivationArguments activation = HutaoActivationArguments.ResolveFromAppActivationArguments(AppInstance.GetCurrent().GetActivatedEventArgs(), args);
             return activation switch
             {
                 { Kind: HutaoActivationKind.Protocol, ProtocolActivatedUri: { } uri } => $"\"{uri.OriginalString}\"",

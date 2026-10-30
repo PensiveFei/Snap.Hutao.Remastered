@@ -111,9 +111,8 @@ public sealed partial class App : Application
                 // E_INVALIDARG E_OUTOFMEMORY
                 activatedEventArgs = AppInstance.GetCurrent().GetActivatedEventArgs();
 
-                // The administrator restart forwards the activation through the command line, which
-                // the app model reports as a plain launch: restore it before the redirect so that the
-                // forwarded URI still starts the game on the instance that receives it.
+                // An administrator restart can carry the URI through its command line rather than
+                // native protocol activation. Resolve it before redirecting or handling this launch.
                 resolvedActivation = HutaoActivationArguments.ResolveFromAppActivationArguments(activatedEventArgs, Environment.GetCommandLineArgs()[1..]);
                 resolvedActivation.IsRedirectTo = true;
 

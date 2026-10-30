@@ -102,9 +102,8 @@ public sealed class HutaoActivationArguments
     }
 
     /// <summary>
-    /// Restores the protocol activation that the administrator restart forwards through the command
-    /// line. Without it the app model reports the forwarded <c>hutao://</c> argument as a plain
-    /// launch, which only brings the main window up instead of starting the game.
+    /// Preserves native activation and, for Launch events, restores a <c>hutao://</c> URI carried
+    /// by the parsed process arguments, including arguments forwarded by an administrator restart.
     /// </summary>
     internal static HutaoActivationArguments ResolveFromAppActivationArguments(AppActivationArguments args, IReadOnlyList<string> commandLineArguments, bool isRedirected = false)
     {
@@ -115,9 +114,9 @@ public sealed class HutaoActivationArguments
             return result;
         }
 
-        // LaunchActivatedArguments can be a quoted URI or the entire command line, including
-        // the executable. Main's arguments (or Environment.GetCommandLineArgs()[1..]) have
-        // already been split and unquoted by the runtime; never treat the raw line as argv[0].
+        // Main's arguments (or Environment.GetCommandLineArgs()[1..]) have already been split
+        // and unquoted by the runtime. Use those to restore the protocol activation without
+        // assuming the app-model launch payload has the same shape as the process command line.
         HutaoActivationArguments? forwarded = TryCreateFromCommandLineArguments(commandLineArguments);
         if (forwarded is not { Kind: HutaoActivationKind.Protocol })
         {
