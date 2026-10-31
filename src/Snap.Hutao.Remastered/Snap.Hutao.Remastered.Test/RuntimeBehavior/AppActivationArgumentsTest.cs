@@ -147,4 +147,63 @@ public sealed class AppActivationArgumentsTest
         Assert.AreEqual(HutaoActivationKind.Protocol, result?.Kind);
         Assert.AreEqual(Argument, result?.ProtocolActivatedUri?.OriginalString);
     }
+
+    [TestMethod]
+    public void AdministratorRestartForwardsTheResolvedNativeProtocol()
+    {
+        const string NativeUri = "hutao://achievement/import?value=a%2Fb%20c";
+        AppActivationArguments args = new() { Kind = ExtendedActivationKind.Protocol, Uri = new(NativeUri) };
+        HutaoActivationArguments resolved = HutaoActivationArguments.ResolveFromAppActivationArguments(args, [ForwardedUri]);
+
+        Assert.IsTrue(resolved.TryGetAdministratorRestartArguments(out string arguments));
+        Assert.AreEqual($"\"{NativeUri}\"", arguments);
+    }
+
+    [TestMethod]
+    public void AdministratorRestartForwardsTheProtocolRestoredFromArgv()
+    {
+        AppActivationArguments args = new() { Kind = ExtendedActivationKind.Launch };
+        HutaoActivationArguments resolved = HutaoActivationArguments.ResolveFromAppActivationArguments(args, [ForwardedUri]);
+
+        Assert.IsTrue(resolved.TryGetAdministratorRestartArguments(out string arguments));
+        Assert.AreEqual($"\"{ForwardedUri}\"", arguments);
+    }
+
+    [TestMethod]
+    public void AdministratorRestartDoesNotReplayTheRawLaunchCommandLine()
+    {
+        AppActivationArguments args = new() { Kind = ExtendedActivationKind.Launch, Arguments = "\"C:\\Program Files\\Snap Hutao\\app.exe\"" };
+        HutaoActivationArguments resolved = HutaoActivationArguments.ResolveFromAppActivationArguments(args, []);
+
+        Assert.IsTrue(resolved.TryGetAdministratorRestartArguments(out string arguments));
+        Assert.AreEqual(string.Empty, arguments);
+    }
+
+    [TestMethod]
+    public void NotificationStaysInTheRegisteredProcessInsteadOfLosingItsPayloadToElevation()
+    {
+        AppActivationArguments args = new()
+        {
+            Kind = ExtendedActivationKind.AppNotification,
+            NotificationArguments = new Dictionary<string, string> { ["Action"] = "LaunchGame" },
+            UserInput = new Dictionary<string, string> { ["Reply"] = "kept" },
+        };
+        HutaoActivationArguments resolved = HutaoActivationArguments.ResolveFromAppActivationArguments(args, [ForwardedUri]);
+
+        Assert.IsFalse(resolved.TryGetAdministratorRestartArguments(out string arguments));
+        Assert.AreEqual(string.Empty, arguments);
+        Assert.AreEqual("LaunchGame", resolved.AppNotificationActivatedArguments?["Action"]);
+        Assert.AreEqual("kept", resolved.AppNotificationActivatedUserInput?["Reply"]);
+    }
+
+    [TestMethod]
+    [DataRow(HutaoActivationKind.None)]
+    [DataRow(HutaoActivationKind.Protocol)]
+    public void ActivationWithoutAForwardablePayloadDoesNotRestart(HutaoActivationKind kind)
+    {
+        HutaoActivationArguments args = new() { Kind = kind };
+
+        Assert.IsFalse(args.TryGetAdministratorRestartArguments(out string arguments));
+        Assert.AreEqual(string.Empty, arguments);
+    }
 }

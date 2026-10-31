@@ -7,7 +7,6 @@ using Snap.Hutao.Remastered.Core.LifeCycle.InterProcess.Model;
 using Snap.Hutao.Remastered.Factory.Process;
 using System.IO;
 using System.IO.Pipes;
-using WinRT;
 
 namespace Snap.Hutao.Remastered.Core.LifeCycle.InterProcess;
 
@@ -61,17 +60,21 @@ public sealed partial class PrivateNamedPipeClient : IDisposable
     }
 
     /// <summary>
-    /// Lightweight one-shot redirect from the second instance to the first,
+    /// Lightweight one-shot redirect from an unpackaged second instance to the first,
     /// without needing DI or the singleton pipe client. Called from <see cref="Bootstrap.Main"/>.
     /// </summary>
     /// <param name="args">The command-line arguments from Main().</param>
-    /// <returns>true if a redirect was sent; false if pipe unavailable.</returns>
+    /// <returns>true if a redirect was sent; false if packaged or the pipe is unavailable.</returns>
     public static bool TryLightweightRedirect(string[] args)
     {
-        // Prefer rich app-model activation. A packaged administrator restart can instead be a
-        // plain Launch, so also pass its parsed process arguments to restore the forwarded URI.
-        HutaoActivationArguments hutaoArgs = TryGetAppModelActivationArguments(args)
-            ?? HutaoActivationArguments.TryCreateFromCommandLineArguments(args)
+        // Packaged activation may need the notification COM server. Defer to OnLaunched,
+        // which subscribes and registers before reading and redirecting the activation.
+        if (RuntimeEnvironment.IsPackaged)
+        {
+            return false;
+        }
+
+        HutaoActivationArguments hutaoArgs = HutaoActivationArguments.TryCreateFromCommandLineArguments(args)
             ?? new()
             {
                 // No arguments, treat as a regular launch to bring existing instance to foreground
@@ -135,24 +138,5 @@ public sealed partial class PrivateNamedPipeClient : IDisposable
         }
 
         SpinWaitPolyfill.SpinUntil(response, static response => !ProcessFactory.TryGetById(response.ProcessId, out _));
-    }
-
-    private static HutaoActivationArguments? TryGetAppModelActivationArguments(string[] args)
-    {
-        if (RuntimeEnvironment.IsUnpackaged)
-        {
-            return null;
-        }
-
-        try
-        {
-            ComWrappersSupport.InitializeComWrappers();
-            return HutaoActivationArguments.ResolveFromAppActivationArguments(AppInstance.GetCurrent().GetActivatedEventArgs(), args);
-        }
-        catch (Exception ex)
-        {
-            SentrySdk.CaptureException(ex);
-            return null;
-        }
     }
 }

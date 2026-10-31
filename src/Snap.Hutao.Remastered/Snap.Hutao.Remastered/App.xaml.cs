@@ -122,14 +122,24 @@ public sealed partial class App : Application
                     XamlApplicationLifetime.ActivationAndInitializationCompleted = true;
                     Exit();
 
-                    // base.Exit() may not fully terminate the process in unpackaged mode,
-                    // so force exit to guarantee the new instance terminates completely.
+                    // Release the notification COM server before terminating the redirecting process.
+                    AppNotificationManager.Default.Unregister();
+                    AppNotificationManager.Default.NotificationInvoked -= activation.NotificationInvoked;
                     SentrySdk.Flush();
                     Environment.Exit(0);
                     return;
                 }
 
                 resolvedActivation.IsRedirectTo = false;
+
+                if (Bootstrap.TryRestartAsAdministrator(resolvedActivation))
+                {
+                    AppNotificationManager.Default.Unregister();
+                    AppNotificationManager.Default.NotificationInvoked -= activation.NotificationInvoked;
+                    SentrySdk.Flush();
+                    Environment.Exit(0);
+                    return;
+                }
             }
             else
             {

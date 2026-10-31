@@ -69,7 +69,7 @@ public sealed class HutaoActivationArguments
 
     /// <summary>
     /// Reads the activation carried by the command line. The administrator restart forwards the
-    /// activation as an argument, see <c>Bootstrap.RestartAsAdministrator</c>.
+    /// activation as an argument, see <c>Bootstrap.TryRestartAsAdministrator</c>.
     /// </summary>
     internal static HutaoActivationArguments? TryCreateFromCommandLineArguments(IReadOnlyList<string> args)
     {
@@ -131,5 +131,21 @@ public sealed class HutaoActivationArguments
 
         forwarded.IsRedirectTo = isRedirected;
         return forwarded;
+    }
+
+    /// <summary>
+    /// Serializes an already resolved activation for an administrator restart. Other activation
+    /// kinds must stay in this process so their payload and user input are not discarded.
+    /// </summary>
+    internal bool TryGetAdministratorRestartArguments(out string arguments)
+    {
+        arguments = string.Empty;
+        if (Kind is HutaoActivationKind.Protocol && ProtocolActivatedUri is { } uri)
+        {
+            arguments = $"\"{uri.OriginalString}\"";
+            return true;
+        }
+
+        return Kind is HutaoActivationKind.Launch;
     }
 }
